@@ -9,11 +9,56 @@ class HomeAnnoncementPage extends StatefulWidget {
 
 class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   int _current = 0;
+  String _selectedLanguage = 'EN'; // Default language
+  bool _isDarkMode = false; // Default theme mode
 
   final List<String> imgList = [
     'assets/NewGate.jpg',
     'assets/img.png',
   ];
+
+  void _changeLanguage() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Language'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('English'),
+                onTap: () {
+                  setState(() {
+                    _selectedLanguage = 'EN';
+                  });
+                  Navigator.of(context).pop();
+                  // تنفيذ تغيير اللغة إلى الإنجليزية
+                },
+              ),
+              ListTile(
+                title: Text('العربية'),
+                onTap: () {
+                  setState(() {
+                    _selectedLanguage = 'AR';
+                  });
+                  Navigator.of(context).pop();
+                  // تنفيذ تغيير اللغة إلى العربية
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _toggleTheme(bool isDarkMode) {
+    setState(() {
+      _isDarkMode = isDarkMode;
+    });
+    // قم بتحديث موضوع التطبيق هنا بناءً على قيمة _isDarkMode
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,17 +164,25 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               ),
               ListTile(
                 leading: Icon(Icons.color_lens, color: Color(0xFF318c3c)),
-                title: Text('Theme'),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Theme'),
+                    Switch(
+                      value: _isDarkMode,
+                      onChanged: _toggleTheme,
+                      activeColor: Color(0xFF318c3c),
+                    ),
+                  ],
+                ),
                 onTap: () {
-                  // تنفيذ تغيير السمة
+                  _toggleTheme(!_isDarkMode);
                 },
               ),
               ListTile(
                 leading: Icon(Icons.language, color: Color(0xFF318c3c)),
-                title: Text('Language: EN'),
-                onTap: () {
-                  // تنفيذ تغيير اللغة
-                },
+                title: Text('Language: $_selectedLanguage'),
+                onTap: _changeLanguage,
               ),
               ListTile(
                 leading: Icon(Icons.help, color: Color(0xFF318c3c)),
@@ -169,7 +222,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                       children: [
                         Text(
                           'User Name', // Replace with actual name
-                            style: TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Acumin Variable Concept',
                             fontSize: 26,
                             fontWeight: FontWeight.bold,

@@ -6,7 +6,6 @@ import 'Signup&Login/forgot_password.dart';
 import 'Annoncement_page/Home_Annoncement_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignupPage(),
         '/forgot_password': (context) => const ForgotPasswordPage(),
         '/Home_Annoncament_page': (context) => HomeAnnoncementPage(),
-        '/GPA_Calculator':(context) => GpaCalculator(),
+        '/GPA_Calculator': (context) => GpaCalculator(),
       },
     );
   }
