@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
+import '../Annoncement_page/Home_Annoncement_page.dart'; // Replace with the path to the announcements page file
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
     } else if (!EmailValidator.validate(value)) {
-      return 'Please enter a valid email';
+      return 'Please enter a valid email address';
     }
     return null;
   }
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     if (value == null || value.isEmpty) {
       return 'Please enter your password';
     } else if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return 'Password must be at least 8 characters';
     } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
       return 'Password must contain at least one uppercase letter';
     } else if (!RegExp(r'[0-9]').hasMatch(value)) {
@@ -58,7 +59,12 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _isLoading = false;
         });
-        // Proceed with login or show error
+
+        // Navigate to the announcements page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeAnnoncementPage()),
+        );
       });
     }
   }
@@ -159,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
                       onPressed: _handleLogin,
-                      child: const Text('Login',style:TextStyle(fontWeight: FontWeight.bold,color:Colors.white)),
+                      child: const Text('Login', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         backgroundColor: Colors.teal,
@@ -175,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushNamed(context, '/forgot_password');
                       },
                       child: const Text(
-                        'Forgot Password?',
+                        'Forgot password?',
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
