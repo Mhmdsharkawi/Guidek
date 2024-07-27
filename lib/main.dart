@@ -4,7 +4,6 @@ import 'Signup&Login/login.dart';
 import 'Signup&Login/signup.dart';
 import 'Signup&Login/forgot_password.dart';
 import 'Annoncement_page/Home_Annoncement_page.dart';
-import 'Annoncement_page/Settings_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
 
 
@@ -26,7 +25,6 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignupPage(),
         '/forgot_password': (context) => const ForgotPasswordPage(),
         '/Home_Annoncament_page': (context) => HomeAnnoncementPage(),
-        '/Settings_page':(context) => SettingsPage(),
         '/GPA_Calculator':(context) => GpaCalculator(),
       },
     );

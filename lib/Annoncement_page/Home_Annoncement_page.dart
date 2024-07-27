@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'Settings_page.dart';
-import 'GPA_Calculator.dart'; // Make sure to import the GpaCalculator page
+import 'GPA_Calculator.dart';
 
 class HomeAnnoncementPage extends StatefulWidget {
   @override
@@ -54,17 +53,145 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
-              );
-            },
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
+      ),
+      drawer: Drawer(
+        width: MediaQuery.of(context).size.width * 0.65,
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              Container(
+                height: 100,
+                child: Center(
+                  child: Row(
+                    children: [
+                      SizedBox(width: 8),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'GUIDE',
+                              style: TextStyle(
+                                fontFamily: 'Acumin Variable Concept',
+                                fontSize: 32,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xFF318c3c),
+                                letterSpacing: 12.0,
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: SizedBox(width: 3),
+                            ),
+                            TextSpan(
+                              text: 'K',
+                              style: TextStyle(
+                                fontFamily: 'Acumin Variable Concept',
+                                fontSize: 38,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF318c3c),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Divider(color: Colors.grey),
+              ListTile(
+                leading: Icon(Icons.home, color: Color(0xFF318c3c)),
+                title: Text('Home'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.color_lens, color: Color(0xFF318c3c)),
+                title: Text('Theme'),
+                onTap: () {
+                  // تنفيذ تغيير السمة
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.language, color: Color(0xFF318c3c)),
+                title: Text('Language: EN'),
+                onTap: () {
+                  // تنفيذ تغيير اللغة
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.help, color: Color(0xFF318c3c)),
+                title: Text('Help'),
+                onTap: () {
+                  // الانتقال إلى صفحة المساعدة
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.info, color: Color(0xFF318c3c)),
+                title: Text('App Info'),
+                onTap: () {
+                  // عرض معلومات التطبيق
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
+                title: Text('Contact Us'),
+                onTap: () {
+                  // الانتقال إلى صفحة الاتصال
+                },
+              ),
+              SizedBox(height: 348), // Space before the divider
+              Divider(color: Colors.grey), // Thin line divider
+              // Profile information
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/profile.jpg'), // Replace with actual path
+                      radius: 30,
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'User Name', // Replace with actual name
+                            style: TextStyle(
+                            fontFamily: 'Acumin Variable Concept',
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'Manage Account', // Replace with actual status
+                          style: TextStyle(
+                            fontFamily: 'Acumin Variable Concept',
+                            fontSize: 14,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       body: Column(
         children: [
@@ -110,7 +237,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 );
               }),
               _buildIcon(Icons.help, 'FAQ', () {}),
-              _buildIcon(Icons.contact_mail, 'Contact Us', () {}),
+              _buildIcon(Icons.location_on, 'University class', () {}),
             ],
           ),
         ],
