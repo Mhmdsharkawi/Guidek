@@ -33,7 +33,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     _selectedLanguage = 'EN';
                   });
                   Navigator.of(context).pop();
-                  // تنفيذ تغيير اللغة إلى الإنجليزية
                 },
               ),
               ListTile(
@@ -43,7 +42,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     _selectedLanguage = 'AR';
                   });
                   Navigator.of(context).pop();
-                  // تنفيذ تغيير اللغة إلى العربية
                 },
               ),
             ],
@@ -57,7 +55,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     setState(() {
       _isDarkMode = isDarkMode;
     });
-    // قم بتحديث موضوع التطبيق هنا بناءً على قيمة _isDarkMode
   }
 
   @override
@@ -188,21 +185,18 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 leading: Icon(Icons.help, color: Color(0xFF318c3c)),
                 title: Text('Help'),
                 onTap: () {
-                  // الانتقال إلى صفحة المساعدة
                 },
               ),
               ListTile(
                 leading: Icon(Icons.info, color: Color(0xFF318c3c)),
                 title: Text('App Info'),
                 onTap: () {
-                  // عرض معلومات التطبيق
                 },
               ),
               ListTile(
                 leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
                 title: Text('Contact Us'),
                 onTap: () {
-                  // الانتقال إلى صفحة الاتصال
                 },
               ),
               SizedBox(height: 348), // Space before the divider
