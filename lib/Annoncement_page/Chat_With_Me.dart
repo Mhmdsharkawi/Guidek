@@ -153,8 +153,5 @@ class _ChatWithMeState extends State<ChatWithMe> {
       _sendMessage(chatMessage);
     }
   }
-
-}
-
 }
 
