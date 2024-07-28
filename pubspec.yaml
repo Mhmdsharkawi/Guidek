@@ -16,17 +16,16 @@ dependencies:
   carousel_slider: ^4.2.0
   flutter_svg: ^2.0.10+1
   google_fonts: ^6.2.1
-<<<<<<< HEAD
   shared_preferences: ^2.0.13
   flutter_gemini: ^2.0.4
   dash_chat_2: ^0.0.21
   image_picker: ^1.1.2
 
-=======
+
   flutter_gemini: ^2.0.4
   dash_chat_2: ^0.0.21
   image_picker: ^1.1.2
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
+
 
  # The following adds the Cupertino Icons font to your application.
  # Use with the CupertinoIcons class for iOS style icons.
