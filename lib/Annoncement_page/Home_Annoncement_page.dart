@@ -72,15 +72,15 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // إغلاق الحوار
+                Navigator.of(context).pop(); 
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()), // التنقل إلى صفحة التسجيل
-                      (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة من مكدس التنقل
+                  MaterialPageRoute(builder: (context) => HomePage()), 
+                      (Route<dynamic> route) => false, 
                 );
               },
               child: Text('Yes', style: TextStyle(color: Colors.red)),
@@ -236,7 +236,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     MaterialPageRoute(builder: (context) => ContactUsPage()),
                   );                },
               ),
-<<<<<<< HEAD
+
               ListTile(
                 leading: Icon(Icons.logout, color: Colors.red),
                 title: Text(
@@ -245,8 +245,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 ),
                 onTap: _confirmLogout,
               ),
-              SizedBox(height: 291), // Space before the divider
-              Divider(color: Colors.grey), // Thin line divider
+              SizedBox(height: 291), 
+              Divider(color: Colors.grey), 
               // Profile information
               Padding(
                 padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
@@ -257,13 +257,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     MaterialPageRoute(builder: (context) => UserProfilePage()),
                   );
                 },
-=======
-              const SizedBox(height: 348), // Space before the divider
-              const Divider(color: Colors.grey), // Thin line divider
+
+              const SizedBox(height: 348), 
+              const Divider(color: Colors.grey), 
               // Profile information
               const Padding(
                 padding:  EdgeInsets.fromLTRB(8,0,0,0),
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
+
                 child: Row(
                   children: [
                     CircleAvatar(
