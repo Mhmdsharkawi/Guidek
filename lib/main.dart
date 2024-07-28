@@ -6,14 +6,11 @@ import 'Signup&Login/signup.dart';
 import 'Signup&Login/forgot_password.dart';
 import 'Annoncement_page/Home_Annoncement_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
-<<<<<<< HEAD
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'consts.dart';
-=======
 import 'Annoncement_page/Chat_With_Me.dart';
 import 'consts.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
 
 void main() {
   Gemini.init(
