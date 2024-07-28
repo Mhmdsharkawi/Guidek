@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:guidek_project1/Annoncement_page/Chat_With_Me.dart';
+import 'package:guidek_project1/Annoncement_page/Contact_Us.dart';
+import 'package:guidek_project1/Annoncement_page/File_Information.dart';
+import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
+import 'Chat_With_Me.dart';
 
 class HomeAnnoncementPage extends StatefulWidget {
   @override
@@ -9,8 +14,8 @@ class HomeAnnoncementPage extends StatefulWidget {
 
 class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   int _current = 0;
-  String _selectedLanguage = 'EN'; // Default language
-  bool _isDarkMode = false; // Default theme mode
+  String _selectedLanguage = 'EN';
+  bool _isDarkMode = false;
 
   final List<String> imgList = [
     'assets/NewGate.jpg',
@@ -55,6 +60,35 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     setState(() {
       _isDarkMode = isDarkMode;
     });
+  }
+
+  void _confirmLogout() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout Confirmation'),
+          content: Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // إغلاق الحوار
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => HomePage()), // التنقل إلى صفحة التسجيل
+                      (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة من مكدس التنقل
+                );
+              },
+              child: Text('Yes', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -197,13 +231,31 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
                 title: Text('Contact Us'),
                 onTap: () {
-                },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ContactUsPage()),
+                  );                },
               ),
-              SizedBox(height: 348), // Space before the divider
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.red),
+                title: Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: _confirmLogout,
+              ),
+              SizedBox(height: 291), // Space before the divider
               Divider(color: Colors.grey), // Thin line divider
               // Profile information
               Padding(
-                padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
+               child:GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserProfilePage()),
+                  );
+                },
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -235,6 +287,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     ),
                   ],
                 ),
+               )
               ),
             ],
           ),
@@ -275,7 +328,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
             childAspectRatio: 1.0,
             children: [
               _buildIcon(Icons.school, 'Subjects & Classes', () {}),
-              _buildIcon(Icons.chat_bubble, 'Chat with me', () {}),
+              _buildIcon(Icons.chat_bubble, 'Chat with me', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatWithMe()),
+                );
+              }),
               _buildIcon(Icons.description, 'Procedure Guide', () {}),
               _buildIcon(Icons.calculate, 'GPA Calculator', () {
                 Navigator.push(
@@ -284,7 +342,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 );
               }),
               _buildIcon(Icons.help, 'FAQ', () {}),
-              _buildIcon(Icons.location_on, 'University class', () {}),
+              _buildIcon(Icons.location_on, 'University Classes', () {}),
             ],
           ),
         ],
