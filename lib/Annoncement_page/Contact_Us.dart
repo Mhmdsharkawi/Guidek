@@ -18,10 +18,10 @@ class ContactUsPage extends StatelessWidget {
       ),
       body: Container(
         width: double.infinity,
-        height: double.infinity,  
+        height: double.infinity,  // Ensures the container covers the full height
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/contact-us.jpg'), 
+            image: AssetImage('assets/contact-us.jpg'), // استبدل بمسار الصورة الفعلي
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.5),
@@ -52,7 +52,7 @@ class ContactUsPage extends StatelessWidget {
                   'fadfdsa@bgfs.dsd',
                   'dfvmjkls@htrs.gv',
                 ],
-                Color(0xFFfdcd90), 
+                Color(0xFFfdcd90), // Yellow color
               ),
               SizedBox(height: 20),
               _buildInfoSection(
@@ -64,7 +64,7 @@ class ContactUsPage extends StatelessWidget {
                   'Salah El-Din Anouqa: 0799713509',
                   'Zaid Al_Nsour: 0782494403',
                 ],
-                Color(0xff3a8c31), 
+                Color(0xff3a8c31), // Green color
               ),
               SizedBox(height: 20),
               _buildInfoSection(
@@ -76,7 +76,7 @@ class ContactUsPage extends StatelessWidget {
                   'SalahAnnuka',
                   'UsrFourz',
                 ],
-                Color(0xFF9C27B0), 
+                Color(0xFF9C27B0), // Purple color
               ),
             ],
           ),
