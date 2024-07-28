@@ -85,17 +85,10 @@ packages:
     dependency: transitive
     description:
       name: cross_file
-<<<<<<< HEAD
-      sha256: "2f9d2cbccb76127ba28528cb3ae2c2326a122446a83de5a056aaa3880d3882c5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.3+7"
-=======
       sha256: "55d7b444feb71301ef6b8838dbc1ae02e63dd48c8773f3810ff53bb1e2945b32"
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4+1"
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
   crypto:
     dependency: transitive
     description:
@@ -347,17 +340,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_for_web
-<<<<<<< HEAD
-      sha256: "869fe8a64771b7afbc99fc433a5f7be2fea4d1cb3d7c11a48b6b579eb9c797f0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-=======
       sha256: "5d6eb13048cd47b60dbf1a5495424dea226c5faf3950e20bf8120a58efb5b5f3"
       url: "https://pub.dev"
     source: hosted
     version: "3.0.4"
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
   image_picker_ios:
     dependency: transitive
     description:
@@ -406,17 +392,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
-<<<<<<< HEAD
-  js:
-    dependency: transitive
-    description:
-      name: js
-      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.7"
-=======
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
   json_annotation:
     dependency: transitive
     description:
@@ -601,7 +576,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
-<<<<<<< HEAD
   shared_preferences:
     dependency: "direct main"
     description:
@@ -646,10 +620,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_web
-      sha256: d762709c2bbe80626ecc819143013cc820fa49ca5e363620ee20a8b15a3e3daf
+      sha256: "9aee1089b36bd2aafe06582b7d7817fd317ef05fc30e6ba14bff247d0933042a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.1"
+    version: "2.3.0"
   shared_preferences_windows:
     dependency: transitive
     description:
@@ -658,8 +632,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
-=======
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
   sky_engine:
     dependency: transitive
     description: flutter
@@ -805,17 +777,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_web
-<<<<<<< HEAD
-      sha256: "7fd2f55fe86cea2897b963e864dc01a7eb0719ecc65fcef4c1cc3d686d718bb2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-=======
       sha256: "8d9e750d8c9338601e709cd0885f95825086bd8b642547f26bda435aade95d8a"
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
   url_launcher_windows:
     dependency: transitive
     description:
@@ -900,17 +865,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_web
-<<<<<<< HEAD
-      sha256: "8e9cb7fe94e49490e67bbc15149691792b58a0ade31b32e3f3688d104a0e057b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-=======
       sha256: ff4d69a6614b03f055397c27a71c9d3ddea2b2a23d71b2ba0164f59ca32b8fe2
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
->>>>>>> fd64b8b2e850f6abff25c8a4a595333cf9fa01a9
   vm_service:
     dependency: transitive
     description:
