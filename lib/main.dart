@@ -12,6 +12,7 @@ import 'Annoncement_page/Chat_With_Me.dart';
 import 'consts.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
+
 void main() {
   Gemini.init(
     apiKey: GEMINI_API_KEY,
