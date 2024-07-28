@@ -34,7 +34,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           children: [
             Text(
               'GPA Calculator',
-              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal),
+              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal ,color: Colors.white),
             ),
           ],
         ),

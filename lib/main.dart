@@ -5,8 +5,14 @@ import 'Signup&Login/signup.dart';
 import 'Signup&Login/forgot_password.dart';
 import 'Annoncement_page/Home_Annoncement_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
+import 'Annoncement_page/Chat_With_Me.dart';
+import 'consts.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 void main() {
+  Gemini.init(
+    apiKey: GEMINI_API_KEY,
+  );
   runApp(const MyApp());
 }
 
@@ -25,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/forgot_password': (context) => const ForgotPasswordPage(),
         '/Home_Annoncament_page': (context) => HomeAnnoncementPage(),
         '/GPA_Calculator': (context) => GpaCalculator(),
+        '/Chat_With_Me': (context) =>const ChatWithMe(),
       },
     );
   }
