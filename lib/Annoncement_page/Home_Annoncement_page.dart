@@ -27,7 +27,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:const Text('Select Language'),
+          title: Text('Select Language'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -72,15 +72,15 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); 
+                Navigator.of(context).pop(); // إغلاق الحوار
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()), 
-                      (Route<dynamic> route) => false, 
+                  MaterialPageRoute(builder: (context) => HomePage()), // التنقل إلى صفحة التسجيل
+                      (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة من مكدس التنقل
                 );
               },
               child: Text('Yes', style: TextStyle(color: Colors.red)),
@@ -101,7 +101,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
         title: Padding(
           padding: EdgeInsets.only(left: 0.0),
           child: RichText(
-            text: const TextSpan(
+            text: TextSpan(
               children: [
                 TextSpan(
                   text: 'GUIDE',
@@ -132,7 +132,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.menu),
+              icon: Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -154,7 +154,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     children: [
                       SizedBox(width: 8),
                       RichText(
-                        text: const TextSpan(
+                        text: TextSpan(
                           children: [
                             TextSpan(
                               text: 'GUIDE',
@@ -185,20 +185,20 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   ),
                 ),
               ),
-              const Divider(color: Colors.grey),
+              Divider(color: Colors.grey),
               ListTile(
-                leading:const Icon(Icons.home, color: Color(0xFF318c3c)),
-                title:const Text('Home'),
+                leading: Icon(Icons.home, color: Color(0xFF318c3c)),
+                title: Text('Home'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading:const Icon(Icons.color_lens, color: Color(0xFF318c3c)),
+                leading: Icon(Icons.color_lens, color: Color(0xFF318c3c)),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Theme'),
+                    Text('Theme'),
                     Switch(
                       value: _isDarkMode,
                       onChanged: _toggleTheme,
@@ -211,32 +211,30 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 },
               ),
               ListTile(
-                leading:const Icon(Icons.language, color: Color(0xFF318c3c)),
+                leading: Icon(Icons.language, color: Color(0xFF318c3c)),
                 title: Text('Language: $_selectedLanguage'),
                 onTap: _changeLanguage,
               ),
               ListTile(
-                leading:const Icon(Icons.help, color: Color(0xFF318c3c)),
-                title:const Text('Help'),
-                onTap: () {
-                },
+                leading: Icon(Icons.help, color: Color(0xFF318c3c)),
+                title: Text('Help'),
+                onTap: () {},
               ),
               ListTile(
-                leading: const Icon(Icons.info, color: Color(0xFF318c3c)),
-                title:const Text('App Info'),
-                onTap: () {
-                },
+                leading: Icon(Icons.info, color: Color(0xFF318c3c)),
+                title: Text('App Info'),
+                onTap: () {},
               ),
               ListTile(
-                leading:const Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
-                title:const Text('Contact Us'),
+                leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
+                title: Text('Contact Us'),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ContactUsPage()),
-                  );                },
+                  );
+                },
               ),
-
               ListTile(
                 leading: Icon(Icons.logout, color: Colors.red),
                 title: Text(
@@ -245,57 +243,49 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 ),
                 onTap: _confirmLogout,
               ),
-              SizedBox(height: 291), 
-              Divider(color: Colors.grey), 
-              // Profile information
+              SizedBox(height: 292), // Space before the divider
+              Divider(color: Colors.grey), // Thin line divider
               Padding(
-                padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
-               child:GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserProfilePage()),
-                  );
-                },
-
-              const SizedBox(height: 348), 
-              const Divider(color: Colors.grey), 
-              // Profile information
-              const Padding(
-                padding:  EdgeInsets.fromLTRB(8,0,0,0),
-
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/profile.jpg'), // Replace with actual path
-                      radius: 30,
-                    ),
-                    SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'User Name', // Replace with actual name
-                          style: TextStyle(
-                            fontFamily: 'Acumin Variable Concept',
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UserProfilePage()),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: AssetImage('assets/profile.jpg'), // Replace with actual path
+                        radius: 30,
+                      ),
+                      SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'User Name', // Replace with actual name
+                            style: TextStyle(
+                              fontFamily: 'Acumin Variable Concept',
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Manage Account', // Replace with actual status
-                          style: TextStyle(
-                            fontFamily: 'Acumin Variable Concept',
-                            fontSize: 14,
-                            color: Colors.black,
+                          Text(
+                            'Manage Account', // Replace with actual status
+                            style: TextStyle(
+                              fontFamily: 'Acumin Variable Concept',
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-               )
               ),
             ],
           ),
@@ -327,9 +317,9 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           Container(
             width: double.infinity,
             height: 12.0,
-            color:const Color(0xFFfdcd90),
+            color: Color(0xFFfdcd90),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40),
           GridView.count(
             crossAxisCount: 3,
             shrinkWrap: true,
@@ -339,7 +329,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               _buildIcon(Icons.chat_bubble, 'Chat with me', () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ChatWithMe()),
+                  MaterialPageRoute(builder: (context) => ChatWithMe()),
                 );
               }),
               _buildIcon(Icons.description, 'Procedure Guide', () {}),
@@ -398,10 +388,10 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               ],
             ),
           ),
-          const SizedBox(height: 8),
-           Text(
+          SizedBox(height: 8),
+          Text(
             label,
-             style:const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               color: Color(0xff000000),
               fontWeight: FontWeight.normal,
