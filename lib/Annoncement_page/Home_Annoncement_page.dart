@@ -22,7 +22,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Language'),
+          title:const Text('Select Language'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -67,7 +67,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
         title: Padding(
           padding: EdgeInsets.only(left: 0.0),
           child: RichText(
-            text: TextSpan(
+            text: const TextSpan(
               children: [
                 TextSpan(
                   text: 'GUIDE',
@@ -98,7 +98,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -120,7 +120,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     children: [
                       SizedBox(width: 8),
                       RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                           children: [
                             TextSpan(
                               text: 'GUIDE',
@@ -151,20 +151,20 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   ),
                 ),
               ),
-              Divider(color: Colors.grey),
+              const Divider(color: Colors.grey),
               ListTile(
-                leading: Icon(Icons.home, color: Color(0xFF318c3c)),
-                title: Text('Home'),
+                leading:const Icon(Icons.home, color: Color(0xFF318c3c)),
+                title:const Text('Home'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.color_lens, color: Color(0xFF318c3c)),
+                leading:const Icon(Icons.color_lens, color: Color(0xFF318c3c)),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Theme'),
+                    const Text('Theme'),
                     Switch(
                       value: _isDarkMode,
                       onChanged: _toggleTheme,
@@ -177,33 +177,33 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.language, color: Color(0xFF318c3c)),
+                leading:const Icon(Icons.language, color: Color(0xFF318c3c)),
                 title: Text('Language: $_selectedLanguage'),
                 onTap: _changeLanguage,
               ),
               ListTile(
-                leading: Icon(Icons.help, color: Color(0xFF318c3c)),
-                title: Text('Help'),
+                leading:const Icon(Icons.help, color: Color(0xFF318c3c)),
+                title:const Text('Help'),
                 onTap: () {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.info, color: Color(0xFF318c3c)),
-                title: Text('App Info'),
+                leading: const Icon(Icons.info, color: Color(0xFF318c3c)),
+                title:const Text('App Info'),
                 onTap: () {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
-                title: Text('Contact Us'),
+                leading:const Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
+                title:const Text('Contact Us'),
                 onTap: () {
                 },
               ),
-              SizedBox(height: 348), // Space before the divider
-              Divider(color: Colors.grey), // Thin line divider
+              const SizedBox(height: 348), // Space before the divider
+              const Divider(color: Colors.grey), // Thin line divider
               // Profile information
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8,0,0,0),
+              const Padding(
+                padding:  EdgeInsets.fromLTRB(8,0,0,0),
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -266,9 +266,9 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           Container(
             width: double.infinity,
             height: 12.0,
-            color: Color(0xFFfdcd90),
+            color:const Color(0xFFfdcd90),
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           GridView.count(
             crossAxisCount: 3,
             shrinkWrap: true,
@@ -332,10 +332,10 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               ],
             ),
           ),
-          SizedBox(height: 8),
-          Text(
+          const SizedBox(height: 8),
+           Text(
             label,
-            style: TextStyle(
+             style:const TextStyle(
               fontSize: 13,
               color: Color(0xff000000),
               fontWeight: FontWeight.normal,

@@ -16,16 +16,16 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.black, // Status bar color
-      statusBarIconBrightness: Brightness.light, // Status bar icon color
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+      statusBarIconBrightness: Brightness.light,
     ));
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF318c3c),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon:const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -46,7 +46,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
             child: SvgPicture.asset(
               'assets/guidek-bg.jpg.svg',
               fit: BoxFit.fill,
-              color: Color.fromARGB(100, 220, 220, 220),
+              color:const Color.fromARGB(100, 220, 220, 220),
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -62,10 +62,10 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Hours Passed :'),
+                          const Text('Hours Passed :'),
                           TextField(
                             controller: hoursController,
-                            decoration: InputDecoration(
+                            decoration:const InputDecoration(
                               hintText: 'Enter hours passed',
                             ),
                           ),
@@ -77,10 +77,10 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Current GPA :'),
+                          const Text('Current GPA :'),
                           TextField(
                             controller: gpaController,
-                            decoration: InputDecoration(
+                            decoration:const InputDecoration(
                               hintText: 'Enter current GPA',
                             ),
                           ),
@@ -109,14 +109,14 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              backgroundColor: Color(0xFF318c3c),
+              backgroundColor:const Color(0xFF318c3c),
               onPressed: _addRow,
-              child: Icon(Icons.add,color: Colors.black,),
+              child:const Icon(Icons.add,color: Colors.black,),
             ),
             FloatingActionButton(
-              backgroundColor: Color(0xFF318c3c),
+              backgroundColor:const Color(0xFF318c3c),
               onPressed: _calculateGPA,
-              child: Icon(Icons.calculate,color: Colors.black,),
+              child:const Icon(Icons.calculate,color: Colors.black,),
             ),
           ],
         ),
@@ -194,15 +194,15 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
   Widget _buildRow(int index, int subjectNumber) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin:const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
           IconButton(
-            icon: Icon(Icons.clear, color: Colors.red),
+            icon:const Icon(Icons.clear, color: Colors.red),
             onPressed: () => _removeRow(index),
           ),
           Text("Subject $subjectNumber"),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           DropdownButton<int>(
             value: rows[index].hours,
             items: [1, 2, 3].map((int value) {
@@ -217,7 +217,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               });
             },
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           DropdownButton<String>(
             value: rows[index].grade,
             items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']

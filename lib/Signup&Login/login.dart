@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
-import '../Annoncement_page/Home_Annoncement_page.dart'; // Replace with the path to the announcements page file
+import '../Annoncement_page/Home_Annoncement_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -165,7 +165,6 @@ class _LoginPageState extends State<LoginPage> {
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
                       onPressed: _handleLogin,
-                      child: const Text('Login', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         backgroundColor: Colors.teal,
@@ -174,6 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
+                      child: const Text('Login', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(

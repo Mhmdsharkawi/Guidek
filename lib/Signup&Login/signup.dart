@@ -217,7 +217,6 @@ class _SignupPageState extends State<SignupPage> {
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
                       onPressed: _handleSignup,
-                      child: const Text('Signup', style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white)),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         textStyle: const TextStyle(fontSize: 16),
@@ -226,6 +225,7 @@ class _SignupPageState extends State<SignupPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
+                      child: const Text('Signup', style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white)),
                     ),
                     const SizedBox(height: 20),
                     Text(
