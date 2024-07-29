@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:guidek_project1/Annoncement_page/App_Info.dart';
 import 'package:guidek_project1/Annoncement_page/Chat_With_Me.dart';
 import 'package:guidek_project1/Annoncement_page/Contact_Us.dart';
 import 'package:guidek_project1/Annoncement_page/File_Information.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
 import 'Chat_With_Me.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+
 
 class HomeAnnoncementPage extends StatefulWidget {
+  const HomeAnnoncementPage({super.key});
+
   @override
   _HomeAnnoncementPageState createState() => _HomeAnnoncementPageState();
 }
@@ -16,6 +22,21 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   int _current = 0;
   String _selectedLanguage = 'EN';
   bool _isDarkMode = false;
+  String? _profileImagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImagePath = prefs.getString('profileImagePath');
+    });
+  }
+
 
   final List<String> imgList = [
     'assets/NewGate.jpg',
@@ -72,15 +93,15 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // إغلاق الحوار
+                Navigator.of(context).pop();
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()), // التنقل إلى صفحة التسجيل
-                      (Route<dynamic> route) => false, // إزالة جميع الصفحات السابقة من مكدس التنقل
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                      (Route<dynamic> route) => false,
                 );
               },
               child: Text('Yes', style: TextStyle(color: Colors.red)),
@@ -223,7 +244,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               ListTile(
                 leading: Icon(Icons.info, color: Color(0xFF318c3c)),
                 title: Text('App Info'),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AppInfoPage()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
@@ -244,7 +270,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 onTap: _confirmLogout,
               ),
               SizedBox(height: 292), // Space before the divider
-              Divider(color: Colors.grey), // Thin line divider
+              Divider(color: Colors.grey),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                 child: GestureDetector(
@@ -252,12 +278,14 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => UserProfilePage()),
-                    );
+                    ).then((_) => _loadProfileImage());  // Reload image after returning from profile page
                   },
                   child: Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: AssetImage('assets/profile.jpg'), // Replace with actual path
+                        backgroundImage: _profileImagePath != null
+                            ? FileImage(File(_profileImagePath!))
+                            : AssetImage('assets/profile.jpg') as ImageProvider,
                         radius: 30,
                       ),
                       SizedBox(width: 10),
@@ -265,7 +293,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'User Name', // Replace with actual name
+                            'User Name',
                             style: TextStyle(
                               fontFamily: 'Acumin Variable Concept',
                               fontSize: 26,
@@ -274,7 +302,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                             ),
                           ),
                           Text(
-                            'Manage Account', // Replace with actual status
+                            'Manage Account',
                             style: TextStyle(
                               fontFamily: 'Acumin Variable Concept',
                               fontSize: 14,
