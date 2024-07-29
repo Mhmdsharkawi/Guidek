@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfilePage extends StatefulWidget {
+  const UserProfilePage({super.key});
+
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
 }
@@ -14,7 +16,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
   String _lastName = 'Nsour';
   String _email = 'Zaiddoe@gnail.com';
   String _phoneNumber = '';
-  String _major = '';
   File? _image;
   final picker = ImagePicker();
 
@@ -24,13 +25,25 @@ class _UserProfilePageState extends State<UserProfilePage> {
     _loadProfileData();
   }
 
+  Future<void> getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+      // Save the image path
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('profileImagePath', pickedFile.path);
+    }
+  }
+
   Future<void> _loadProfileData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _firstName = prefs.getString('firstName') ?? 'John';
-      _lastName = prefs.getString('lastName') ?? 'Doe';
-      _email = prefs.getString('email') ?? 'john.doe@example.com';
-      _phoneNumber = prefs.getString('phoneNumber') ?? '';
+      _firstName = prefs.getString('firstName') ?? 'John'; // ينربط بالباك
+      _lastName = prefs.getString('lastName') ?? 'Doe'; //
+      _email = prefs.getString('email') ?? 'john.doe@example.com'; //
+      _phoneNumber = prefs.getString('phoneNumber') ?? ''; // optional
     });
   }
 
@@ -40,15 +53,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
     prefs.setString('lastName', _lastName);
     prefs.setString('email', _email);
     prefs.setString('phoneNumber', _phoneNumber);
-  }
-
-  Future<void> getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
   }
 
   void _saveChanges() {
@@ -69,10 +73,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         title: Text(
           'Profile',
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
             fontFamily: 'Acumin Variable Concept',
+            fontSize: 30,
+            fontWeight: FontWeight.normal,
+            color: Colors.white,
           ),
         ),
         backgroundColor: Color(0xFF318C3C),
@@ -209,7 +213,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
-                  fontFamily: 'Acumin Variable Concept', // الخط المخصص
+                  fontFamily: 'Acumin Variable Concept',
                 ),
               ),
             ),
@@ -224,7 +228,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 child: Text('Save Changes'),
                 onPressed: _saveChanges,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFDCD90), // اللون الثانوي للزر
+                  backgroundColor: Color(0xFFFDCD90),
                   foregroundColor: Colors.black,
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
