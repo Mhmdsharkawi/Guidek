@@ -1,0 +1,45 @@
+name: guidek_project1
+description: "A new Flutter project."
+publish_to: 'none' # Prevent accidental publishing
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  email_validator: ^2.0.1
+  cupertino_icons: ^1.0.6
+  carousel_slider: ^4.2.0
+  flutter_svg: ^2.0.10+1
+  google_fonts: ^6.2.1
+  shared_preferences: ^2.0.13
+  flutter_gemini: ^2.0.4
+  dash_chat_2: ^0.0.21
+  image_picker: ^1.1.2
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  intl_utils: ^2.5.0 # حزمة لتوليد ملفات الترجمة
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+
+  # إعدادات الترجمة
+  generate: true # تمكين توليد الشيفرة المحلية
+
+  # Uncomment the following lines if you have custom fonts
+  # fonts:
+  #   - family: Acumin Variable Concept
+  #     fonts:
+  #       - asset: fonts/AcuminVariableConcept.ttf
