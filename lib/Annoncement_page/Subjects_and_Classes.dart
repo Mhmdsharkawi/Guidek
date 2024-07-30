@@ -11,12 +11,14 @@ class SubjectsAndClasses extends StatefulWidget {
 
 class _SubjectsPageState extends State<SubjectsAndClasses> {
   final TextEditingController searchController = TextEditingController();
-  List<Subject> subjects = SubjectTree.getAllSubjects();
+  List<Subject> subjects = [];
   List<Subject> filteredSubjects = [];
-
+  SubjectTree tree = new SubjectTree();
   @override
   void initState() {
     super.initState();
+    tree.loadFromJson("jsonString");
+    subjects = tree.getAllSubjects();
     filteredSubjects = subjects;
   }
 

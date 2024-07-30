@@ -26,18 +26,18 @@ class Subject {
 }
 
 class SubjectTree {
-  static List<Subject> subjects = [];
+  List<Subject> subjects = [];
 
-  static void loadFromJson(String jsonString) {
-    final jsonResponse = json.decode(jsonString);
+  void loadFromJson(String jsonString) {
+    final jsonResponse = awajson.decode(jsonString);
     subjects = (jsonResponse['subjects'] as List).map((subject) => Subject.fromJson(subject)).toList();
   }
 
-  static List<Subject> getAllSubjects() {
+  List<Subject> getAllSubjects() {
     return subjects.expand((subject) => _flattenTree(subject)).toList();
   }
 
-  static Iterable<Subject> _flattenTree(Subject subject) sync* {
+  Iterable<Subject> _flattenTree(Subject subject) sync* {
     yield subject;
     for (final child in subject.children) {
       yield* _flattenTree(child);
