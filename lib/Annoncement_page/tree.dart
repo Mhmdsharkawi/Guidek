@@ -1,45 +1,40 @@
+import 'dart:convert';
+
 class Subject {
   final String name;
   final List<Subject> children;
   bool isChecked;
 
   Subject({required this.name, this.children = const [], this.isChecked = false});
+
+  factory Subject.fromJson(Map<String, dynamic> json) {
+    var childrenFromJson = json['children'] as List;
+    List<Subject> childrenList = childrenFromJson.map((child) => Subject.fromJson(child)).toList();
+
+    return Subject(
+      name: json['name'],
+      children: childrenList,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'children': children.map((child) => child.toJson()).toList(),
+    };
+  }
 }
 
 class SubjectTree {
-  static final List<Subject> _subjects = [
-    Subject(
-      name: 'Math',
-      children: [
-        Subject(name: 'Algebra'),
-        Subject(name: 'Geometry'),
-      ],
-    ),
-    Subject(
-      name: 'Science',
-      children: [
-        Subject(name: 'Physics'),
-        Subject(name: 'Chemistry'),
-      ],
-    ),
-    Subject(
-      name: 'History',
-      children: [
-        Subject(name: 'World History'),
-        Subject(name: 'American History'),
-      ],
-    ),
-    Subject(
-      name: 'Language Arts',
-      children: [
-        Subject(name: 'Literature'),
-        Subject(name: 'Grammar'),
-      ],
-    ),
-  ];
+  static List<Subject> subjects = [];
+
+  static void loadFromJson(String jsonString) {
+    final jsonResponse = json.decode(jsonString);
+    subjects = (jsonResponse['subjects'] as List).map((subject) => Subject.fromJson(subject)).toList();
+  }
 
   static List<Subject> getAllSubjects() {
-    return _subjects.expand((subject) => _flattenTree(subject)).toList();
+    return subjects.expand((subject) => _flattenTree(subject)).toList();
   }
 
   static Iterable<Subject> _flattenTree(Subject subject) sync* {
