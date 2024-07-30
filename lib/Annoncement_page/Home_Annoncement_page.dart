@@ -7,6 +7,7 @@ import 'package:guidek_project1/Annoncement_page/File_Information.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
 import 'Chat_With_Me.dart';
+import 'package:guidek_project1/Annoncement_page/Subjects_and_Classes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 
@@ -23,6 +24,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   String _selectedLanguage = 'EN';
   bool _isDarkMode = false;
   String? _profileImagePath;
+
+
+  Future<bool> _onWillPop() async {
+    return false;
+  }
+
 
   @override
   void initState() {
@@ -114,8 +121,10 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+        appBar: AppBar(
         backgroundColor: Color(0xFF318c3c),
         toolbarHeight: 80,
         automaticallyImplyLeading: false,
@@ -353,7 +362,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
             shrinkWrap: true,
             childAspectRatio: 1.0,
             children: [
-              _buildIcon(Icons.school, 'Subjects & Classes', () {}),
+              _buildIcon(Icons.school, 'Subjects & Classes', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SubjectsAndClasses()),
+                );
+              }),
               _buildIcon(Icons.chat_bubble, 'Chat with me', () {
                 Navigator.push(
                   context,
@@ -369,12 +383,14 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               }),
               _buildIcon(Icons.help, 'FAQ', () {}),
               _buildIcon(Icons.location_on, 'University Classes', () {}),
-            ],
-          ),
-        ],
+             ],
+           ),
+         ],
+       ),
       ),
     );
   }
+
 
   Widget _buildIcon(IconData icon, String label, VoidCallback onTap) {
     return GestureDetector(
