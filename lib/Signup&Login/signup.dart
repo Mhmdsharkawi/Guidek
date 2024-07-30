@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:guidek_project1/Annoncement_page/Home_Annoncement_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -77,9 +78,15 @@ class _SignupPageState extends State<SignupPage> {
           _isLoading = false;
         });
 
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeAnnoncementPage()),
+        );
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
