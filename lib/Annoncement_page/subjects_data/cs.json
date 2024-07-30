@@ -1,0 +1,56 @@
+{
+  "subjects": [
+    {
+      "name": "Math",
+      "children": [
+        {
+          "name": "Algebra",
+          "children": []
+        },
+        {
+          "name": "Geometry",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "Science",
+      "children": [
+        {
+          "name": "Physics",
+          "children": []
+        },
+        {
+          "name": "Chemistry",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "History",
+      "children": [
+        {
+          "name": "World History",
+          "children": []
+        },
+        {
+          "name": "American History",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "Language Arts",
+      "children": [
+        {
+          "name": "Literature",
+          "children": []
+        },
+        {
+          "name": "Grammar",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
