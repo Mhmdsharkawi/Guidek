@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
+
 class Subject {
   final String name;
   final List<Subject> children;
@@ -28,9 +30,9 @@ class Subject {
 class SubjectTree {
   List<Subject> subjects = [];
 
-  void loadFromJson(String jsonString) {
-    final jsonResponse = awajson.decode(jsonString);
-    subjects = (jsonResponse['subjects'] as List).map((subject) => Subject.fromJson(subject)).toList();
+  Future<void> loadFromJson(String jsonString) async{
+    final jsonResponse = json.decode(await rootBundle.loadString(jsonString)) as List<dynamic>;
+    subjects = (jsonResponse as List).map((subject) => Subject.fromJson(subject)).toList();
   }
 
   List<Subject> getAllSubjects() {
