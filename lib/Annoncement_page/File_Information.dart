@@ -16,6 +16,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   String _lastName = 'Nsour';
   String _email = 'Zaiddoe@gnail.com';
   String _phoneNumber = '';
+  String? _profileImagePath;
   File? _image;
   final picker = ImagePicker();
 
@@ -30,6 +31,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
+        _profileImagePath = pickedFile.path;
       });
       // Save the image path
       final prefs = await SharedPreferences.getInstance();
@@ -40,10 +42,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Future<void> _loadProfileData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _firstName = prefs.getString('firstName') ?? 'John'; // ينربط بالباك
-      _lastName = prefs.getString('lastName') ?? 'Doe'; //
-      _email = prefs.getString('email') ?? 'john.doe@example.com'; //
-      _phoneNumber = prefs.getString('phoneNumber') ?? ''; // optional
+      _firstName = prefs.getString('firstName') ?? 'John';
+      _lastName = prefs.getString('lastName') ?? 'Doe';
+      _email = prefs.getString('email') ?? 'john.doe@example.com';
+      _phoneNumber = prefs.getString('phoneNumber') ?? '';
+      _profileImagePath = prefs.getString('profileImagePath');
+      if (_profileImagePath != null) {
+        _image = File(_profileImagePath!);
+      }
     });
   }
 
@@ -53,6 +59,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     prefs.setString('lastName', _lastName);
     prefs.setString('email', _email);
     prefs.setString('phoneNumber', _phoneNumber);
+    prefs.setString('profileImagePath', _profileImagePath ?? '');
   }
 
   void _saveChanges() {
@@ -74,8 +81,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
           'Profile',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
-            fontSize: 30,
-            fontWeight: FontWeight.normal,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
@@ -97,7 +104,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           child: Column(
             children: [
               Container(
-                height: 8,
+                height: 12,
                 color: Color(0xFFfdcd90),
               ),
               _buildProfileHeader(),
@@ -159,7 +166,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Colors.orangeAccent,
+                      color: Color(0xFFfdcd90),
                       width: 2.6,
                     ),
                   ),
@@ -209,7 +216,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           children: [
             Center(
               child: Text(
-                'Zaid Nsour',
+                '$_firstName $_lastName',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -218,18 +225,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
               ),
             ),
             SizedBox(height: 10),
-            _buildTextField('First Name', _firstName, true),
-            _buildTextField('Last Name', _lastName, true),
-            _buildTextField('E-mail Address', _email, true),
+            _buildTextField('First Name', _firstName, false),
+            _buildTextField('Last Name', _lastName, false),
+            _buildTextField('E-mail Address', _email, false),
             _buildTextField('Phone Number', _phoneNumber, false),
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
-                child: Text('Save Changes'),
+                child: Text(
+                  'Save Changes',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 onPressed: _saveChanges,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFFDCD90),
-                  foregroundColor: Colors.black,
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
