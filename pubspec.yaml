@@ -39,6 +39,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
 
@@ -81,3 +82,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: "AppIcon"
+  image_path: "assets/guidek[1].png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  adaptive_icon_foreground: "assets/icon.png"
+  adaptive_icon_background: "#ffffff"
