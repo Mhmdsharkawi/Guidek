@@ -4,6 +4,7 @@ import 'package:guidek_project1/Annoncement_page/App_Info.dart';
 import 'package:guidek_project1/Annoncement_page/Chat_With_Me.dart';
 import 'package:guidek_project1/Annoncement_page/Contact_Us.dart';
 import 'package:guidek_project1/Annoncement_page/File_Information.dart';
+import 'package:guidek_project1/Annoncement_page/Help&Support.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
 import 'Chat_With_Me.dart';
@@ -247,8 +248,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               ),
               ListTile(
                 leading: Icon(Icons.help, color: Color(0xFF318c3c)),
-                title: Text('Help'),
-                onTap: () {},
+                title: Text('Help & Support'),
+                onTap: () {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HelpSupportPage()),
+                  );
+                },
               ),
               ListTile(
                 leading: Icon(Icons.info, color: Color(0xFF318c3c)),
