@@ -19,8 +19,8 @@ class AppInfoPage extends StatelessWidget {
           'App Info',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
-            fontSize: 30,
-            fontWeight: FontWeight.normal,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
@@ -36,7 +36,7 @@ class AppInfoPage extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 8,
+                height: 12,
                 color: Color(0xFFfdcd90),
               ),
               SizedBox(height: 60),
