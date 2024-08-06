@@ -8,9 +8,6 @@ import 'Annoncement_page/Home_Annoncement_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'consts.dart';
-import 'Annoncement_page/Chat_With_Me.dart';
-import 'consts.dart';
-import 'package:flutter_gemini/flutter_gemini.dart';
 
 
 void main() {
@@ -33,8 +30,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/forgot_password': (context) => const ForgotPasswordPage(),
-        '/Home_Annoncament_page': (context) => HomeAnnoncementPage(),
-        '/GPA_Calculator': (context) => GpaCalculator(),
+        '/Home_Annoncament_page': (context) => const HomeAnnoncementPage(),
+        '/GPA_Calculator': (context) => const GpaCalculator(),
         '/Chat_With_Me': (context) =>const ChatWithMe(),
       },
     );

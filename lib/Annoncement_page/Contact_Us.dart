@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ContactUsPage extends StatelessWidget {
+  const ContactUsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF318c3c),
-        title: Text(
+        backgroundColor: const Color(0xFF318c3c),
+        title: const Text(
           'Contact Us',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
@@ -21,7 +23,7 @@ class ContactUsPage extends StatelessWidget {
         height: double.infinity,  // Ensures the container covers the full height
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/contact-us.jpg'), // استبدل بمسار الصورة الفعلي
+            image: const AssetImage('assets/contact-us.jpg'), // استبدل بمسار الصورة الفعلي
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.5),
@@ -30,11 +32,11 @@ class ContactUsPage extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              const Text(
                 'Developers',
                 style: TextStyle(
                   fontSize: 26,
@@ -42,7 +44,7 @@ class ContactUsPage extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildInfoSection(
                 Icons.email,
                 'E-mail',
@@ -52,9 +54,9 @@ class ContactUsPage extends StatelessWidget {
                   'fadfdsa@bgfs.dsd',
                   'dfvmjkls@htrs.gv',
                 ],
-                Color(0xFFfdcd90), // Yellow color
+                const Color(0xFFfdcd90), // Yellow color
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildInfoSection(
                 Icons.phone,
                 'Mobile',
@@ -64,9 +66,9 @@ class ContactUsPage extends StatelessWidget {
                   'Salah El-Din Anouqa: 0799713509',
                   'Zaid Al_Nsour: 0782494403',
                 ],
-                Color(0xff3a8c31), // Green color
+                const Color(0xff3a8c31), // Green color
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildInfoSection(
                 Icons.code,
                 'Github',
@@ -76,7 +78,7 @@ class ContactUsPage extends StatelessWidget {
                   'SalahAnnuka',
                   'UsrFourz',
                 ],
-                Color(0xFF9C27B0), // Purple color
+                const Color(0xFF9C27B0), // Purple color
               ),
             ],
           ),
@@ -92,10 +94,10 @@ class ContactUsPage extends StatelessWidget {
         Row(
           children: [
             Icon(icon, color: iconColor, size: 24),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -103,12 +105,12 @@ class ContactUsPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         ...items.map((item) => Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text(
             item,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               color: Colors.white,
             ),

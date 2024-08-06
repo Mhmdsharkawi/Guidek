@@ -47,15 +47,15 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ButtonStyle(
-                    side: MaterialStateProperty.all(const BorderSide(color: Colors.white, width: 2)),
-                    padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 30, vertical: 15)),
-                    textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 18)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    side: WidgetStateProperty.all(const BorderSide(color: Colors.white, width: 2)),
+                    padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 30, vertical: 15)),
+                    textStyle: WidgetStateProperty.all(const TextStyle(fontSize: 18)),
+                    shape: WidgetStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     )),
-                    backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered)) {
+                    backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+                          (Set<WidgetState> states) {
+                        if (states.contains(WidgetState.hovered)) {
                           return Colors.white.withOpacity(0.2);
                         }
                         return Colors.transparent;

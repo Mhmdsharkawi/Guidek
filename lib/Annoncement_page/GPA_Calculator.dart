@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GpaCalculator extends StatefulWidget {
+  const GpaCalculator({super.key});
+
 
   @override
   _GpaCalculatorState createState() => _GpaCalculatorState();
@@ -23,7 +25,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF318c3c),
+        backgroundColor: const Color(0xFF318c3c),
         leading: IconButton(
           icon:const Icon(Icons.arrow_back),
           onPressed: () {
@@ -72,7 +74,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

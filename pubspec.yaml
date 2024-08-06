@@ -20,6 +20,8 @@ dependencies:
   flutter_gemini: ^2.0.4
   dash_chat_2: ^0.0.21
   image_picker: ^1.1.2
+  http: ^1.2.2
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +42,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
 
@@ -82,3 +85,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: "AppIcon"
+  image_path: "assets/guidek_icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true

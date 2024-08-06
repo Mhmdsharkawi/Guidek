@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class _ChatWithMeState extends State<ChatWithMe> {
   ChatUser BotUser = ChatUser(
     id: "1",
     firstName: "Guidek",
-    profileImage: "",//replace with they app icon img
+    profileImage: "assets/guidek_icon.png",//replace with they app icon img
   );
 
   @override
@@ -35,7 +34,7 @@ class _ChatWithMeState extends State<ChatWithMe> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF318c3c),
+        backgroundColor: const Color(0xFF318c3c),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

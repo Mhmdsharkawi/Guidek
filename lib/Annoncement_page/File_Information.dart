@@ -60,7 +60,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _formKey.currentState!.save();
       _saveProfileData();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profile updated successfully')),
+        const SnackBar(content: Text('Profile updated successfully')),
       );
     }
   }
@@ -70,7 +70,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Profile',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
@@ -79,15 +79,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Color(0xFF318C3C),
+        backgroundColor: const Color(0xFF318C3C),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/background.png'),
             fit: BoxFit.cover,
@@ -98,7 +98,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             children: [
               Container(
                 height: 8,
-                color: Color(0xFFfdcd90),
+                color: const Color(0xFFfdcd90),
               ),
               _buildProfileHeader(),
               Expanded(
@@ -115,7 +115,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   Widget _buildProfileHeader() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           GestureDetector(
@@ -136,7 +136,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       fit: BoxFit.cover,
                     ),
                   )
-                      : Icon(
+                      : const Icon(
                     Icons.person,
                     size: 70,
                     color: Colors.grey,
@@ -168,12 +168,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   bottom: 0,
                   right: 0,
                   child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.camera_alt,
                       color: Colors.grey,
                     ),
@@ -189,12 +189,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   Widget _buildForm() {
     return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
       decoration: BoxDecoration(
-        color: Color(0xFF318C3C),
+        color: const Color(0xFF318C3C),
         borderRadius: BorderRadius.circular(30),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 10,
@@ -207,7 +207,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            const Center(
               child: Text(
                 'Zaid Nsour',
                 style: TextStyle(
@@ -217,24 +217,24 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildTextField('First Name', _firstName, true),
             _buildTextField('Last Name', _lastName, true),
             _buildTextField('E-mail Address', _email, true),
             _buildTextField('Phone Number', _phoneNumber, false),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Center(
               child: ElevatedButton(
-                child: Text('Save Changes'),
                 onPressed: _saveChanges,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFDCD90),
+                  backgroundColor: const Color(0xFFFDCD90),
                   foregroundColor: Colors.black,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
+                child: const Text('Save Changes'),
               ),
             ),
           ],
@@ -245,30 +245,30 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   Widget _buildTextField(String label, String initialValue, bool readOnly) {
     return Container(
-      margin: EdgeInsets.only(bottom: 15),
+      margin: const EdgeInsets.only(bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontFamily: 'Acumin Variable Concept',
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           TextFormField(
             initialValue: initialValue,
             readOnly: readOnly,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontFamily: 'Acumin Variable Concept',
             ),
             decoration: InputDecoration(
               filled: true,
-              fillColor: Color(0xFF2E7D32),
+              fillColor: const Color(0xFF2E7D32),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide.none,

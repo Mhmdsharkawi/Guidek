@@ -6,7 +6,6 @@ import 'package:guidek_project1/Annoncement_page/Contact_Us.dart';
 import 'package:guidek_project1/Annoncement_page/File_Information.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
-import 'Chat_With_Me.dart';
 import 'package:guidek_project1/Annoncement_page/Subjects_and_Classes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
@@ -24,12 +23,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   String _selectedLanguage = 'EN';
   bool _isDarkMode = false;
   String? _profileImagePath;
-
-
-  Future<bool> _onWillPop() async {
-    return false;
-  }
-
 
   @override
   void initState() {
@@ -55,12 +48,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Language'),
+          title: const Text('Select Language'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                title: Text('English'),
+                title: const Text('English'),
                 onTap: () {
                   setState(() {
                     _selectedLanguage = 'EN';
@@ -69,7 +62,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 },
               ),
               ListTile(
-                title: Text('العربية'),
+                title: const Text('العربية'),
                 onTap: () {
                   setState(() {
                     _selectedLanguage = 'AR';
@@ -95,23 +88,23 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Logout Confirmation'),
-          content: Text('Are you sure you want to log out?'),
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to log out?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()),
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                       (Route<dynamic> route) => false,
                 );
               },
-              child: Text('Yes', style: TextStyle(color: Colors.red)),
+              child: const Text('Yes', style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -121,17 +114,15 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: _onWillPop,
-        child: Scaffold(
-        appBar: AppBar(
-        backgroundColor: Color(0xFF318c3c),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF318c3c),
         toolbarHeight: 80,
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: EdgeInsets.only(left: 0.0),
+          padding: const EdgeInsets.only(left: 0.0),
           child: RichText(
-            text: TextSpan(
+            text: const TextSpan(
               children: [
                 TextSpan(
                   text: 'GUIDE',
@@ -162,7 +153,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -177,14 +168,14 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              Container(
+              SizedBox(
                 height: 100,
                 child: Center(
                   child: Row(
                     children: [
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                           children: [
                             TextSpan(
                               text: 'GUIDE',
@@ -215,24 +206,24 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   ),
                 ),
               ),
-              Divider(color: Colors.grey),
+              const Divider(color: Colors.grey),
               ListTile(
-                leading: Icon(Icons.home, color: Color(0xFF318c3c)),
-                title: Text('Home'),
+                leading: const Icon(Icons.home, color: Color(0xFF318c3c)),
+                title: const Text('Home'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.color_lens, color: Color(0xFF318c3c)),
+                leading: const Icon(Icons.color_lens, color: Color(0xFF318c3c)),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Theme'),
+                    const Text('Theme'),
                     Switch(
                       value: _isDarkMode,
                       onChanged: _toggleTheme,
-                      activeColor: Color(0xFF318c3c),
+                      activeColor: const Color(0xFF318c3c),
                     ),
                   ],
                 ),
@@ -241,52 +232,52 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.language, color: Color(0xFF318c3c)),
+                leading: const Icon(Icons.language, color: Color(0xFF318c3c)),
                 title: Text('Language: $_selectedLanguage'),
                 onTap: _changeLanguage,
               ),
               ListTile(
-                leading: Icon(Icons.help, color: Color(0xFF318c3c)),
-                title: Text('Help'),
+                leading: const Icon(Icons.help, color: Color(0xFF318c3c)),
+                title: const Text('Help'),
                 onTap: () {},
               ),
               ListTile(
-                leading: Icon(Icons.info, color: Color(0xFF318c3c)),
-                title: Text('App Info'),
+                leading: const Icon(Icons.info, color: Color(0xFF318c3c)),
+                title: const Text('App Info'),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AppInfoPage()),
+                    MaterialPageRoute(builder: (context) => const AppInfoPage()),
                   );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
-                title: Text('Contact Us'),
+                leading: const Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
+                title: const Text('Contact Us'),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ContactUsPage()),
+                    MaterialPageRoute(builder: (context) => const ContactUsPage()),
                   );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.logout, color: Colors.red),
-                title: Text(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text(
                   'Logout',
                   style: TextStyle(color: Colors.red),
                 ),
                 onTap: _confirmLogout,
               ),
-              SizedBox(height: 292), // Space before the divider
-              Divider(color: Colors.grey),
+              const SizedBox(height: 292), // Space before the divider
+              const Divider(color: Colors.grey),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => UserProfilePage()),
+                      MaterialPageRoute(builder: (context) => const UserProfilePage()),
                     ).then((_) => _loadProfileImage());  // Reload image after returning from profile page
                   },
                   child: Row(
@@ -294,11 +285,11 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                       CircleAvatar(
                         backgroundImage: _profileImagePath != null
                             ? FileImage(File(_profileImagePath!))
-                            : AssetImage('assets/profile.jpg') as ImageProvider,
+                            : const AssetImage('assets/profile.jpg') as ImageProvider,
                         radius: 30,
                       ),
-                      SizedBox(width: 10),
-                      Column(
+                      const SizedBox(width: 10),
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -331,7 +322,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       body: Column(
         children: [
           CarouselSlider(
-            items: imgList.map((item) => Container(
+            items: imgList.map((item) => SizedBox(
               width: double.infinity,
               child: Image.asset(
                 item,
@@ -354,9 +345,9 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           Container(
             width: double.infinity,
             height: 12.0,
-            color: Color(0xFFfdcd90),
+            color: const Color(0xFFfdcd90),
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           GridView.count(
             crossAxisCount: 3,
             shrinkWrap: true,
@@ -365,32 +356,30 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               _buildIcon(Icons.school, 'Subjects & Classes', () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SubjectsAndClasses()),
+                  MaterialPageRoute(builder: (context) => const SubjectsAndClasses()),
                 );
               }),
               _buildIcon(Icons.chat_bubble, 'Chat with me', () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ChatWithMe()),
+                  MaterialPageRoute(builder: (context) => const ChatWithMe()),
                 );
               }),
               _buildIcon(Icons.description, 'Procedure Guide', () {}),
               _buildIcon(Icons.calculate, 'GPA Calculator', () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GpaCalculator()),
+                  MaterialPageRoute(builder: (context) => const GpaCalculator()),
                 );
               }),
               _buildIcon(Icons.help, 'FAQ', () {}),
               _buildIcon(Icons.location_on, 'University Classes', () {}),
-             ],
-           ),
-         ],
-       ),
+            ],
+          ),
+        ],
       ),
     );
   }
-
 
   Widget _buildIcon(IconData icon, String label, VoidCallback onTap) {
     return GestureDetector(
@@ -423,19 +412,19 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   width: 74,
                   height: 74,
                   decoration: BoxDecoration(
-                    color: Color(0xFF318c3c),
+                    color: const Color(0xFF318c3c),
                     borderRadius: BorderRadius.circular(23),
-                    border: Border.all(color: Color(0xFFfdcd90), width: 3.4),
+                    border: Border.all(color: const Color(0xFFfdcd90), width: 3.4),
                   ),
-                  child: Icon(icon, size: 40, color: Color(0xFFfdcd90)),
+                  child: Icon(icon, size: 40, color: const Color(0xFFfdcd90)),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 13,
               color: Color(0xff000000),
               fontWeight: FontWeight.normal,
