@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Annoncement_page/Home_Annoncement_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -48,24 +49,45 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void _handleLogin() {
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    if (isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeAnnoncementPage()),
+      );
+    }
+  }
+
+
+  void _handleLogin() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
       // Simulate a login process
-      Future.delayed(const Duration(seconds: 2), () {
-        setState(() {
-          _isLoading = false;
-        });
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Save login state
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('userEmail', _emailController.text);
+
+      // Set expiration date (30 days from now)
+      DateTime expirationDate = DateTime.now().add(const Duration(days: 30));
+      await prefs.setString('loginExpiration', expirationDate.toIso8601String());
+
+      setState(() {
+        _isLoading = false;
+      });
 
         // Navigate to the announcements page
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeAnnoncementPage()),
         );
-      });
     }
   }
 
