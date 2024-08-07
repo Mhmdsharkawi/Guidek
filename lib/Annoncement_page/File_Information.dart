@@ -42,9 +42,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Future<void> _loadProfileData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _firstName = prefs.getString('firstName') ?? 'John';
-      _lastName = prefs.getString('lastName') ?? 'Doe';
-      _email = prefs.getString('email') ?? 'john.doe@example.com';
+      _firstName = prefs.getString('firstName') ?? 'Zaid';
+      _lastName = prefs.getString('lastName') ?? 'nsour';
+      _email = prefs.getString('email') ?? 'Zaid.doe@example.com';
       _phoneNumber = prefs.getString('phoneNumber') ?? '';
       _profileImagePath = prefs.getString('profileImagePath');
       if (_profileImagePath != null) {

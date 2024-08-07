@@ -36,56 +36,58 @@ class ContactUsPage extends StatelessWidget {
               color: Color(0xFFFDCD90),
             ),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Developers',
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Developers',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    _buildInfoSection(
-                      Icons.email,
-                      'E-mail',
-                      [
-                        'mohammadalsharkawi2@gmail.com',
-                        'obaidullahkh204@gmail.com',
-                        'fadfdsa@bgfs.dsd',
-                        'nsourzaid1@gmail.com',
-                      ],
-                      Color(0xFFfdcd90), 
-                    ),
-                    SizedBox(height: 20),
-                    _buildInfoSection(
-                      Icons.phone,
-                      'Mobile',
-                      [
-                        'Mohammad Alsharkawi: 0795508192',
-                        'Obaidullah Khuraisat: 0771001023',
-                        'Salah El-Din Anouqa: 0799713509',
-                        'Zaid Al_Nsour: 0782494403',
-                      ],
-                      Color(0xff3a8c31),  
-                    ),
-                    SizedBox(height: 20),
-                    _buildInfoSection(
-                      Icons.code,
-                      'Github',
-                      [
-                        'mhmdsharkawi',
-                        'obaidullahkh2003',
-                        'SalahAnnuka',
-                        'zaidNsour',
-                      ],
-                      Color(0xFF9C27B0),  
-                    ),
-                  ],
+                      SizedBox(height: 20),
+                      _buildInfoSection(
+                        Icons.email,
+                        'E-mail',
+                        [
+                          'mohammadalsharkawi2@gmail.com',
+                          'obaidullahkh204@gmail.com',
+                          'fadfdsa@bgfs.dsd',
+                          'nsourzaid1@gmail.com',
+                        ],
+                        Color(0xFFfdcd90),
+                      ),
+                      SizedBox(height: 20),
+                      _buildInfoSection(
+                        Icons.phone,
+                        'Mobile',
+                        [
+                          'Mohammad Alsharkawi: 0795508192',
+                          'Obaidullah Khuraisat: 0771001023',
+                          'Salah El-Din Anouqa: 0799713509',
+                          'Zaid Al_Nsour: 0782494403',
+                        ],
+                        Color(0xff3a8c31),
+                      ),
+                      SizedBox(height: 20),
+                      _buildInfoSection(
+                        Icons.code,
+                        'Github',
+                        [
+                          'mhmdsharkawi',
+                          'obaidullahkh2003',
+                          'SalahAnnuka',
+                          'zaidNsour',
+                        ],
+                        Color(0xFF9C27B0),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

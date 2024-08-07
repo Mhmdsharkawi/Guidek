@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:guidek_project1/Annoncement_page/Chat_With_Me.dart';
 import 'Signup&Login/home.dart';
 import 'Signup&Login/login.dart';
@@ -8,26 +9,39 @@ import 'Annoncement_page/Home_Annoncement_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'consts.dart';
-import 'Annoncement_page/Chat_With_Me.dart';
-import 'consts.dart';
-import 'package:flutter_gemini/flutter_gemini.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Gemini.init(apiKey: GEMINI_API_KEY);
 
-void main() {
-  Gemini.init(
-    apiKey: GEMINI_API_KEY,
-  );
-  runApp(const MyApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  String? expirationDateString = prefs.getString('loginExpiration');
+
+  if (isLoggedIn && expirationDateString != null) {
+    DateTime expirationDate = DateTime.parse(expirationDateString);
+    if (DateTime.now().isBefore(expirationDate)) {
+      runApp(MyApp(initialRoute: '/Home_Annoncament_page'));
+    } else {
+      // Login expired, clear preferences
+      await prefs.clear();
+      runApp(const MyApp(initialRoute: '/'));
+    }
+  } else {
+    runApp(const MyApp(initialRoute: '/'));
+  }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+
+  const MyApp({super.key, this.initialRoute = '/'});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: initialRoute,
       routes: {
         '/': (context) => const HomePage(),
         '/login': (context) => const LoginPage(),
@@ -35,7 +49,7 @@ class MyApp extends StatelessWidget {
         '/forgot_password': (context) => const ForgotPasswordPage(),
         '/Home_Annoncament_page': (context) => HomeAnnoncementPage(),
         '/GPA_Calculator': (context) => GpaCalculator(),
-        '/Chat_With_Me': (context) =>const ChatWithMe(),
+        '/Chat_With_Me': (context) => const ChatWithMe(),
       },
     );
   }
