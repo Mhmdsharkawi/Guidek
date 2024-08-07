@@ -8,7 +8,6 @@ import 'package:guidek_project1/Annoncement_page/Help&Support.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
 import 'Chat_With_Me.dart';
-import 'package:guidek_project1/Annoncement_page/Subjects_and_Classes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 
@@ -385,13 +384,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                       physics: NeverScrollableScrollPhysics(),
                       childAspectRatio: 1.0,
                       children: [
-                        _buildIcon(Icons.school, 'Subjects & Classes', () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SubjectsAndClasses()),
-                          );
-                        }),
+                        _buildIcon(Icons.school, 'Subjects & Classes', () {}),
                         _buildIcon(Icons.chat_bubble, 'Chat with me', () {
                           Navigator.push(
                             context,
