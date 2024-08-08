@@ -7,6 +7,7 @@ import 'package:guidek_project1/Annoncement_page/File_Information.dart';
 import 'package:guidek_project1/Annoncement_page/Help&Support.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
+import 'Find_My_Class.dart';
 import 'Chat_With_Me.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
@@ -402,7 +403,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                         }),
                         _buildIcon(Icons.help, 'FAQ', () {}),
                         _buildIcon(
-                            Icons.location_on, 'University Classes', () {}),
+                            Icons.location_on, 'University Classes', () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FindMyClassPage()),
+                          );
+                        }),
                       ],
                     ),
                   ),
