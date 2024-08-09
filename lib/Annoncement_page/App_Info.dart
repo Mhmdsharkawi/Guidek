@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class AppInfoPage extends StatelessWidget {
   const AppInfoPage({super.key});
@@ -16,7 +18,7 @@ class AppInfoPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF318c3c),
         title: Text(
-          'App Info',
+          tr('app_info'),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 28,
@@ -99,7 +101,7 @@ class AppInfoPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Created By:',
+                                  tr('created_by'),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25,
@@ -109,7 +111,7 @@ class AppInfoPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  'Front-end/UI Design:',
+                                  tr('frontend_ui_design'),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 21,
@@ -127,7 +129,7 @@ class AppInfoPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  'Back-end/Database:',
+                                  tr('backend_database'),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 21,
@@ -145,7 +147,7 @@ class AppInfoPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  'Project Mentor:',
+                                  tr('project_mentor'),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
