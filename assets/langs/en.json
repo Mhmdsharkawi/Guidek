@@ -1,0 +1,63 @@
+{
+  "app_info": "App Info",
+  "cancel": "Cancel",
+  "chat_with_me": "Chat with Me",
+  "contact_us": "Contact Us",
+  "faq": "FAQ",
+  "gpa_calculator": "GPA Calculator",
+  "help_support": "Help & Support",
+  "home": "Home",
+  "language": "Language",
+  "logout": "Logout",
+  "logout_confirmation": "Logout Confirmation",
+  "logout_message": "Are you sure you want to logout?",
+  "manage_account": "Manage Account",
+  "procedure_guide": "Procedure Guide",
+  "select_language": "Select Language",
+  "subjects_classes": "Subjects & Classes",
+  "theme": "Theme",
+  "university_classes": "University Classes",
+  "yes": "Yes",
+
+  "to": "To",
+  "select_page": "Select The Page...",
+  "announcement_page": "Announcement Page",
+  "subjects_classes_page": "Subjects & Classes Page",
+  "chat_with_me_page": "Chat With Me Page",
+  "procedure_guide_page": "Procedure Guide Page",
+  "gpa_calculator_page": "GPA Calculator Page",
+  "faq_page": "FAQ Page",
+  "university_classes_page": "University Classes Page",
+  "help_page": "Help Page",
+  "profile_page": "Profile Page",
+  "others": "Others ...",
+  "title": "Title",
+  "enter_title": "Enter title",
+  "description": "Description",
+  "enter_description": "Enter description",
+  "clear": "Clear",
+  "send_report": "Send Report",
+
+  "developers": "Developers",
+
+  "app_info": "App Info",
+  "created_by": "Created By:",
+  "frontend_ui_design": "Front-end/UI Design:",
+  "backend_database": "Back-end/Database:",
+  "project_mentor": "Project Mentor:",
+
+
+  "profileTitle": "Profile",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "emailAddress": "E-mail Address",
+  "phoneNumber": "Phone Number",
+  "saveChanges": "Save Changes"
+}
+
+
+
+
+
+
+

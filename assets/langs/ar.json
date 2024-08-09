@@ -1,0 +1,62 @@
+{
+  "app_info": "معلومات التطبيق",
+  "cancel": "إلغاء",
+  "chat_with_me": "الدردشة معي",
+  "contact_us": "اتصل بنا",
+  "faq": "الأسئلة الشائعة",
+  "gpa_calculator": "حساب المعدل التراكمي",
+  "help_support": "المساعدة والدعم",
+  "home": "الرئيسية",
+  "language": "اللغة",
+  "logout": "تسجيل الخروج",
+  "logout_confirmation": "تأكيد تسجيل الخروج",
+  "logout_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "manage_account": "إدارة الحساب",
+  "procedure_guide": "دليل الإجراءات",
+  "select_language": "اختر اللغة",
+  "subjects_classes": "المواد والفصول",
+  "theme": "السمة",
+  "university_classes": "اماكن القاعات",
+  "yes": "نعم",
+  "help & support_page":"المساعدة والدعم",
+
+  "to": "إلى",
+  "select_page": "اختر الصفحة...",
+  "announcement_page": "صفحة الإعلانات",
+  "subjects_classes_page": "صفحة المواد والفصول",
+  "chat_with_me_page": "صفحة الدردشة معي",
+  "procedure_guide_page": "صفحة دليل الإجراءات",
+  "gpa_calculator_page": "صفحة حساب المعدل التراكمي",
+  "faq_page": "صفحة الأسئلة الشائعة",
+  "university_classes_page": "صفحة اماكن القاعات",
+  "help_page": "صفحة المساعدة",
+  "profile_page": "صفحة الملف الشخصي",
+  "others": "أخرى...",
+  "title": "العنوان",
+  "enter_title": "أدخل العنوان",
+  "description": "الوصف",
+  "enter_description": "أدخل الوصف",
+  "clear": "مسح",
+  "send_report": "إرسال التقرير",
+
+  "developers": "المطورون",
+
+  "app_info": "معلومات التطبيق",
+  "created_by": "تم الإنشاء بواسطة:",
+  "frontend_ui_design": "تصميم الواجهة الأمامية/UI:",
+  "backend_database": "الواجهة الخلفية/قاعدة البيانات:",
+  "project_mentor": "مشرف المشروع:",
+
+
+  "profileTitle": "الملف الشخصي",
+  "firstName": "الاسم الأول",
+  "lastName": "اسم العائلة",
+  "emailAddress": "البريد الإلكتروني",
+  "phoneNumber": "رقم الهاتف",
+  "saveChanges": "حفظ التغييرات"
+}
+
+
+
+
+
