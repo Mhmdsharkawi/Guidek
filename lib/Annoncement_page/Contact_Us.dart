@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ContactUsPage extends StatelessWidget {
   @override
@@ -7,7 +8,7 @@ class ContactUsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF318c3c),
         title: Text(
-          'Contact Us',
+          tr('contact_us'),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 28,
@@ -43,7 +44,7 @@ class ContactUsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Developers',
+                        tr('developers'),
                         style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
