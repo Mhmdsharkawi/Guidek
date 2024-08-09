@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class HelpSupportPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Help & Support',
+          tr('help_support'),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
@@ -49,7 +50,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('To', style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
+                    Text(tr('to'), style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
                     SizedBox(height: 24),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -69,7 +70,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                           value: selectedDestination,
                           isExpanded: true,
                           hint: Text(
-                            'Select The Page...',
+                            tr('select_page'),
                             style: TextStyle(
                               fontFamily: 'Acumin Variable Concept',
                               color: grayColor,
@@ -83,16 +84,16 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                             fontSize: 18,
                           ),
                           items: [
-                            'Announcement Page',
-                            'Subjects & Classes Page',
-                            'Chat With Me Page',
-                            'Procedure Guide Page',
-                            'GPA Calculator Page',
-                            'FAQ Page',
-                            'University Classes Page',
-                            'Help Page',
-                            'Profile Page',
-                            'Others ...'
+                            tr('announcement_page'),
+                            tr('subjects_classes_page'),
+                            tr('chat_with_me_page'),
+                            tr('procedure_guide_page'),
+                            tr('gpa_calculator_page'),
+                            tr('faq_page'),
+                            tr('university_classes_page'),
+                            tr('help_page'),
+                            tr('profile_page'),
+                            tr('others')
                           ].map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -108,7 +109,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                       ),
                     ),
                     SizedBox(height: 40),
-                    Text('Title', style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
+                    Text(tr('title'), style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
                     SizedBox(height: 12),
                     TextField(
                       controller: titleController,
@@ -119,14 +120,14 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
                         ),
-                        hintText: 'Enter title',
+                        hintText: tr('enter_title'),
                         hintStyle: TextStyle(fontFamily: 'Acumin Variable Concept', color: Colors.white70, fontSize: 17),
                         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                       ),
                       style: TextStyle(fontFamily: 'Acumin Variable Concept', color: Colors.white, fontSize: 18),
                     ),
                     SizedBox(height: 40),
-                    Text('Description', style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
+                    Text(tr('description'), style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
                     SizedBox(height: 12),
                     Container(
                       height: 180,
@@ -148,7 +149,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                         textAlignVertical: TextAlignVertical.top,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Enter description',
+                          hintText: tr('enter_description'),
                           hintStyle: TextStyle(fontFamily: 'Acumin Variable Concept', color: Colors.white70, fontSize: 17),
                           contentPadding: EdgeInsets.all(16),
                         ),
@@ -160,10 +161,10 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
-                          child: Text('Clear',
-                              style: TextStyle(fontFamily: 'Acumin Variable Concept',
-                                  fontSize: 18,
-                                  color: Colors.white)),
+                          child: Text(
+                            tr('clear'),
+                            style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18, color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
@@ -182,7 +183,10 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                         ),
                         ElevatedButton.icon(
                           icon: Icon(Icons.send, size: 20, color: Colors.white),
-                          label: Text('Send Report', style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18, color: Colors.white)),
+                          label: Text(
+                            tr('send_report'),
+                            style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18, color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
