@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart'; 
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -12,9 +13,9 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  String _firstName = 'Zaid';
+  String _firstName = 'zaid';
   String _lastName = 'Nsour';
-  String _email = 'Zaiddoe@gnail.com';
+  String _email = 'zaid@example.com';
   String _phoneNumber = '';
   String? _profileImagePath;
   File? _image;
@@ -33,7 +34,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
         _image = File(pickedFile.path);
         _profileImagePath = pickedFile.path;
       });
-      // Save the image path
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('profileImagePath', pickedFile.path);
     }
@@ -43,8 +43,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _firstName = prefs.getString('firstName') ?? 'Zaid';
-      _lastName = prefs.getString('lastName') ?? 'nsour';
-      _email = prefs.getString('email') ?? 'Zaid.doe@example.com';
+      _lastName = prefs.getString('lastName') ?? 'Nsour';
+      _email = prefs.getString('email') ?? 'zaid@example.com';
       _phoneNumber = prefs.getString('phoneNumber') ?? '';
       _profileImagePath = prefs.getString('profileImagePath');
       if (_profileImagePath != null) {
@@ -67,7 +67,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _formKey.currentState!.save();
       _saveProfileData();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profile updated successfully')),
+        SnackBar(content: Text('saveChanges'.tr())), 
       );
     }
   }
@@ -78,7 +78,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          'Profile',
+          'profileTitle'.tr(), 
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 28,
@@ -89,7 +89,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         backgroundColor: Color(0xFF318C3C),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -225,26 +225,26 @@ class _UserProfilePageState extends State<UserProfilePage> {
               ),
             ),
             SizedBox(height: 10),
-            _buildTextField('First Name', _firstName, false),
-            _buildTextField('Last Name', _lastName, false),
-            _buildTextField('E-mail Address', _email, false),
-            _buildTextField('Phone Number', _phoneNumber, false),
+            _buildTextField('firstName'.tr(), _firstName, false), 
+            _buildTextField('lastName'.tr(), _lastName, false), 
+            _buildTextField('emailAddress'.tr(), _email, false),
+            _buildTextField('phoneNumber'.tr(), _phoneNumber, false), 
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
-                child: Text(
-                  'Save Changes',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
                 onPressed: _saveChanges,
+                child: Text('saveChanges'.tr()), 
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFDCD90),
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  textStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Acumin Variable Concept',
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
+                  backgroundColor: Color(0xFFfdcd90),
                 ),
               ),
             ),
@@ -254,14 +254,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  Widget _buildTextField(String label, String initialValue, bool readOnly) {
+  Widget _buildTextField(String labelText, String initialValue, bool readOnly) {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            labelText,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -287,13 +287,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ),
             onChanged: (value) {
               setState(() {
-                if (label == 'First Name') {
+                if (labelText == 'firstName'.tr()) {
                   _firstName = value;
-                } else if (label == 'Last Name') {
+                } else if (labelText == 'lastName'.tr()) {
                   _lastName = value;
-                } else if (label == 'E-mail Address') {
+                } else if (labelText == 'emailAddress'.tr()) {
                   _email = value;
-                } else if (label == 'Phone Number') {
+                } else if (labelText == 'phoneNumber'.tr()) {
                   _phoneNumber = value;
                 }
               });
