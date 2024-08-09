@@ -9,9 +9,11 @@ import 'Annoncement_page/Home_Annoncement_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'consts.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   Gemini.init(apiKey: GEMINI_API_KEY);
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -21,14 +23,34 @@ void main() async {
   if (isLoggedIn && expirationDateString != null) {
     DateTime expirationDate = DateTime.parse(expirationDateString);
     if (DateTime.now().isBefore(expirationDate)) {
-      runApp(MyApp(initialRoute: '/Home_Annoncament_page'));
+      runApp(
+        EasyLocalization(
+          supportedLocales: [Locale('en'), Locale('ar')],
+          path: 'assets/langs',
+          fallbackLocale: Locale('en'),
+          child: MyApp(initialRoute: '/Home_Annoncament_page'),
+        ),
+      );
     } else {
-      // Login expired, clear preferences
       await prefs.clear();
-      runApp(const MyApp(initialRoute: '/'));
+      runApp(
+        EasyLocalization(
+          supportedLocales: [Locale('en'), Locale('ar')],
+          path: 'assets/langs',
+          fallbackLocale: Locale('en'),
+          child: const MyApp(initialRoute: '/'),
+        ),
+      );
     }
   } else {
-    runApp(const MyApp(initialRoute: '/'));
+    runApp(
+      EasyLocalization(
+        supportedLocales: [Locale('en'), Locale('ar')],
+        path: 'assets/langs',
+        fallbackLocale: Locale('en'),
+        child: const MyApp(initialRoute: '/'),
+      ),
+    );
   }
 }
 
@@ -51,6 +73,9 @@ class MyApp extends StatelessWidget {
         '/GPA_Calculator': (context) => GpaCalculator(),
         '/Chat_With_Me': (context) => const ChatWithMe(),
       },
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }
