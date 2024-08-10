@@ -21,6 +21,7 @@ class HomeAnnoncementPage extends StatefulWidget {
 }
 
 class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
+  bool _isLoggedIn = true; // المتغير الذي يحفظ حالة تسجيل الدخول
   int _current = 0;
   String _selectedLanguage = 'EN';
   bool _isDarkMode = false;
@@ -33,8 +34,24 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   @override
   void initState() {
     super.initState();
+    _checkLoginStatus();  
     _loadProfileImage();
   }
+
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isLoggedIn = prefs.getBool('isLoggedIn') ?? true;
+    });
+    if (!_isLoggedIn) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()), 
+      );
+    }
+  }
+
+
+
 
   Future<void> _loadProfileImage() async {
     final prefs = await SharedPreferences.getInstance();
@@ -105,13 +122,15 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               child: Text('cancel'.tr()),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('isLoggedIn', false); // حفظ حالة تسجيل الخروج
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()),
+                  MaterialPageRoute(builder: (context) => HomePage()), 
                       (Route<dynamic> route) => false,
                 );
               },
-              child: Text('yes'.tr(), style: TextStyle(color: Colors.red)),
+              child: Text('yes', style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -394,7 +413,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                         }),
                         _buildIcon(Icons.help, 'faq'.tr(), () {}),
                         _buildIcon(
-                            Icons.location_on, 'University Classes', () {
+                            Icons.location_on, 'university_classes'.tr(), () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
