@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Annoncement_page/Home_Annoncement_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -72,6 +73,17 @@ class _LoginPageState extends State<LoginPage> {
 
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
+
+        await Future.delayed(const Duration(seconds: 2));
+
+        // Save login state
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('userEmail', _emailController.text);
+
+        // Set expiration date (30 days from now)
+        DateTime expirationDate = DateTime.now().add(const Duration(days: 30));
+        await prefs.setString('loginExpiration', expirationDate.toIso8601String());
 
         setState(() {
           _isLoading = false;
