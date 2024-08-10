@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GpaCalculator extends StatefulWidget {
-
   @override
   _GpaCalculatorState createState() => _GpaCalculatorState();
 }
@@ -23,9 +22,9 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF318c3c),
+        backgroundColor: const Color(0xFF318c3c),
         leading: IconButton(
-          icon:const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -34,11 +33,10 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           children: [
             Text(
               'GPA Calculator',
-              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal ,color: Colors.white),
+              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal, color: Colors.white),
             ),
           ],
         ),
-
       ),
       body: Stack(
         children: [
@@ -46,7 +44,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
             child: SvgPicture.asset(
               'assets/guidek-bg.jpg.svg',
               fit: BoxFit.fill,
-              color:const Color.fromARGB(100, 220, 220, 220),
+              color: const Color.fromARGB(100, 220, 220, 220),
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -62,10 +60,10 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Hours Passed :'),
+                          const Text('Hours Passed:'),
                           TextField(
                             controller: hoursController,
-                            decoration:const InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Enter hours passed',
                             ),
                           ),
@@ -77,10 +75,10 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Current GPA :'),
+                          const Text('Current GPA:'),
                           TextField(
                             controller: gpaController,
-                            decoration:const InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Enter current GPA',
                             ),
                           ),
@@ -109,14 +107,19 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              backgroundColor:const Color(0xFF318c3c),
+              backgroundColor: const Color(0xFF318c3c),
               onPressed: _addRow,
-              child:const Icon(Icons.add,color: Colors.black,),
+              child: const Icon(Icons.add, color: Colors.black),
             ),
             FloatingActionButton(
-              backgroundColor:const Color(0xFF318c3c),
+              backgroundColor: Colors.red,
+              onPressed: _clearRows,
+              child: const Icon(Icons.delete, color: Colors.black),
+            ),
+            FloatingActionButton(
+              backgroundColor: const Color(0xFF318c3c),
               onPressed: _calculateGPA,
-              child:const Icon(Icons.calculate,color: Colors.black,),
+              child: const Icon(Icons.calculate, color: Colors.black),
             ),
           ],
         ),
@@ -136,23 +139,52 @@ class _GpaCalculatorState extends State<GpaCalculator> {
     });
   }
 
+  void _clearRows() {
+    setState(() {
+      rows.clear();
+    });
+  }
+
   void _calculateGPA() {
     double totalPoints = 0;
     int totalHours = 0;
+
+    // Create a map to track highest grade for each subject
+    Map<String, RowData> subjectMap = {};
+
+    // Process initial GPA
     int passedHours = int.tryParse(hoursController.text) ?? 0;
     double currentGPA = double.tryParse(gpaController.text) ?? 0.0;
-
-    // Calculate current total points
     totalPoints = currentGPA * passedHours;
     totalHours = passedHours;
 
-    // Add points and hours from new subjects
+    // Process each row
     for (var row in rows) {
-      totalPoints += _getPoints(row.grade) * row.hours;
+      double newGradePoints = _getPoints(row.grade);
+      String subjectKey = 'subject_${row.hashCode}'; // Use a unique identifier for each subject
+
+      if (row.isRetaken) {
+        // If the subject is already in the map, subtract old points
+        if (subjectMap.containsKey(subjectKey)) {
+          double oldGradePoints = _getPoints(subjectMap[subjectKey]!.grade);
+          totalPoints -= oldGradePoints * row.hours;
+        }
+        // Update the subject with the new grade
+        subjectMap[subjectKey] = row;
+        // Add the new grade points
+        totalPoints += newGradePoints * row.hours;
+      } else {
+        // For non-retaken subjects, simply add the points
+        totalPoints += newGradePoints * row.hours;
+        // Add the subject to the map
+        subjectMap[subjectKey] = row;
+      }
+
       totalHours += row.hours;
     }
 
-    double gpa = totalPoints / totalHours;
+    // Calculate final GPA
+    double gpa = totalHours > 0 ? totalPoints / totalHours : 0.0;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -160,6 +192,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
       ),
     );
   }
+
+
 
   double _getPoints(String grade) {
     switch (grade) {
@@ -194,44 +228,102 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
   Widget _buildRow(int index, int subjectNumber) {
     return Container(
-      margin:const EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
           IconButton(
-            icon:const Icon(Icons.clear, color: Colors.red),
+            icon: const Icon(Icons.clear, color: Colors.red),
             onPressed: () => _removeRow(index),
           ),
-          Text("Subject $subjectNumber"),
-          const SizedBox(width: 8),
-          DropdownButton<int>(
-            value: rows[index].hours,
-            items: [1, 2, 3].map((int value) {
-              return DropdownMenuItem<int>(
-                value: value,
-                child: Text('$value hours'),
-              );
-            }).toList(),
-            onChanged: (newValue) {
-              setState(() {
-                rows[index].hours = newValue!;
-              });
-            },
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text('Subject $subjectNumber hours: '),
+                    Expanded(
+                      child: DropdownButton<int>(
+                        value: rows[index].hours,
+                        items: [1, 2, 3].map((int value) {
+                          return DropdownMenuItem<int>(
+                            value: value,
+                            child: Text('$value'),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            rows[index].hours = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: DropdownButton<String>(
+                        value: rows[index].grade,
+                        items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            rows[index].grade = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                if (rows[index].isRetaken)
+                  Center(
+                    child: Row(
+                      children: [
+                        const Text('Old'),
+                        const SizedBox(width: 15), // Adjust to align with other rows
+                        Expanded(
+
+                          child: DropdownButton<String>(
+                            value: rows[index].oldGrade,
+                            items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                rows[index].oldGrade = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 150),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
           const SizedBox(width: 16),
-          DropdownButton<String>(
-            value: rows[index].grade,
-            items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
-                .map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (newValue) {
-              setState(() {
-                rows[index].grade = newValue!;
-              });
-            },
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Checkbox(
+                value: rows[index].isRetaken,
+                onChanged: (newValue) {
+                  setState(() {
+                    rows[index].isRetaken = newValue!;
+                  });
+                },
+                activeColor: const Color(0xFF318c3c), // Matching the button color
+              ),
+              const Text('Retaken'),
+            ],
           ),
         ],
       ),
@@ -242,6 +334,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 class RowData {
   int hours;
   String grade;
+  bool isRetaken;
+  String oldGrade;
 
-  RowData({this.hours = 1, this.grade = 'A'});
+  RowData({this.hours = 1, this.grade = 'A', this.isRetaken = false, this.oldGrade = 'A'});
 }

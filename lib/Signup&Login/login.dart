@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../Annoncement_page/Home_Annoncement_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -39,57 +40,71 @@ class _LoginPageState extends State<LoginPage> {
       return 'Please enter your password';
     } else if (value.length < 8) {
       return 'Password must be at least 8 characters';
-    } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+    } /*else if (!RegExp(r'[A-Z]').hasMatch(value)) {
       return 'Password must contain at least one uppercase letter';
-    } else if (!RegExp(r'[0-9]').hasMatch(value)) {
+    }*/ else if (!RegExp(r'[0-9]').hasMatch(value)) {
       return 'Password must contain at least one number';
-    } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'Password must contain at least one special character';
-    }
+    } //else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+    //return 'Password must contain at least one special character';
+    //}
     return null;
   }
 
-  Future<void> checkLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    if (isLoggedIn) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeAnnoncementPage()),
-      );
-    }
-  }
-
-
-  void _handleLogin() async {
+  Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
-      // Simulate a login process
-      await Future.delayed(const Duration(seconds: 2));
+      final url = 'https://guidekproject.onrender.com/auth/login';  // Update to match your local setup
 
-      // Save login state
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      await prefs.setString('userEmail', _emailController.text);
-
-      // Set expiration date (30 days from now)
-      DateTime expirationDate = DateTime.now().add(const Duration(days: 30));
-      await prefs.setString('loginExpiration', expirationDate.toIso8601String());
-
-      setState(() {
-        _isLoading = false;
-      });
-
-        // Navigate to the announcements page
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeAnnoncementPage()),
+      try {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'email': _emailController.text,
+            'password': _passwordController.text,
+          }),
         );
+
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (response.statusCode == 200) {
+          final data = jsonDecode(response.body);
+          final accessToken = data['access_token'];
+          final refreshToken = data['refresh_token'];
+
+          // Save tokens or navigate to a new page
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeAnnoncementPage()),
+          );
+        } else {
+          // Handle error response
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login failed: ${jsonDecode(response.body)['message']}')),
+          );
+        }
+      } catch (e) {
+        print('Request failed with error: $e');
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login failed: Network error')),
+        );
+      }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

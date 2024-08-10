@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:guidek_project1/Annoncement_page/Home_Annoncement_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:guidek_project1/Signup&Login/login.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -65,28 +67,58 @@ class _SignupPageState extends State<SignupPage> {
     }
     return null;
   }
-  
 
-  void _handleSignup() {
+  Future<void> _handleSignup() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
-      // Simulate a signup process
-      Future.delayed(const Duration(seconds: 2), () {
+      final fullname = '${_firstNameController.text} ${_lastNameController.text}';
+      final url = 'https://guidekproject.onrender.com/auth/register';
+
+      try {
+        final response = await http.post(
+          Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'fullname': fullname,
+            'email': _emailController.text,
+            'password': _passwordController.text,
+          }),
+        );
+
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+
         setState(() {
           _isLoading = false;
         });
 
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeAnnoncementPage()),
+        if (response.statusCode == 201) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Signup failed: ${jsonDecode(response.body)['message']}')),
+          );
+        }
+      } catch (e) {
+        print('Request failed with error: $e');
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Signup failed: Network error')),
         );
-      });
+      }
     }
   }
+
 
 
   @override
@@ -228,12 +260,12 @@ class _SignupPageState extends State<SignupPage> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         textStyle: const TextStyle(fontSize: 16),
-                        backgroundColor: Colors.teal, // Background color of the button
+                        backgroundColor: Colors.teal,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      child: const Text('Signup', style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white)),
+                      child: const Text('Signup', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
                     Text(
