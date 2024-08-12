@@ -23,13 +23,12 @@ class LocationDetailScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Image button to open Google Maps
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
-                elevation: 0, // Remove shadow
+                elevation: 0,
                 padding: EdgeInsets.zero,
               ),
               onPressed: () async {
@@ -51,10 +50,10 @@ class LocationDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Directionality(
-              textDirection: TextDirection.rtl, // Set text direction to RTL
+              textDirection: TextDirection.rtl,
               child: Text(
                 item['description'],
-                textAlign: TextAlign.center, // Center text within its container
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
             ),

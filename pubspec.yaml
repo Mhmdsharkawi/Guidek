@@ -95,3 +95,7 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   adaptive_icon_foreground: "assets/icon.png"
   adaptive_icon_background: "#ffffff"
+carousel_slider:
+  git:
+    url: https://github.com/sampaio96/flutter_carousel_slider.git
+    ref: master

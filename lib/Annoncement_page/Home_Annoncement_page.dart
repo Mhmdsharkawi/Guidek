@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:guidek_project1/Annoncement_page/App_Info.dart';
 import 'package:guidek_project1/Annoncement_page/Chat_With_Me.dart';
@@ -8,11 +8,10 @@ import 'package:guidek_project1/Annoncement_page/classes_locations.dart';
 import 'package:guidek_project1/Annoncement_page/Help&Support.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
-import 'Chat_With_Me.dart';
-import 'classes_locations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
+import 'q&a.dart';
 
 class HomeAnnoncementPage extends StatefulWidget {
   const HomeAnnoncementPage({super.key});
@@ -412,7 +411,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                                 builder: (context) => GpaCalculator()),
                           );
                         }),
-                        _buildIcon(Icons.help, 'faq'.tr(), () {}),
+                        _buildIcon(Icons.help, 'faq'.tr(), () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => QAScreen()),
+                          );
+                        }),
                         _buildIcon(
                             Icons.location_on, 'university_classes'.tr(), () {
                           Navigator.push(
