@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'location_detail.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ClassesLocationsScreen extends StatefulWidget {
   const ClassesLocationsScreen({super.key});
@@ -13,6 +14,10 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
   List<Map<String, dynamic>> items = [];
   String searchQuery = '';
   final Color appBarColor = Color(0xFF318c3c);
+
+  void getLocation() async{
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
 
   @override
   void initState() {
