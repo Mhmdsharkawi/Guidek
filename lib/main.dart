@@ -10,6 +10,7 @@ import 'Annoncement_page/GPA_Calculator.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'consts.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:guidek_project1/Annoncement_page/classes_locations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

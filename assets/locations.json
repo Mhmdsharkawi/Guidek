@@ -1,0 +1,722 @@
+[
+    {
+        "class_name": "اعمال 101",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr9",
+        "description": "كلية الأعمال - الطابق الأول-الجناح B-أول قاعدة على اليسار"
+    },
+    {
+        "class_name": "اعمال 102",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr10",
+        "description": "كلية الأعمال - الطابق الأول-الجناح B- القاعة التي في نهاية الممر"
+    },
+    {
+        "class_name": "اعمال 103",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr11",
+        "description": "كلية الأعمال- الطابق الأول- الجناح B- نهاية الممر يساراً-القاعة الثانية يساراً"
+    },
+    {
+        "class_name": "اعمال 104",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr12",
+        "description": "كلية الأعمال - الطابق الأول- الجناح B- نهاية الممر يسارا-أول قاعة على اليسار"
+    },
+    {
+        "class_name": "اعمال 105",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr13",
+        "description": "كلية الأعمال- الطابق الأول- الجناح B-نهاية الممر يسارا-نهاية الممر يسارا - بجانب الدرج يسارا-اخر قاعة يسارا "
+    },
+    {
+        "class_name": "اعمال 106",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr14",
+        "description": "كلية الأعمال - الطابق الأول- الجناح B- نهاية الممر يسارا- ثالث قاعة على اليمين "
+    },
+    {
+        "class_name": "اعمال 201",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr15",
+        "description": "كلية الأعمال - الطابق الثاني- الجناح B- أول قاعة على اليسار"
+    },
+    {
+        "class_name": "اعمال 202",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr16",
+        "description": "كلية الأعمال- الطابق الثاني- الجناح B- نهاية الممر في الأمام"
+    },
+    {
+        "class_name": "اعمال 203",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr17",
+        "description": "كلية الأعمال - الطابق الثاني - الجناح B-نهاية الممر يسارا- ثاني قاعة على اليمين "
+    },
+    {
+        "class_name": "اعمال 204",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr18",
+        "description": "كلية الأعمال - الطابق الثاني - الجناح B- نهاية الممر يسارا-أول قاعة على اليسار"
+    },
+    {
+        "class_name": "اعمال 205",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr19",
+        "description": " الطابق الثاني - جناح B - اخر الممر على اليسار الباب الاخير"
+    },
+    {
+        "class_name": "اعمال 206",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr20",
+        "description": "الطابق الثاني - جناح B - اخر الممر على اليمين الباب الرابع"
+    },
+    {
+        "class_name": "اعمال 301",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr21",
+        "description": "الطابق الثالث - جناح B - الدخول مباشرة إلى اخر الممر ثالث باب على اليسار"
+    },
+    {
+        "class_name": "اعمال 302",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr22",
+        "description": "الطابق الثالث - جناح B - الدخول مباشرة إلى اخر الممر ثاني باب على اليسار"
+    },
+    {
+        "class_name": "اعمال 303",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr23",
+        "description": "الطابق الثالث - جناح B - الدخول مباشرة إلى اخر الممر اول باب على اليسار"
+    },
+    {
+        "class_name": "مختبر حاسوب الاعمال (3)",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr24",
+        "description": " الطابق B1  - اخر الممر اول وثاني باب على اليمين"
+    },
+    {
+        "class_name": "مختبر حاسوب الاعمال (4)",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr25",
+        "description": "الطابق B1 - اخر الممر الباب الثالث والرابع على اليمين"
+    },
+    {
+        "class_name": "مختبر حاسوب الاعمال (7)",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr26",
+        "description": " الطابق GF - جناح B - اخر الممر على اليمين الباب الثالث والرابع"
+    },
+    {
+        "class_name": "مختبر حاسوب الاعمال (8)",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr27",
+        "description": "الطابق B1 - اول باب على اليسار"
+    },
+    {
+        "class_name": "مختبر حاسوب الاعمال (9)",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr28",
+        "description": "الطابق B1 - ثاني باب على اليسار"
+    },
+    {
+        "class_name": "مختبر حاسوب الاعمال(5)",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr29",
+        "description": "الطابق B1 - اخر الممر على اليسار الباب الثاني"
+    },
+    {
+        "class_name": "مختبر حاسوب الاعمال(6)",
+        "gps_link": "https://maps.app.goo.gl/QuLA6GTKBLXfBVJr30",
+        "description": "الطابق GF - جناح B - اخر الممر الباب الأول والثاني على اليمين"
+    },
+    {
+        "class_name": "تكنولوجيا  401",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأول-يمين الدرج-مقابل مكاتب رؤساء الأقسام"
+    },
+    {
+        "class_name": "تكنولوجيا  405",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأول-يمين الدرج-ثاني قاعة"
+    },
+    {
+        "class_name": "تكنولوجيا 102",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-طابق التسوية الثانية(B2)-أقصى يمين الدرج من اتجاه المصلى"
+    },
+    {
+        "class_name": "تكنولوجيا 301",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأرضي(GF)-يمين الباب الرئيسي-اول قاعة"
+    },
+    {
+        "class_name": "تكنولوجيا 302",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأرضي(GF)-يمين الدرج"
+    },
+    {
+        "class_name": "تكنولوجيا 402",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأول-يسار الدرج-مقابل مكتب مساعد العميد"
+    },
+    {
+        "class_name": "تكنولوجيا 406",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأول-يمين الدرج-اخر قاعة"
+    },
+    {
+        "class_name": "مختبر حاسوب - علوم (302)",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأرضي(GF)-يمين الباب الرئيسي-ثاني قاعة"
+    },
+    {
+        "class_name": "مختبر حاسوب - علوم (303)",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأرضي(GF)-يمين الباب الرئيسي-آخر قاعة"
+    },
+    {
+        "class_name": "مختبر حاسوب - علوم (304)",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الأرضي(GF)-يمين الباب الرئيسي-يمين الدرج"
+    },
+    {
+        "class_name": "مختبر حاسوب (501) - علوم",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الثاني-(مختبر الرسم بالحاسوب و الرسوم المتحركة) "
+    },
+    {
+        "class_name": "مختبر حاسوب (502) - علوم",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الثاني-يسار الدرج"
+    },
+    {
+        "class_name": "مختبر حاسوب (503)-علوم",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-الطابق الثاني-يسار الدرج-اخر قاعة"
+    },
+    {
+        "class_name": "مختبر حاسوب(100)-علوم",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلوما-طابق التسوية الثانية(B2) -يسار الدرج من اتجاه الحمامات "
+    },
+    {
+        "class_name": "مختبر حاسوب(101)-علوم",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي للإتصالات و تكنولوجيا المعلومات-طابق التسوية الثانية(B2)-يسار الدرج من اتجاه الحمامات"
+    },
+    {
+        "class_name": "طب L201 / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الثاني-اتجاه اليسار من الدرج مقابل جناح(c)"
+    },
+    {
+        "class_name": "قاعة L102 / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الأول-جناح(A)"
+    },
+    {
+        "class_name": "قاعة L103 / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الأول-جناح(A)"
+    },
+    {
+        "class_name": "مختبر التقييم الصحي / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الثاني-أقصى اليسار من الدرج"
+    },
+    {
+        "class_name": "مختبر أساسيات القبالة(1)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الثاني-أقصى اليسار من الدرج"
+    },
+    {
+        "class_name": "مختبر أساسيات القبالة(2)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الأول-جناح(A)"
+    },
+    {
+        "class_name": "مختبر مهارات التمريض (1) / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الثاني- أقصى يسار الدرج"
+    },
+    {
+        "class_name": "مختبر مهارات التمريض (2) / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الثاني- أقصى اليسار من الدرج"
+    },
+    {
+        "class_name": "مختبر مهارات القبالة (1) / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الثاني-اتجاه اليسار من الدرج-مقابل جناح©"
+    },
+    {
+        "class_name": "مختبر مهارات القبالة (2) / كلية التمريض",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية التمريض-الطابق الثاني-اتجاه اليسار من الدرج مقابل طب(L201)"
+    },
+    {
+        "class_name": "مدرج (1)",
+        "gps_link": "https://maps.app.goo.gl/FBT6MuzFMEYhAwPL9",
+        "description": "مجمع القاعات التدريسية-طابق التسوية الثانية-يمين الدرج-مقابل حمامات الإناث"
+    },
+    {
+        "class_name": "تقني 2",
+        "gps_link": "https://maps.app.goo.gl/mme9eNTAsbdfNwMJA",
+        "description": "كلية الذكاء - طابق B1 - مدخل الكلية المقابل لكلية الهندسة الباب - تكون ثاني قاعة يسار الممر "
+    },
+    {
+        "class_name": "تقني 3",
+        "gps_link": "https://maps.app.goo.gl/mme9eNTAsbdfNwMJA",
+        "description": "كلية الذكاء - طابق B1 - مدخل الكلية المقابل لكلية الهندسة الباب - تكون ثالث قاعة يسار الممر "
+    },
+    {
+        "class_name": "تقني 4",
+        "gps_link": "https://maps.app.goo.gl/mme9eNTAsbdfNwMJA",
+        "description": "كلية الذكاء - طابق B1 - مدخل الكلية المقابل لكلية الهندسة الباب - تكون رابع قاعة يسار الممر "
+    },
+    {
+        "class_name": "مختبر التحقيقات الجنائية الرقمية",
+        "gps_link": "https://maps.app.goo.gl/mme9eNTAsbdfNwMJA",
+        "description": "طابق B2 - جناح A - من مدخل الجناح تكون القاعة خامس باب على يمين الممر"
+    },
+    {
+        "class_name": "مختبر برمجة الذكاء الاصطناعي",
+        "gps_link": "https://maps.app.goo.gl/mme9eNTAsbdfNwMJA",
+        "description": "طابق B2 - جناح A - من مدخل الجناح تكون القاعة عند الباب الثالث على يمين الممر "
+    },
+    {
+        "class_name": "زراعة 101",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf6",
+        "description": "كلية الزراعة - الطابق الأرضي -اتجه يسار المدخل –اول قاعة على اليسار"
+    },
+    {
+        "class_name": "زراعه 102",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf7",
+        "description": "كلية الزراعة - الطابق الأرضي -اتجه يسار المدخل –ثاني قاعة على اليسار."
+    },
+    {
+        "class_name": "مجمع 205",
+        "gps_link": "https://maps.app.goo.gl/6u4gm6MY7pSfbr3E8",
+        "description": "مبنى المجمع – الطابق الأول – ثاني على اليمين"
+    },
+    {
+        "class_name": "مجمع مرسم (1)",
+        "gps_link": "https://maps.app.goo.gl/6u4gm6MY7pSfbr3E8",
+        "description": "مبنى المجمع - طابق التسوية الأولى (تحت الارضي) -اول باب على اليسار."
+    },
+    {
+        "class_name": "مجمع مرسم (2)",
+        "gps_link": "https://maps.app.goo.gl/6u4gm6MY7pSfbr3E8",
+        "description": "مبنى المجمع - طابق التسوية الأولى (تحت الارضي) -ثاني باب على اليسار."
+    },
+    {
+        "class_name": "مختبر الاحياء الدقيقة للأغذية",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf11",
+        "description": "كلية الزراعة – الطابق الثاني – مختبرات قسم التغذية – اول باب على اليسار."
+    },
+    {
+        "class_name": "مختبر التصنيع الغذائي",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf12",
+        "description": "كلية الزراعة – الطابق الثاني – مختبرات قسم التغذية – اول باب على اليمين."
+    },
+    {
+        "class_name": "مختبر التقنيات الحيوية-زراعة",
+        "gps_link": "https://maps.app.goo.gl/2TDA8eBxiKTDVULx6",
+        "description": "المبنى المقابل للصالة الرياضية – الطابق الأرضي – قسم انتاج ووقاية نبات – الباب الذي في نهاية الممر."
+    },
+    {
+        "class_name": "مختبر العلوم الحياتية- زراعة",
+        "gps_link": "https://maps.app.goo.gl/2TDA8eBxiKTDVULx6",
+        "description": "المبنى المقابل للصالة الرياضية – الطابق الأرضي – قسم انتاج ووقاية نبات – خامس باب على اليمين."
+    },
+    {
+        "class_name": "مختبر المياه و البيئة - زراعة",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf15",
+        "description": "كلية الزراعة – طابق التسوية (تحت الطابق الارضي) -اول باب على يمين الدرج"
+    },
+    {
+        "class_name": "مختبر امراض النبات",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf16",
+        "description": "كلية الزراعة -الطابق الأرضي – اتجه يمين المدخل –اول باب على اليمين بعد الدرج"
+    },
+    {
+        "class_name": "مختبر انتاج ووقاية النبات",
+        "gps_link": "https://maps.app.goo.gl/2TDA8eBxiKTDVULx6",
+        "description": "المبنى المقابل للصالة الرياضية – الطابق الأرضي -قسم انتاج ووقاية نبات – ثاني باب على اليسار"
+    },
+    {
+        "class_name": "مختبر علم الحشرات",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf18",
+        "description": "كلية الزراعة -الطابق الأرضي – اتجه يمين المدخل –اول باب على اليسار بعد الدرج"
+    },
+    {
+        "class_name": "مختبر علم النحل",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf19",
+        "description": "كلية الزراعة -الطابق الأرضي – اتجه يمين المدخل –ثاني باب على اليسار بعد الدرج"
+    },
+    {
+        "class_name": "مختبر فيزياء التربة",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf20",
+        "description": "كلية الزراعة – الطابق الثالث – على يسار الدرج – اول باب على اليسار"
+    },
+    {
+        "class_name": "مختبر كيمياء  وتحليل الاغذية",
+        "gps_link": "https://maps.app.goo.gl/tMMU5DYstXob3GZf21",
+        "description": "كلية الزراعة – الطابق الثاني – مختبرات قسم التغذية – الباب في نهاية الممر"
+    },
+    {
+        "class_name": "تقني 1",
+        "gps_link": "https://maps.app.goo.gl/h3cRrznPv2B6uAt37",
+        "description": "كلية الذكاء - طابق B1 - مدخل الكلية المقابل لكلية الهندسة الباب - تكون اول قاعة يسار الممر "
+    },
+    {
+        "class_name": "تقني 8",
+        "gps_link": "https://maps.app.goo.gl/h3cRrznPv2B6uAt37",
+        "description": "طابق B1 - جناح A - من مدخل الجناح تكون القاعة سابع باب على يسار الممر"
+    },
+    {
+        "class_name": "مختبر الروبوتات",
+        "gps_link": "https://maps.app.goo.gl/h3cRrznPv2B6uAt37",
+        "description": "طابق B2 - جناح C - من مدخل الجناح تكون القاعة ثاني باب على يسار الممر"
+    },
+    {
+        "class_name": "مختبر الواقع الافتراضي",
+        "gps_link": "https://maps.app.goo.gl/h3cRrznPv2B6uAt37",
+        "description": "طابق B2 - جناح C - من مدخل الجناح تكون القاعة اول باب على يمين الممر"
+    },
+    {
+        "class_name": "مختبر حاسوب تقني 2",
+        "gps_link": "https://maps.app.goo.gl/h3cRrznPv2B6uAt37",
+        "description": "طابق B1 - جناح A - من مدخل الجناح تكون القاعة ثالث باب على يمين الممر"
+    },
+    {
+        "class_name": "مختبر علم البيانات وانترنت الاشياء",
+        "gps_link": "https://maps.app.goo.gl/h3cRrznPv2B6uAt37",
+        "description": "طابق - B2 - جناح C - من مدخل الجناح تكون القاعة عند رابع باب على يسار الممر "
+    },
+    {
+        "class_name": "مشغل خياطة",
+        "gps_link": "https://maps.app.goo.gl/h3cRrznPv2B6uAt37",
+        "description": "طابق B3 - جناح B - من مدخل الجناح تكون القاعة على يسار مدخل مسرح الكلية "
+    },
+    {
+        "class_name": " مختير حاسوب (كلية السلط الانسانية)- م1",
+        "gps_link": "https://maps.app.goo.gl/vTKgmzHMqPS4DQFEA",
+        "description": "ممر الرئاسة / ممر الزراعة - باب رقم ٧ - الطابق الثاني"
+    },
+    {
+        "class_name": "قاعة صفية ب 1",
+        "gps_link": "https://maps.app.goo.gl/vTKgmzHMqPS4DQFEA",
+        "description": "ممر الرئاسة / ممر الزراعة - ثالث ممر من اليمين - ثم يسار"
+    },
+    {
+        "class_name": "قاعة صفيه ب 2",
+        "gps_link": "https://maps.app.goo.gl/vTKgmzHMqPS4DQFEA",
+        "description": "ممر الرئاسة / ممر الزراعة - ثالث ممر من اليمين - ثم يسار"
+    },
+    {
+        "class_name": "قاعة مشتركة دبلوم/ السلط",
+        "gps_link": "https://maps.app.goo.gl/vTKgmzHMqPS4DQFEA",
+        "description": "ممر الرئاسة / ممر الزراعة - باب رقم ٦ - اول قاعة من اليسار"
+    },
+    {
+        "class_name": "م 6",
+        "gps_link": "https://maps.app.goo.gl/vTKgmzHMqPS4DQFEA",
+        "description": "ممر الرئاسة / ممر الزراعة - باب رقم ٦ - اول قاعة من اليسار"
+    },
+    {
+        "class_name": "مجمع 101",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الاول - اول قاعة من جهة اليمين"
+    },
+    {
+        "class_name": "مجمع 102",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الاول - ثاني قاعة من جهة اليمين"
+    },
+    {
+        "class_name": "مجمع 103",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الاول - ثالث قاعة من جهة اليمين"
+    },
+    {
+        "class_name": "مجمع 104",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الاول -  اول قاعة من جهة اليسار"
+    },
+    {
+        "class_name": "مجمع 201",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الثاني - اول قاعة من جهة اليمين"
+    },
+    {
+        "class_name": "مجمع 202",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الثاني - ثاني قاعة من جهة اليمين"
+    },
+    {
+        "class_name": "مجمع 203",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الثاني - ثالث قاعة من جهة اليمين"
+    },
+    {
+        "class_name": "مجمع 204",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الثاني -  اول قاعة من جهة اليسار"
+    },
+    {
+        "class_name": "مختبر التربية الصحية والبدنية",
+        "gps_link": "https://maps.app.goo.gl/vTKgmzHMqPS4DQFEA",
+        "description": "ممر الرئاسة / ممر الزراعة - باب رقم ٧ - الطابق الاول"
+    },
+    {
+        "class_name": "مختبر التغذية-السلط",
+        "gps_link": "https://maps.app.goo.gl/vTKgmzHMqPS4DQFEA",
+        "description": "ممر الرئاسة / ممر الزراعة - باب رقم ٧ - الطابق الاول"
+    },
+    {
+        "class_name": "مدرج (2)",
+        "gps_link": "https://maps.app.goo.gl/qZMBPiLutrDKPAeY9",
+        "description": "مجمع القاعات التدريسية - الطابق الارضي"
+    },
+    {
+        "class_name": "علوم  304",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية العلوم (IT) – الطابق الأرضي – القاعة المقابلة للمدخل"
+    },
+    {
+        "class_name": "علوم (B1-101 )",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية العلوم و التمريض – طابق B1 – اتجه يمين المصعد – القاعة الأولى من اليسار"
+    },
+    {
+        "class_name": "علوم (B2-201)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية العلوم و التمريض – طابق B2 – اتجه يمين المصعد – القاعة الأولى جهة اليمين"
+    },
+    {
+        "class_name": "علوم (B2-202)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية العلوم و التمريض – طابق B2 – اتجه يمين المصعد – القاعة الثانية جهة اليمين"
+    },
+    {
+        "class_name": "علوم (B2-203)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية العلوم و التمريض – طابق B2 – اتجه يمين المصعد – القاعة الثانية جهة اليسار "
+    },
+    {
+        "class_name": "علوم (B2-204)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية العلوم و التمريض – طابق B2 -اتجه يمين المصعد – القاعة الأولى جهة اليسار"
+    },
+    {
+        "class_name": "علوم 301",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي(IT) – الطابق الأرضي – اتجه يسار المدخل- القاعة الأولى جهة اليسار"
+    },
+    {
+        "class_name": "علوم 302",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي (IT) – الطابق الأرضي – اتجه يسار المدخل – االقاعة الثانية جهة اليسار"
+    },
+    {
+        "class_name": "علوم 303",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي (IT) – الطابق الأرضي – اتجه يسار المدخل -اول قاعة بعد الدرج"
+    },
+    {
+        "class_name": "علوم 403",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي (IT) – الطابق الأول – اتجه يسار – القاعة الثانية بعد الدرج"
+    },
+    {
+        "class_name": "علوم 404",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الأمير عبدالله بن غازي (IT) – الطابق الأول – اتجه يسار – القاعة الثالثة بعد الدرج"
+    },
+    {
+        "class_name": "مختبر  الانسجة",
+        "gps_link": "https://maps.app.goo.gl/DhsFc9kJFZcsB6La9",
+        "description": "مبنى المختبرات الطبية- خلف كلية الأمير عبدالله بن غازي (IT) – الطابق الأول – القاعة يمين الدرج"
+    },
+    {
+        "class_name": "مختبر التحاليل الطبية (1)",
+        "gps_link": "https://maps.app.goo.gl/DhsFc9kJFZcsB6La9",
+        "description": "مبنى المختبرات الطبية – خلف كلية الأمير عبدالله بن غازي ( IT) – الطابق الأرضي – القاعة يسار المدخل"
+    },
+    {
+        "class_name": "مختبر التحاليل الطبية (2)",
+        "gps_link": "https://maps.app.goo.gl/DhsFc9kJFZcsB6La9",
+        "description": "مبنى المختبرات الطبية – خلف كلية الأمير عبدالله بن غازي ( IT) – الطابق الأرضي – القاعة يمين المدخل"
+    },
+    {
+        "class_name": "مختبر التشريح",
+        "gps_link": "https://maps.app.goo.gl/DhsFc9kJFZcsB6La9",
+        "description": "مبنى المختبرات الطبية- خلف كلية الأمير عبدالله بن غازي (IT) - طابق B1 –  يمين الدرج "
+    },
+    {
+        "class_name": "مختبر الفيزياء المتقدمة/كلية العلوم",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية ال IT- الطابق B1"
+    },
+    {
+        "class_name": "مختبر الفيزياء المتوسطة",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية ال IT-الطابق B1"
+    },
+    {
+        "class_name": "مختبر الكيماء العضوية (1)",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "المبنى الذي بجانب مصلى الاناث-مقابل كلية ال IT-الطابق الثاني -بعد الدرج آخر الممر على اليمين"
+    },
+    {
+        "class_name": "مختبر الكيمياء 504",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية الIT-الطابق الثاني-نهاية الممر "
+    },
+    {
+        "class_name": "مختبر الكيمياء 505",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية ال IT-الطابق الثاني"
+    },
+    {
+        "class_name": "مختبر الكيمياء 506",
+        "gps_link": "https://maps.app.goo.gl/1GQyKHfBqjNVU9e5A-",
+        "description": "كلية ال IT-الطابق الثاني"
+    },
+    {
+        "class_name": "مختبر تحاليل طبية (3)",
+        "gps_link": "https://maps.app.goo.gl/DhsFc9kJFZcsB6La9",
+        "description": "مبنى المختبرات الطبية- خلف كلية الأمير عبدالله بن غازي (IT) – الطابق الثاني – يسار الدرج"
+    },
+    {
+        "class_name": "مختبر فسيولوجي",
+        "gps_link": "https://maps.app.goo.gl/DhsFc9kJFZcsB6La9",
+        "description": "مبنى المختبرات الطبية- خلف كلية الأمير عبدالله بن غازي (IT) – طابق الأول – يسار الدرج"
+    },
+    {
+        "class_name": "مدرج العلوم (B1-1)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية العلوم و التمريض – طابق B1  - يسار المصعد"
+    },
+    {
+        "class_name": "مدرج لعلوم (B2-2)",
+        "gps_link": "https://maps.app.goo.gl/CYUorroE6hsNVghHA",
+        "description": "كلية العلوم و التمريض – طابق B2 – يسار المصعد"
+    },
+    {
+        "class_name": "مختبر الاستشعار عن بعد - هندسة",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "كلية الهندسة - الطابق الأول- يسار الدرج"
+    },
+    {
+        "class_name": "مختبر المساحة التصويرية العددية",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "كلية الهندسة - الطابق الاول"
+    },
+    {
+        "class_name": "مختبر المساحة و الجيوديزياء - هندسة",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "كلية الهندسة - طابق B1 - يمين من الدرج"
+    },
+    {
+        "class_name": "مختبر تصميم المنطق الرقمي",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "كلية الهندسة - الطابق الأرضي - مقابل الدرج"
+    },
+    {
+        "class_name": "مختبر حماية انظمة القوى",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق GF - اتجاه الشمال اخر الممر - بجانب مختبر حاسوب هندسي (3)"
+    },
+    {
+        "class_name": "مختبر دارات كهربائية",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق B1 - باتجاه الشمال - بجانب مختبر التمديدات الكهربائية على اليمين"
+    },
+    {
+        "class_name": "مختبر شبكات الحاسوب للهندسة",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق الاول - اتجاه اليمين -  بجانب مختبر حاسوب 2"
+    },
+    {
+        "class_name": "مختبر معمارية الحاسوب وتنظيمه",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق GF - اتجاه الشمال - اخر الممي يمين - بجانب مختبر حاسوب هندسي 1"
+    },
+    {
+        "class_name": "مختبر نظم المعلومات الجغرافية هندسة",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق الاول - باتجاه اليمين"
+    },
+    {
+        "class_name": "مختبر هندسة جيوتقنية",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - طابق التسوية - باتجاه الشمال"
+    },
+    {
+        "class_name": "مرسم /مدني",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول -باتجاه الشمال - اخر الممر"
+    },
+    {
+        "class_name": "مرسم عمارة (1)",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول -باتجاه الشمال - اخر الممر"
+    },
+    {
+        "class_name": "مرسم عمارة (2)",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول -باتجاه الشمال - اخر الممر"
+    },
+    {
+        "class_name": "مرسم عمارة (4)",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول - باتجاه اليمين"
+    },
+    {
+        "class_name": "مرسم عمارة (5)",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول - باتجاه اليمين"
+    },
+    {
+        "class_name": "مرسم عمارة (6)",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول - باتجاه اليمين"
+    },
+    {
+        "class_name": "مرسم عمارة (7)",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول - باتجاه اليمين - مع مرسم عمارة 3"
+    },
+    {
+        "class_name": "مرسم عمارة (8)",
+        "gps_link": "https://maps.app.goo.gl/FWWBM5tDstpmYCDx8",
+        "description": "قسم هندسة العمارة - الطابق الاول - باتجاه اليمين - مع مرسم عمارة 3"
+    },
+    {
+        "class_name": "هندسة 001",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق GF - اتجاه اليمين - اخر الممر - اتجاه اليمين"
+    },
+    {
+        "class_name": "هندسة 002",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق GF - اتجاه اليمين - اخر الممر - اتجاه اليمين"
+    },
+    {
+        "class_name": "هندسة 003",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق GF - اتجاه اليمين - اخر الممر - اتجاه اليمين"
+    },
+    {
+        "class_name": "هندسة 004",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق GF - اتجاه اليمين - اخر الممر - اتجاه اليمين"
+    },
+    {
+        "class_name": "هندسة 101",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق الاول - باتجاه اليمين - اخر الممر على الشمال"
+    },
+    {
+        "class_name": "هندسة 102",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق الاول - باتجاه اليمين - اخر الممر على الشمال"
+    },
+    {
+        "class_name": "هندسة 103",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق الاول - باتجاه اليمين - اخر الممر على اليمين"
+    },
+    {
+        "class_name": "هندسة 104",
+        "gps_link": "https://maps.app.goo.gl/y8nYN8nPHHiT73Uw6",
+        "description": "الطابق الاول - باتجاه اليمين - اخر الممر على اليمين"
+    },
+    {
+        "class_name": "مختبر تدريس انتاج ووقاية النبات",
+        "gps_link": "https://maps.app.goo.gl/2TDA8eBxiKTDVULx6",
+        "description": "المبنى المقابل للصالة الرياضية – الطابق الأرضي -قسم انتاج ووقاية نبات – ثاني باب على اليسار"
+    }
+]

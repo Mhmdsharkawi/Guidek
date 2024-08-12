@@ -4,11 +4,12 @@ import 'package:guidek_project1/Annoncement_page/App_Info.dart';
 import 'package:guidek_project1/Annoncement_page/Chat_With_Me.dart';
 import 'package:guidek_project1/Annoncement_page/Contact_Us.dart';
 import 'package:guidek_project1/Annoncement_page/File_Information.dart';
-import 'package:guidek_project1/Annoncement_page/Find_My_Class.dart';
+import 'package:guidek_project1/Annoncement_page/classes_locations.dart';
 import 'package:guidek_project1/Annoncement_page/Help&Support.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
 import 'Chat_With_Me.dart';
+import 'classes_locations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,7 +22,7 @@ class HomeAnnoncementPage extends StatefulWidget {
 }
 
 class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
-  bool _isLoggedIn = true; // المتغير الذي يحفظ حالة تسجيل الدخول
+  bool _isLoggedIn = true;
   int _current = 0;
   String _selectedLanguage = 'EN';
   bool _isDarkMode = false;
@@ -124,7 +125,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
             TextButton(
               onPressed: () async {
                 final prefs = await SharedPreferences.getInstance();
-                await prefs.setBool('isLoggedIn', false); // حفظ حالة تسجيل الخروج
+                await prefs.setBool('isLoggedIn', false);
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => HomePage()), 
                       (Route<dynamic> route) => false,
@@ -417,7 +418,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FindMyClassPage()),
+                                builder: (context) => ClassesLocationsScreen()),
                           );
                         }),
                       ],
