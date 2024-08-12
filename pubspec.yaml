@@ -23,7 +23,6 @@ dependencies:
   easy_localization: ^3.0.0
   http: ^1.2.2
   url_launcher: ^6.3.0
-  geolocator: ^9.0.2
 
   # The following adds the Cupertino Icons font to your application.
  # The following adds the Cupertino Icons font to your application.
