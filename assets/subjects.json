@@ -1,0 +1,32 @@
+{
+  "Computer Science": {
+    "subjects": [
+      {
+        "name": "Introduction to Programming",
+        "books": "https://drive.google.com/file/d/1WH1Weh7BVvR5usDm1P7YwRdNSCr8J_xX/view?usp=sharing",
+        "slides": "https://drive.google.com/file/d/SLIDE_ID/view?usp=sharing",
+        "coursePlan": "https://drive.google.com/file/d/PLAN_ID/view?usp=sharing"
+      }, {
+        "name": "Introduction to Programming 1",
+        "books": "https://drive.google.com/file/d/BOOK_ID/view?usp=sharing",
+        "slides": "https://drive.google.com/file/d/SLIDE_ID/view?usp=sharing",
+        "coursePlan": "https://drive.google.com/file/d/PLAN_ID/view?usp=sharing"
+      }, {
+        "name": "Introduction to Programming 2",
+        "books": "https://drive.google.com/file/d/BOOK_ID/view?usp=sharing",
+        "slides": "https://drive.google.com/file/d/SLIDE_ID/view?usp=sharing",
+        "coursePlan": "https://drive.google.com/file/d/PLAN_ID/view?usp=sharing"
+      }
+    ]
+  },
+  "Software Engineering": {
+    "subjects": [
+      {
+        "name": "Software Development Lifecycle",
+        "books": "https://drive.google.com/file/d/BOOK_ID/view?usp=sharing",
+        "slides": "https://drive.google.com/file/d/SLIDE_ID/view?usp=sharing",
+        "coursePlan": "https://drive.google.com/file/d/PLAN_ID/view?usp=sharing"
+      }
+    ]
+  }
+}

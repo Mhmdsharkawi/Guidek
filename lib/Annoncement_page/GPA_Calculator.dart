@@ -13,6 +13,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
   final TextEditingController hoursController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
 
+  static const Color appBarColor = Color(0xFF318c3c);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -22,7 +24,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF318c3c),
+        backgroundColor: appBarColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -63,8 +65,15 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                           const Text('Hours Passed:'),
                           TextField(
                             controller: hoursController,
-                            decoration: const InputDecoration(
+                            cursorColor: appBarColor,
+                            decoration: InputDecoration(
                               hintText: 'Enter hours passed',
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
                             ),
                           ),
                         ],
@@ -77,9 +86,16 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                         children: [
                           const Text('Current GPA:'),
                           TextField(
+                            cursorColor: appBarColor,
                             controller: gpaController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               hintText: 'Enter current GPA',
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
                             ),
                           ),
                         ],
@@ -107,7 +123,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              backgroundColor: const Color(0xFF318c3c),
+              backgroundColor: appBarColor,
               onPressed: _addRow,
               child: const Icon(Icons.add, color: Colors.black),
             ),
@@ -117,7 +133,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               child: const Icon(Icons.delete, color: Colors.black),
             ),
             FloatingActionButton(
-              backgroundColor: const Color(0xFF318c3c),
+              backgroundColor: appBarColor,
               onPressed: _calculateGPA,
               child: const Icon(Icons.calculate, color: Colors.black),
             ),
@@ -192,8 +208,6 @@ class _GpaCalculatorState extends State<GpaCalculator> {
       ),
     );
   }
-
-
 
   double _getPoints(String grade) {
     switch (grade) {
@@ -285,7 +299,6 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                         const Text('Old'),
                         const SizedBox(width: 15), // Adjust to align with other rows
                         Expanded(
-
                           child: DropdownButton<String>(
                             value: rows[index].oldGrade,
                             items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
@@ -320,7 +333,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                     rows[index].isRetaken = newValue!;
                   });
                 },
-                activeColor: const Color(0xFF318c3c), // Matching the button color
+                activeColor: appBarColor, // Matching the app bar color
               ),
               const Text('Retaken'),
             ],
@@ -332,10 +345,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 }
 
 class RowData {
-  int hours;
-  String grade;
-  bool isRetaken;
-  String oldGrade;
-
-  RowData({this.hours = 1, this.grade = 'A', this.isRetaken = false, this.oldGrade = 'A'});
+  int hours = 1;
+  String grade = 'A';
+  String oldGrade = 'A';
+  bool isRetaken = false;
 }

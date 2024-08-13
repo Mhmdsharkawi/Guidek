@@ -1,0 +1,16 @@
+{
+  "Computer Science": {
+    "subjects": [
+      "Introduction to Computer Science",
+      "OOP",
+      "Java"
+    ]
+  },
+  "Software Engineering": {
+    "subjects": [
+      "Introduction toSoftware Engineering",
+      "Tools",
+      "UI/UX"
+    ]
+  }
+}

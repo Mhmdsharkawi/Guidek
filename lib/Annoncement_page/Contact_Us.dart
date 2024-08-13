@@ -58,7 +58,7 @@ class ContactUsPage extends StatelessWidget {
                         [
                           'mohammadalsharkawi2@gmail.com',
                           'obaidullahkh204@gmail.com',
-                          'fadfdsa@bgfs.dsd',
+                          's.mohammadannuka@gmail.com',
                           'nsourzaid1@gmail.com',
                         ],
                         Color(0xFFfdcd90),

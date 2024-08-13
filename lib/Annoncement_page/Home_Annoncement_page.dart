@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'q&a.dart';
+import 'subjects.dart';
 
 class HomeAnnoncementPage extends StatefulWidget {
   const HomeAnnoncementPage({super.key});
@@ -395,7 +396,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                       physics: NeverScrollableScrollPhysics(),
                       childAspectRatio: 1.0,
                       children: [
-                        _buildIcon(Icons.school, 'subjects_classes'.tr(), () {}),
+                        _buildIcon(Icons.school, 'subjects_classes'.tr(), () {
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SubjectsScreen()),
+                        );
+                        }),
                         _buildIcon(Icons.chat_bubble, 'chat_with_me'.tr(), () {
                           Navigator.push(
                             context,
