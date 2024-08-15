@@ -15,31 +15,34 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   bool _obscureText = true;
   bool _isLoading = false;
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _studentIdController = TextEditingController();
+  String? _selectedMajor;
   final _formKey = GlobalKey<FormState>();
+
+  // List of majors for the dropdown, including 'Other' option
+  final List<Map<String, String>> _majors = [
+    {'name': 'Computer Science', 'value': 'Computer Science'},
+    {'name': 'Software Engineering', 'value': 'Software Engineering'},
+    {'name': 'Computer Information System', 'value': 'Computer Information System'},
+    {'name': 'Computer Animation And Graphics', 'value': 'Computer Animation And Graphics'},
+    {'name': 'Other', 'value': 'Other'},
+  ];
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _studentIdController.dispose();
     super.dispose();
   }
 
-  String? _validateFirstName(String? value) {
+  String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your first name';
-    }
-    return null;
-  }
-
-  String? _validateLastName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your last name';
+      return 'Please enter your name';
     }
     return null;
   }
@@ -70,11 +73,17 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> _handleSignup() async {
     if (_formKey.currentState!.validate()) {
+      if (_selectedMajor == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select a major')),
+        );
+        return;
+      }
+
       setState(() {
         _isLoading = true;
       });
 
-      final fullname = '${_firstNameController.text} ${_lastNameController.text}';
       final url = 'https://guidekproject.onrender.com/auth/register';
 
       try {
@@ -84,9 +93,11 @@ class _SignupPageState extends State<SignupPage> {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{
-            'fullname': fullname,
+            'fullname': _nameController.text,
             'email': _emailController.text,
             'password': _passwordController.text,
+            'number': _studentIdController.text,
+            'major_name': _selectedMajor!,
           }),
         );
 
@@ -100,7 +111,7 @@ class _SignupPageState extends State<SignupPage> {
         if (response.statusCode == 201) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -118,8 +129,6 @@ class _SignupPageState extends State<SignupPage> {
       }
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -162,15 +171,15 @@ class _SignupPageState extends State<SignupPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormField(
-                      controller: _firstNameController,
+                      controller: _nameController,
                       decoration: InputDecoration(
-                        labelText: 'First Name',
+                        labelText: 'Name',
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
                         ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.teal),
                         ),
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.1),
@@ -178,27 +187,41 @@ class _SignupPageState extends State<SignupPage> {
                         prefixIcon: const Icon(Icons.person, color: Colors.white),
                       ),
                       style: const TextStyle(color: Colors.white),
-                      validator: _validateFirstName,
+                      validator: _validateName,
                     ),
                     const SizedBox(height: 20),
-                    TextFormField(
-                      controller: _lastNameController,
+                    DropdownButtonFormField<String>(
+                      value: _selectedMajor,
+                      items: _majors.map((major) {
+                        return DropdownMenuItem<String>(
+                          value: major['value'],
+                          child: Text(
+                            major['name']!,
+                            style: const TextStyle(color: Colors.white), // Ensure text color is black for visibility
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedMajor = value;
+                        });
+                      },
                       decoration: InputDecoration(
-                        labelText: 'Last Name',
+                        labelText: 'Major',
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
                         ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.teal),
                         ),
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.1),
                         hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                        prefixIcon: const Icon(Icons.person, color: Colors.white),
+                        prefixIcon: const Icon(Icons.school, color: Colors.white),
                       ),
-                      style: const TextStyle(color: Colors.white),
-                      validator: _validateLastName,
+                      style: const TextStyle(color: Colors.black), // Ensure text color is black for visibility
+                      dropdownColor: Color(0xf00000013), // Ensure dropdown background color is black
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
@@ -209,8 +232,8 @@ class _SignupPageState extends State<SignupPage> {
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
                         ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.teal),
                         ),
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.1),
@@ -222,6 +245,31 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
+                      controller: _studentIdController,
+                      decoration: InputDecoration(
+                        labelText: 'Student ID',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.teal),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.1),
+                        hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
+                        prefixIcon: const Icon(Icons.card_membership, color: Colors.white),
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your student ID';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
                       controller: _passwordController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
@@ -230,8 +278,8 @@ class _SignupPageState extends State<SignupPage> {
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
                         ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.teal),
                         ),
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.1),
@@ -252,25 +300,34 @@ class _SignupPageState extends State<SignupPage> {
                       style: const TextStyle(color: Colors.white),
                       validator: _validatePassword,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     _isLoading
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
                       onPressed: _handleSignup,
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                        textStyle: const TextStyle(fontSize: 16),
                         backgroundColor: Colors.teal,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white, // Ensure text color is white
                         ),
                       ),
-                      child: const Text('Signup', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      child: const Text('Sign Up',style: TextStyle(color: Colors.white),),
                     ),
                     const SizedBox(height: 20),
-                    Text(
-                      'By signing up, you agree to our BAU terms',
-                      style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 12),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                        );
+                      },
+                      child: const Text(
+                        'Already have an account? Login',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),

@@ -1,0 +1,418 @@
+{
+  "programs": {
+    "Computer Science": {
+      "total_credits": 133,
+      "plan": [
+        {
+          "year": 1,
+          "semester": 1,
+          "subjects": [
+            {"name": "Computer Skills I", "credits": 3},
+            {"name": "Computer Skills I Lab", "credits": 0},
+            {"name": "Introduction to Computer Programming", "credits": 3},
+            {"name": "Calculus I", "credits": 3},
+            {"name": "English I", "credits": 3},
+            {"name": "Arabic I", "credits": 3}
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "subjects": [
+            {"name": "Computer Skills II", "credits": 3},
+            {"name": "Computer Skills II Lab ", "credits": 0},
+            {"name": "Calculus II", "credits": 3},
+            {"name": "Discrete Mathematics", "credits": 3},
+            {"name": "English II", "credits": 3},
+            {"name": "Arabic II", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 1,
+          "subjects": [
+            {"name": "Algorithm Design And Analysis", "credits": 3},
+            {"name": "Digital Logic", "credits": 3},
+            {"name": "Digital Logic Lab", "credits": 1},
+            {"name": "Object Oriented Programming (OOP)", "credits": 3},
+            {"name": "Object Oriented Programming (OOP) Lab", "credits": 1},
+            {"name": "National Education and University Behavior", "credits": 3},
+            {"name": "Probability And Statistics", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 2,
+          "subjects": [
+            {"name": "Java Programming", "credits": 3},
+            {"name": "Java Programming Lab", "credits": 1},
+            {"name": "Data Structures", "credits": 3},
+            {"name": "Data Structures Lab", "credits": 1},
+            {"name": "Database Design And Management Lab", "credits": 1},
+            {"name": "Database Design And Management", "credits": 3},
+            {"name": "One Optional University Requirement", "credits": 3}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 1,
+          "subjects": [
+            {"name": "Web Application Programming", "credits": 3},
+            {"name": "Web Application Programming Lab", "credits": 1},
+            {"name": "Computer Networking Principles", "credits": 3},
+            {"name": "Visual Programming For Smart Devices Lab", "credits": 1},
+            {"name": "Embedded Systems Design And Organization  ", "credits": 3},
+            {"name": "Visual Programming For Smart Devices", "credits": 3},
+            {"name": "Systems Analysis And Design", "credits": 3}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 2,
+          "subjects": [
+            {"name": "Computational Theory And Automation", "credits": 3},
+            {"name": "Wireless Computer Networks", "credits": 3},
+            {"name": "Operating Systems Principles", "credits": 3},
+            {"name": "Modern Software Engineering", "credits": 3},
+            {"name": "Principles of Numerical Analysis", "credits": 3},
+            {"name": "Artificial Intelligence", "credits": 3}
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 1,
+          "subjects": [
+            {"name": "Compiler Design And Programming Languages", "credits": 3},
+            {"name": "Military Science", "credits": 3},
+            {"name": "Information Security", "credits": 3},
+            {"name": "Computer Architecture", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Optional University Requirement", "credits": 3}
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 2,
+          "subjects": [
+            {"name": "Project For Computer Science Students", "credits": 3},
+            {"name": "Training For Computer Science Students", "credits": 6},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3}
+          ]
+        }
+
+      ]
+    },"Software Engineering": {
+      "total_credits": 132,
+      "plan": [
+        {
+          "year": 1,
+          "semester": 1,
+          "subjects": [
+            {"name": "Computer Skills I ", "credits": 3},
+            {"name": "Computer Skills I Lab", "credits": 0},
+            {"name": "Introduction to Computer Programming", "credits": 3},
+            {"name": "Calculus I", "credits": 3},
+            {"name": "English I", "credits": 3},
+            {"name": "Arabic I", "credits": 3}
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "subjects": [
+            {"name": "Computer Skills II", "credits": 3},
+            {"name": "Computer Skills II Lab ", "credits": 0},
+            {"name": "Calculus II", "credits": 3},
+            {"name": "Discrete Mathematics", "credits": 3},
+            {"name": "English II", "credits": 3},
+            {"name": "Arabic II", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 1,
+          "subjects": [
+            {"name": "One Optional University Requirement", "credits": 3},
+            {"name": "Digital Logic", "credits": 3},
+            {"name": "Digital Logic Lab", "credits": 1},
+            {"name": "Object Oriented Programming (OOP)", "credits": 3},
+            {"name": "Object Oriented Programming (OOP) Lab", "credits": 1},
+            {"name": "National Education and University Behavior", "credits": 3},
+            {"name": "Software Engineering Principles", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 2,
+          "subjects": [
+            {"name": "Java Programming", "credits": 3},
+            {"name": "Java Programming Lab", "credits": 1},
+            {"name": "Data Structures", "credits": 3},
+            {"name": "Data Structures Lab", "credits": 1},
+            {"name": "Database Design And Management Lab", "credits": 1},
+            {"name": "Database Design And Management", "credits": 3},
+            {"name": "Software Requirements Engineering And Description", "credits": 3}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 1,
+          "subjects": [
+            {"name": "Web Application Programming", "credits": 3},
+            {"name": "Computer Networking Principles", "credits": 3},
+            {"name": "Visual Programming For Smart Devices Lab", "credits": 1},
+            {"name": "Object Oriented Software Engineering", "credits": 3},
+            {"name": "Visual Programming For Smart Devices", "credits": 3},
+            {"name": "Algorithm Design And Analysis", "credits": 3}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 2,
+          "subjects": [
+            {"name": "Software Testing And Verification", "credits": 3},
+            {"name": "Software Building Tools", "credits": 3},
+            {"name": "Operating Systems Principles", "credits": 3},
+            {"name": "Probability And Statistics", "credits": 3},
+            {"name": "Principles of Numerical Analysis", "credits": 3},
+            {"name": "User Interface Design and Implementation", "credits": 3}
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 1,
+          "subjects": [
+            {"name": "Software Component Development", "credits": 3},
+            {"name": "Military Science", "credits": 3},
+            {"name": "Software Project Planning And Management", "credits": 3},
+            {"name": "Computer Design And Organization", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Optional University Requirement", "credits": 3}
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 2,
+          "subjects": [
+            {"name": "Project For Software Engineering Students", "credits": 3},
+            {"name": "Training For Software Engineering Students", "credits": 6},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3}
+          ]
+        }
+      ]
+    },"Computer Information System": {
+      "total_credits": 133,
+      "plan": [
+        {
+          "year": 1,
+          "semester": 1,
+          "subjects": [
+            {"name": "Computer Skills I", "credits": 3},
+            {"name": "Computer Skills I Lab", "credits": 0},
+            {"name": "Introduction to Computer Programming", "credits": 3},
+            {"name": "Calculus I", "credits": 3},
+            {"name": "English I", "credits": 3},
+            {"name": "Arabic I", "credits": 3}
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "subjects": [
+            {"name": "Computer Skills II", "credits": 3},
+            {"name": "Computer Skills Lab II", "credits": 0},
+            {"name": "Calculus II", "credits": 3},
+            {"name": "Discrete Mathematics", "credits": 3},
+            {"name": "English II", "credits": 3},
+            {"name": "Arabic II", "credits": 3},
+            {"name": "One Optional University Requirement", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 1,
+          "subjects": [
+            {"name": "One Optional University Requirement", "credits": 3},
+            {"name": "Digital Logic", "credits": 3},
+            {"name": "Digital Logic Lab", "credits": 1},
+            {"name": "Object Oriented Programming (OOP)", "credits": 3},
+            {"name": "Object Oriented Programming (OOP) Lab", "credits": 1},
+            {"name": "National Education and University Behavior", "credits": 3},
+            {"name": "Probability And Statistics", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 2,
+          "subjects": [
+            {"name": "Java Programming", "credits": 3},
+            {"name": "Java Programming Lab", "credits": 1},
+            {"name": "Data Structures", "credits": 3},
+            {"name": "Data Structures Lab", "credits": 1},
+            {"name": "Database Design And Management Lab", "credits": 1},
+            {"name": "Database Design And Management", "credits": 3},
+            {"name": "Computer Networking Principles", "credits": 3}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 1,
+          "subjects": [
+            {"name": "Web Application Programming", "credits": 3},
+            {"name": "Algorithm Design And Analysis", "credits": 3},
+            {"name": "Visual Programming For Smart Devices Lab", "credits": 1},
+            {"name": "Operating Systems And Systems Programming", "credits": 3},
+            {"name": "Visual Programming For Smart Devices", "credits": 3},
+            {"name": "Database Design And Management II", "credits": 3},
+            {"name": "Database Design And Management II Lab", "credits": 1}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 2,
+          "subjects": [
+            {"name": "Wireless Computer Networks", "credits": 3},
+            {"name": "Data Mining", "credits": 3},
+            {"name": "Information Security", "credits": 3},
+            {"name": "Data Warehouses", "credits": 3},
+            {"name": "Information Retrieval Systems", "credits": 3},
+            {"name": "Systems Analysis And Design", "credits": 3}
+
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 1,
+          "subjects": [
+            {"name": "Modern Software Engineering", "credits": 3},
+            {"name": "Military Science", "credits": 3},
+            {"name": "Computer Network Administration", "credits": 3},
+            {"name": "Operating Systems And Systems Programming", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "Data Mining Lab", "credits": 1}
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 2,
+          "subjects": [
+            {"name": "Project For Computer Information System Students", "credits": 3},
+            {"name": "Training For Computer Information System Students", "credits": 6},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3}
+          ]
+        }
+
+      ]
+    },"Computer Animation And Graphics": {
+      "total_credits": 132,
+      "plan": [
+        {
+          "year": 1,
+          "semester": 1,
+          "subjects": [
+            {"name": "Computer Skills I", "credits": 3},
+            {"name": "Computer Skills I Lab", "credits": 0},
+            {"name": "Introduction to Computer Programming", "credits": 3},
+            {"name": "Calculus I", "credits": 3},
+            {"name": "English I", "credits": 3},
+            {"name": "Arabic I", "credits": 3},
+            {"name": "Principles Of Fine Arts","credits": 3}
+
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "subjects": [
+            {"name": "Computer Skills 2", "credits": 3},
+            {"name": "Computer Skills Lab 2", "credits": 0},
+            {"name": "Calculus II", "credits": 3},
+            {"name": "Discrete Mathematics", "credits": 3},
+            {"name": "English II", "credits": 3},
+            {"name": "Arabic II", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 1,
+          "subjects": [
+            {"name": "Algorithm Design And Analysis", "credits": 3},
+            {"name": "Mathematics for Computer Graphics", "credits": 3},
+            {"name": "Database Design And Management", "credits": 3},
+            {"name": "Database Design And Management Lab", "credits": 1},
+            {"name": "Object Oriented Programming (OOP)", "credits": 3},
+            {"name": "Object Oriented Programming (OOP) Lab", "credits": 1},
+            {"name": "Principles Of Computer Graphics", "credits": 3}
+          ]
+        },
+        {
+          "year": 2,
+          "semester": 2,
+          "subjects": [
+            {"name": "Java Programming", "credits": 3},
+            {"name": "Java Programming Lab", "credits": 1},
+            {"name": "2D Animation", "credits": 3},
+            {"name": "2D Animation Lab", "credits": 1},
+            {"name": "Coloring Methods", "credits": 3},
+            {"name": "Computer Applications in Arts", "credits": 3},
+            {"name": "One Optional University Requirement", "credits": 3}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 1,
+          "subjects": [
+            {"name": "Web Application Programming", "credits": 3},
+            {"name": "Web Application Programming Lab", "credits": 1},
+            {"name": "Principles of Numerical Analysis", "credits": 3},
+            {"name": "National Education and University Behavior", "credits": 3},
+            {"name": "3D Character Design", "credits": 3},
+            {"name": "Digital Film Design", "credits": 3},
+            {"name": "Digital Film Design Lab", "credits": 1}
+          ]
+        },
+        {
+          "year": 3,
+          "semester": 2,
+          "subjects": [
+            {"name": "Multimedia", "credits": 3},
+            {"name": "Storyboard Design", "credits": 3},
+            {"name": "3D Model Design", "credits": 3},
+            {"name": "3d Character Animation", "credits": 3},
+            {"name": "Human Computer Interaction", "credits": 3}
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 1,
+          "subjects": [
+            {"name": "Interactive Graphics", "credits": 3},
+            {"name": "Military Science", "credits": 3},
+            {"name": "Visual Programming For Smart Devices", "credits": 3},
+            {"name": "Project For (1) Computer Animation And Graphics Students", "credits": 1},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Optional University Requirement", "credits": 3}
+          ]
+        },
+        {
+          "year": 4,
+          "semester": 2,
+          "subjects": [
+            {"name": "Project For (2) Computer Animation And Graphics Students", "credits": 2},
+            {"name": "Training For Computer Animation And Graphics Students", "credits": 6},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3},
+            {"name": "One Elective Major Requirement", "credits": 3}
+          ]
+        }
+
+      ]
+    }
+  }
+}

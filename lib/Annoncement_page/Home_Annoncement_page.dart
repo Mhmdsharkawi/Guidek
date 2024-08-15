@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:guidek_project1/Annoncement_page/App_Info.dart';
 import 'package:guidek_project1/Annoncement_page/Chat_With_Me.dart';
 import 'package:guidek_project1/Annoncement_page/Contact_Us.dart';
-import 'package:guidek_project1/Annoncement_page/File_Information.dart';
+import 'package:guidek_project1/Annoncement_page/User_Information.dart';
 import 'package:guidek_project1/Annoncement_page/classes_locations.dart';
 import 'package:guidek_project1/Annoncement_page/Help&Support.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
@@ -26,7 +26,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   int _current = 0;
   String _selectedLanguage = 'EN';
   bool _isDarkMode = false;
-  String? _profileImagePath;
+  String? _profileImageUrl;
+  String _userFullName = 'Loading...';
 
   Future<bool> _onWillPop() async {
     return false;
@@ -35,8 +36,32 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus();  
+    _checkLoginStatus();
     _loadProfileImage();
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? fullName = prefs.getString('userFullName');
+    setState(() {
+      _userFullName = fullName ?? 'Guest'; // Use 'Guest' if no name is found
+    });
+  }
+
+  Future<void> _loadProfileImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? filename = prefs.getString('userImgUrl');
+    print(filename);
+    if (filename != null) {
+      setState(() {
+        _profileImageUrl = 'https://guidekproject.onrender.com/users/get_image/$filename';
+      });
+    } else {
+      setState(() {
+        _profileImageUrl = 'https://guidekproject.onrender.com/users/get_image/default_image.jpg';
+      });
+    }
   }
 
   Future<void> _checkLoginStatus() async {
@@ -51,15 +76,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     }
   }
 
-
-
-
-  Future<void> _loadProfileImage() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _profileImagePath = prefs.getString('profileImagePath');
-    });
-  }
 
   final List<String> imgList = [
     'assets/NewGate.jpg',
@@ -120,7 +136,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('cancel'.tr()),
+              child: Text('cancel'.tr() , style: TextStyle(color: Color(0xFF318C3C)),),
             ),
             TextButton(
               onPressed: () async {
@@ -316,10 +332,10 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     },
                     child: Row(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: _profileImagePath != null
-                              ? FileImage(File(_profileImagePath!))
-                              : AssetImage('assets/profile.jpg') as ImageProvider,
+                          CircleAvatar(
+                          backgroundImage: _profileImageUrl != null
+                              ? NetworkImage(_profileImageUrl!)
+                              : AssetImage('assets/default_image.jpg') as ImageProvider,
                           radius: 30,
                         ),
                         SizedBox(width: 10),
@@ -327,20 +343,23 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Zaid Nsour',
+                              _userFullName,
                               style: TextStyle(
                                 fontFamily: 'Acumin Variable Concept',
-                                fontSize: 26,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               'manage_account'.tr(),
                               style: TextStyle(
                                 fontFamily: 'Acumin Variable Concept',
                                 fontSize: 14,
-                                color: Colors.black,
+                                color: Color(0xFF318C3C),
                               ),
                             ),
                           ],

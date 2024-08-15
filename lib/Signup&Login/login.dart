@@ -73,48 +73,91 @@ class _LoginPageState extends State<LoginPage> {
         print('Response status: ${response.statusCode}');
         print('Response body: ${response.body}');
 
-        await Future.delayed(const Duration(seconds: 2));
-
-        // Save login state
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isLoggedIn', true);
-        await prefs.setString('userEmail', _emailController.text);
-
-        // Set expiration date (30 days from now)
-        DateTime expirationDate = DateTime.now().add(const Duration(days: 30));
-        await prefs.setString('loginExpiration', expirationDate.toIso8601String());
-
-        setState(() {
-          _isLoading = false;
-        });
-
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           final accessToken = data['access_token'];
-          final refreshToken = data['refresh_token'];
 
-          // Save tokens or navigate to a new page
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeAnnoncementPage()),
+          // Save tokens
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isLoggedIn', true);
+          await prefs.setString('userEmail', _emailController.text);
+          await prefs.setString('accessToken', accessToken);
+
+          // Set expiration date (30 days from now)
+          DateTime expirationDate = DateTime.now().add(const Duration(days: 30));
+          await prefs.setString('loginExpiration', expirationDate.toIso8601String());
+
+          print('Tokens and login state saved successfully');
+
+          // Fetch user info
+          final userInfoResponse = await http.get(
+            Uri.parse('https://guidekproject.onrender.com/users/current_user_info'),
+            headers: <String, String>{
+              'Authorization': 'Bearer $accessToken',
+            },
           );
+
+          print('User info response status: ${userInfoResponse.statusCode}');
+          print('User info response body: ${userInfoResponse.body}');
+
+          if (userInfoResponse.statusCode == 200) {
+            final userInfo = jsonDecode(userInfoResponse.body);
+
+            // Safely extract values, handling null cases
+            final fullName = userInfo['fullname'] ?? '';
+            final Email =userInfo['email']??'';
+            final majorName = userInfo['major_name'] ?? '';
+            final phone = userInfo['phone'] ?? '';
+            final imgUrl = userInfo['img_url'] ?? '';
+            final number = userInfo['number'] ?? 0; // Use default value if null
+
+            // Save user info to SharedPreferences
+            await prefs.setString('userFullName', fullName);
+            await prefs.setString('userEmail', Email);
+            await prefs.setString('userMajor', majorName);
+            await prefs.setString('userPhone', phone);
+            await prefs.setString('userImgUrl', imgUrl);
+            await prefs.setInt('userNumber', number);
+
+            print('User info saved successfully:');
+            print('Full Name: $fullName');
+            print('Major: $majorName');
+            print('Phone: $phone');
+            print('Image URL: $imgUrl');
+            print('Number: $number');
+
+            // Delay navigation to ensure all data is processed
+            await Future.delayed(const Duration(seconds: 2));
+
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeAnnoncementPage()),
+            );
+          } else {
+            // Handle user info fetch error
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to fetch user info')),
+            );
+          }
         } else {
-          // Handle error response
+          // Handle login error
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Login failed: ${jsonDecode(response.body)['message']}')),
           );
         }
       } catch (e) {
         print('Request failed with error: $e');
-        setState(() {
-          _isLoading = false;
-        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login failed: Network error')),
         );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
+
 
 
   @override

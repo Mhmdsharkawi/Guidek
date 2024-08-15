@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:easy_localization/easy_localization.dart'; 
+import 'package:easy_localization/easy_localization.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -13,10 +13,10 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  String _firstName = 'zaid';
-  String _lastName = 'Nsour';
-  String _email = 'zaid@example.com';
-  String _phoneNumber = '';
+  late TextEditingController _fullNameController;
+  late TextEditingController _studentIDController;
+  late TextEditingController _emailController;
+  late TextEditingController _phoneNumberController;
   String? _profileImagePath;
   File? _image;
   final picker = ImagePicker();
@@ -24,7 +24,25 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   void initState() {
     super.initState();
-    _loadProfileData();
+    _fullNameController = TextEditingController();
+    _studentIDController = TextEditingController();
+    _emailController = TextEditingController();
+    _phoneNumberController = TextEditingController();
+    _loadProfileData();  // Load data when the page initializes
+  }
+
+  Future<void> _loadProfileData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _fullNameController.text = prefs.getString('userFullName') ?? 'Zaid Nsour';
+      _studentIDController.text = prefs.getInt('userNumber')?.toString() ?? '';
+      _emailController.text = prefs.getString('userEmail') ?? 'zaid@example.com';
+      _phoneNumberController.text = prefs.getString('userPhone') ?? '';
+      _profileImagePath = prefs.getString('userImgUrl');
+      if (_profileImagePath != null) {
+        _image = File(_profileImagePath!);
+      }
+    });
   }
 
   Future<void> getImage() async {
@@ -35,31 +53,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
         _profileImagePath = pickedFile.path;
       });
       final prefs = await SharedPreferences.getInstance();
-      prefs.setString('profileImagePath', pickedFile.path);
+      prefs.setString('userImgUrl', pickedFile.path);
     }
-  }
-
-  Future<void> _loadProfileData() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _firstName = prefs.getString('firstName') ?? 'Zaid';
-      _lastName = prefs.getString('lastName') ?? 'Nsour';
-      _email = prefs.getString('email') ?? 'zaid@example.com';
-      _phoneNumber = prefs.getString('phoneNumber') ?? '';
-      _profileImagePath = prefs.getString('profileImagePath');
-      if (_profileImagePath != null) {
-        _image = File(_profileImagePath!);
-      }
-    });
   }
 
   Future<void> _saveProfileData() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('firstName', _firstName);
-    prefs.setString('lastName', _lastName);
-    prefs.setString('email', _email);
-    prefs.setString('phoneNumber', _phoneNumber);
-    prefs.setString('profileImagePath', _profileImagePath ?? '');
+    prefs.setString('userFullName', _fullNameController.text);
+    prefs.setString('userPhone', _phoneNumberController.text);
+    prefs.setString('userImgUrl', _profileImagePath ?? '');
+    prefs.setInt('userNumber', int.tryParse(_studentIDController.text) ?? 0);
   }
 
   void _saveChanges() {
@@ -67,9 +70,18 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _formKey.currentState!.save();
       _saveProfileData();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('saveChanges'.tr())), 
+        SnackBar(content: Text('saveChanges'.tr(), style: TextStyle(color: Colors.white))),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _studentIDController.dispose();
+    _emailController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
   }
 
   @override
@@ -78,7 +90,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          'profileTitle'.tr(), 
+          'profileTitle'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 28,
@@ -94,12 +106,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/background.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
         child: SafeArea(
           child: Column(
             children: [
@@ -216,7 +222,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           children: [
             Center(
               child: Text(
-                '$_firstName $_lastName',
+                _fullNameController.text,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -225,15 +231,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
               ),
             ),
             SizedBox(height: 10),
-            _buildTextField('firstName'.tr(), _firstName, false), 
-            _buildTextField('lastName'.tr(), _lastName, false), 
-            _buildTextField('emailAddress'.tr(), _email, false),
-            _buildTextField('phoneNumber'.tr(), _phoneNumber, false), 
+            _buildTextField('Full Name', _fullNameController, false),
+            _buildTextField('Student ID', _studentIDController, false),
+            _buildTextField('Email Address', _emailController, false),
+            _buildTextField('Phone Number', _phoneNumberController, false),
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: _saveChanges,
-                child: Text('saveChanges'.tr()), 
+                child: Text('Save Changes',style: TextStyle(color: Color(0xFF318C3C)),),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   textStyle: TextStyle(
@@ -254,7 +260,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  Widget _buildTextField(String labelText, String initialValue, bool readOnly) {
+  Widget _buildTextField(String labelText, TextEditingController controller, bool readOnly) {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
       child: Column(
@@ -270,7 +276,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           ),
           SizedBox(height: 5),
           TextFormField(
-            initialValue: initialValue,
+            controller: controller,
             readOnly: readOnly,
             style: TextStyle(
               color: Colors.white,
@@ -285,19 +291,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 borderSide: BorderSide.none,
               ),
             ),
-            onChanged: (value) {
-              setState(() {
-                if (labelText == 'firstName'.tr()) {
-                  _firstName = value;
-                } else if (labelText == 'lastName'.tr()) {
-                  _lastName = value;
-                } else if (labelText == 'emailAddress'.tr()) {
-                  _email = value;
-                } else if (labelText == 'phoneNumber'.tr()) {
-                  _phoneNumber = value;
-                }
-              });
-            },
           ),
         ],
       ),

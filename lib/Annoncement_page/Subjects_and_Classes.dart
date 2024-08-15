@@ -17,7 +17,7 @@ class _SubjectsPageState extends State<SubjectsAndClasses> {
   @override
   void initState() {
     super.initState();
-    tree.loadFromJson('assets/subjects_data/cs.json');
+    tree.loadFromJson('assets/subjects_data/majors&subjects.json');
     subjects = tree.getAllSubjects();
     filteredSubjects = subjects;
   }
