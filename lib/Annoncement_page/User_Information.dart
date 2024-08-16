@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -13,10 +14,10 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _fullNameController;
-  late TextEditingController _studentIDController;
-  late TextEditingController _emailController;
-  late TextEditingController _phoneNumberController;
+  String _fullName = '';
+  String _studentID = '';
+  String _email = '';
+  String _phoneNumber = '';
   String? _profileImagePath;
   File? _image;
   final picker = ImagePicker();
@@ -24,20 +25,16 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   void initState() {
     super.initState();
-    _fullNameController = TextEditingController();
-    _studentIDController = TextEditingController();
-    _emailController = TextEditingController();
-    _phoneNumberController = TextEditingController();
     _loadProfileData();  // Load data when the page initializes
   }
 
   Future<void> _loadProfileData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _fullNameController.text = prefs.getString('userFullName') ?? 'Zaid Nsour';
-      _studentIDController.text = prefs.getInt('userNumber')?.toString() ?? '';
-      _emailController.text = prefs.getString('userEmail') ?? 'zaid@example.com';
-      _phoneNumberController.text = prefs.getString('userPhone') ?? '';
+      _fullName = prefs.getString('userFullName') ?? 'Zaid Nsour';
+      _studentID = prefs.getString('userNumber') ?? '';
+      _email = prefs.getString('userEmail') ?? 'zaid@example.com';
+      _phoneNumber = prefs.getString('userPhone') ?? '';
       _profileImagePath = prefs.getString('userImgUrl');
       if (_profileImagePath != null) {
         _image = File(_profileImagePath!);
@@ -52,36 +49,108 @@ class _UserProfilePageState extends State<UserProfilePage> {
         _image = File(pickedFile.path);
         _profileImagePath = pickedFile.path;
       });
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('userImgUrl', pickedFile.path);
+      await _uploadImage();
+    }
+  }
+
+  Future<void> _uploadImage() async {
+    if (_image == null) return;
+
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('https://guidekproject.onrender.com/users/upload_image'),
+    );
+
+    request.files.add(await http.MultipartFile.fromPath('image', _image!.path));
+
+    try {
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      print('Upload response status: ${response.statusCode}');
+      print('Upload response body: $responseBody');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(responseBody);
+        if (data['message'] == 'Image uploaded successfully.') {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('userImgUrl', _image!.path);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Image uploaded successfully'), backgroundColor: Colors.green),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to upload image'), backgroundColor: Colors.red),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to upload image'), backgroundColor: Colors.red),
+        );
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error uploading image'), backgroundColor: Colors.red),
+      );
     }
   }
 
   Future<void> _saveProfileData() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('userFullName', _fullNameController.text);
-    prefs.setString('userPhone', _phoneNumberController.text);
+    prefs.setString('userFullName', _fullName);
+    prefs.setString('userPhone', _phoneNumber);
     prefs.setString('userImgUrl', _profileImagePath ?? '');
-    prefs.setInt('userNumber', int.tryParse(_studentIDController.text) ?? 0);
-  }
+    prefs.setString('userNumber', _studentID);
 
+    final request = http.MultipartRequest(
+      'PUT',
+      Uri.parse('https://guidekproject.onrender.com/users/update_user_info'),
+    );
+
+    request.fields['json_data'] = jsonEncode({
+      'fullname': _fullName,
+      'number': _studentID,
+      'phone': _phoneNumber,
+      'major_name': 'Computer Science', // Example, replace with actual major if needed
+    });
+
+    if (_image != null) {
+      request.files.add(await http.MultipartFile.fromPath('image', _image!.path));
+    }
+
+    try {
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      print('Update response status: ${response.statusCode}');
+      print('Update response body: $responseBody');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(responseBody);
+        if (data['message'] == 'User Profile updated successfully.') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Profile updated successfully'), backgroundColor: Colors.green),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to update profile'), backgroundColor: Colors.red),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update profile'), backgroundColor: Colors.red),
+        );
+      }
+    } catch (e) {
+      print('Error updating profile: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error updating profile'), backgroundColor: Colors.red),
+      );
+    }
+  }
+  
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _saveProfileData();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('saveChanges'.tr(), style: TextStyle(color: Colors.white))),
-      );
     }
-  }
-
-  @override
-  void dispose() {
-    _fullNameController.dispose();
-    _studentIDController.dispose();
-    _emailController.dispose();
-    _phoneNumberController.dispose();
-    super.dispose();
   }
 
   @override
@@ -90,7 +159,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          'profileTitle'.tr(),
+          'profileTitle',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 28,
@@ -222,7 +291,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           children: [
             Center(
               child: Text(
-                _fullNameController.text,
+                _fullName,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -231,15 +300,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
               ),
             ),
             SizedBox(height: 10),
-            _buildTextField('Full Name', _fullNameController, false),
-            _buildTextField('Student ID', _studentIDController, false),
-            _buildTextField('Email Address', _emailController, false),
-            _buildTextField('Phone Number', _phoneNumberController, false),
+            _buildTextField('Full Name', _fullName, false),
+            _buildTextField('Student ID', _studentID, false),
+            _buildTextField('Email Address', _email, false),
+            _buildTextField('Phone Number', _phoneNumber, false),
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: _saveChanges,
-                child: Text('Save Changes',style: TextStyle(color: Color(0xFF318C3C)),),
+                child: Text('Save Changes'),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   textStyle: TextStyle(
@@ -260,7 +329,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  Widget _buildTextField(String labelText, TextEditingController controller, bool readOnly) {
+  Widget _buildTextField(String labelText, String initialValue, bool readOnly) {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
       child: Column(
@@ -274,22 +343,32 @@ class _UserProfilePageState extends State<UserProfilePage> {
               fontFamily: 'Acumin Variable Concept',
             ),
           ),
-          SizedBox(height: 5),
           TextFormField(
-            controller: controller,
+            initialValue: initialValue,
             readOnly: readOnly,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontFamily: 'Acumin Variable Concept',
-            ),
+            onSaved: (value) {
+              if (labelText == 'Full Name') {
+                _fullName = value ?? '';
+              } else if (labelText == 'Student ID') {
+                _studentID = value ?? '';
+              } else if (labelText == 'Email Address') {
+                _email = value ?? '';
+              } else if (labelText == 'Phone Number') {
+                _phoneNumber = value ?? '';
+              }
+            },
             decoration: InputDecoration(
               filled: true,
-              fillColor: Color(0xFF2E7D32),
+              fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide.none,
               ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 15),
+            ),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontFamily: 'Acumin Variable Concept',
             ),
           ),
         ],
