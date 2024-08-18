@@ -13,7 +13,9 @@ class _GpaCalculatorState extends State<GpaCalculator> {
   final TextEditingController hoursController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
 
-  static const Color appBarColor = Color(0xFF318c3c);
+  static const Color primaryColor = Color(0xFF318c3c);
+  static const Color secondaryColor = Color(0xFFFDCD90);
+  final Color grayColor = Colors.grey[600]!;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: appBarColor,
+        backgroundColor: primaryColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -35,86 +37,121 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           children: [
             Text(
               'GPA Calculator',
-              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal, color: Colors.white),
+              style: TextStyle(
+                fontFamily: 'Acumin Variable Concept',
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 28,
+              ),
             ),
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: SvgPicture.asset(
-              'assets/guidek-bg.jpg.svg',
-              fit: BoxFit.fill,
-              color: const Color.fromARGB(100, 220, 220, 220),
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/Background2.jpeg'),
+            fit: BoxFit.cover,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Row(
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 12,
+              color: secondaryColor,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Hours Passed:'),
-                          TextField(
-                            controller: hoursController,
-                            cursorColor: appBarColor,
-                            decoration: InputDecoration(
-                              hintText: 'Enter hours passed',
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Hours Passed:',
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: grayColor,
+                                ),
                               ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
+                              TextField(
+                                controller: hoursController,
+                                cursorColor: primaryColor,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter hours passed',
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  color: grayColor,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Current GPA:',
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: grayColor,
+                                ),
+                              ),
+                              TextField(
+                                controller: gpaController,
+                                cursorColor: primaryColor,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter current GPA',
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  color: grayColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 16),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Current GPA:'),
-                          TextField(
-                            cursorColor: appBarColor,
-                            controller: gpaController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter current GPA',
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: ListView.builder(
+                        itemCount: rows.length,
+                        itemBuilder: (context, index) {
+                          return _buildRow(index, index + 1);
+                        },
                       ),
                     ),
                   ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: rows.length,
-                    itemBuilder: (context, index) {
-                      return _buildRow(index, index + 1);
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
@@ -123,7 +160,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              backgroundColor: appBarColor,
+              backgroundColor: primaryColor,
               onPressed: _addRow,
               child: const Icon(Icons.add, color: Colors.black),
             ),
@@ -133,7 +170,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               child: const Icon(Icons.delete, color: Colors.black),
             ),
             FloatingActionButton(
-              backgroundColor: appBarColor,
+              backgroundColor: primaryColor,
               onPressed: _calculateGPA,
               child: const Icon(Icons.calculate, color: Colors.black),
             ),
@@ -255,7 +292,14 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               children: [
                 Row(
                   children: [
-                    Text('Subject $subjectNumber hours: '),
+                    Text(
+                      'Subject $subjectNumber hours: ',
+                      style: TextStyle(
+                        fontFamily: 'Acumin Variable Concept',
+                        fontSize: 18,
+                        color: grayColor,
+                      ),
+                    ),
                     Expanded(
                       child: DropdownButton<int>(
                         value: rows[index].hours,
@@ -273,6 +317,14 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                       ),
                     ),
                     const SizedBox(width: 16),
+                    Text(
+                      'Grade: ',
+                      style: TextStyle(
+                        fontFamily: 'Acumin Variable Concept',
+                        fontSize: 18,
+                        color: grayColor,
+                      ),
+                    ),
                     Expanded(
                       child: DropdownButton<String>(
                         value: rows[index].grade,
@@ -290,53 +342,27 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                         },
                       ),
                     ),
+                    const SizedBox(width: 16),
+                    Text(
+                      'Retaken: ',
+                      style: TextStyle(
+                        fontFamily: 'Acumin Variable Concept',
+                        fontSize: 18,
+                        color: grayColor,
+                      ),
+                    ),
+                    Checkbox(
+                      value: rows[index].isRetaken,
+                      onChanged: (newValue) {
+                        setState(() {
+                          rows[index].isRetaken = newValue!;
+                        });
+                      },
+                    ),
                   ],
                 ),
-                if (rows[index].isRetaken)
-                  Center(
-                    child: Row(
-                      children: [
-                        const Text('Old'),
-                        const SizedBox(width: 15), // Adjust to align with other rows
-                        Expanded(
-                          child: DropdownButton<String>(
-                            value: rows[index].oldGrade,
-                            items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
-                                .map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                rows[index].oldGrade = newValue!;
-                              });
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 150),
-                      ],
-                    ),
-                  ),
               ],
             ),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Checkbox(
-                value: rows[index].isRetaken,
-                onChanged: (newValue) {
-                  setState(() {
-                    rows[index].isRetaken = newValue!;
-                  });
-                },
-                activeColor: appBarColor, // Matching the app bar color
-              ),
-              const Text('Retaken'),
-            ],
           ),
         ],
       ),
@@ -347,6 +373,5 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 class RowData {
   int hours = 1;
   String grade = 'A';
-  String oldGrade = 'A';
   bool isRetaken = false;
 }
