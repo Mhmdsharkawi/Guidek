@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubjectProposal extends StatefulWidget {
   @override
@@ -12,6 +14,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
   final _studentNumberController = TextEditingController();
   List<String> _majors = [];
   List<String> _filteredSubjects = [];
+  List<String> _subjectList = [];
   String? _selectedSubject;
   String? _selectedMajor;
   final Color _appBarColor = Color(0xFF318c3c);
@@ -20,18 +23,45 @@ class _SubjectProposalState extends State<SubjectProposal> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadMajorsAndSubjects();
   }
 
-  Future<void> _loadData() async {
+  Future<void> _loadMajorsAndSubjects() async {
+    // Load majors and subjects from assets
     final String response = await rootBundle.loadString('assets/majors_subjects.json');
     final Map<String, dynamic> data = json.decode(response);
 
     setState(() {
       _data = data;
       _majors = data.keys.toList();
-      _filteredSubjects = []; // Initially empty
+      _filteredSubjects = [];
     });
+
+    // Fetch subjects from the API
+    await _fetchSubjects();
+  }
+
+  Future<void> _fetchSubjects() async {
+    try {
+      final response = await http.get(Uri.parse('https://guidekproject.onrender.com/subjects/all_subjects'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final List<String> subjects = (data['subjects'] as List<dynamic>)
+            .map((subject) => subject['name'] as String)
+            .toList();
+
+        setState(() {
+          _subjectList = subjects;
+        });
+      } else {
+        throw Exception('Failed to load subjects');
+      }
+    } catch (e) {
+      print('Error fetching subjects: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load subjects. Please try again.')),
+      );
+    }
   }
 
   void _updateSubjects(String? major) {
@@ -44,35 +74,56 @@ class _SubjectProposalState extends State<SubjectProposal> {
       }
       _selectedSubject = null; // Reset selected subject
     } else {
-      _filteredSubjects = []; // Reset to empty
+      _filteredSubjects = _subjectList; // Use the full list of subjects
     }
   }
 
-  void _submitForm() {
-    final fullName = _fullNameController.text;
-    final studentNumber = _studentNumberController.text;
-
-    if (fullName.isEmpty || studentNumber.isEmpty || _selectedSubject == null || _selectedMajor == null) {
-      // Handle validation
+  Future<void> _submitForm() async {
+    if (_selectedSubject == null || _selectedMajor == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill all fields and select a major and subject')),
+        SnackBar(content: Text('Please select a major and subject')),
       );
       return;
     }
 
-    // Handle form submission
-    print('Full Name: $fullName');
-    print('Student Number: $studentNumber');
-    print('Selected Major: $_selectedMajor');
-    print('Selected Subject: $_selectedSubject');
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken') ?? '';
 
-    // Clear the form
-    _fullNameController.clear();
-    _studentNumberController.clear();
-    setState(() {
-      _selectedSubject = null;
-      _selectedMajor = null;
-    });
+    final data = {
+      'subject_name': _selectedSubject,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://guidekproject.onrender.com/classes/request_class'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 201) {
+        final responseData = jsonDecode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'])),
+        );
+        setState(() {
+          _selectedSubject = null;
+          _selectedMajor = null;
+        });
+      } else {
+        final responseData = jsonDecode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'])),
+        );
+      }
+    } catch (e) {
+      print('Error submitting form: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred. Please try again.')),
+      );
+    }
   }
 
   @override
@@ -88,38 +139,9 @@ class _SubjectProposalState extends State<SubjectProposal> {
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 600), // Adjust maxWidth as needed
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                TextField(
-                  controller: _fullNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    labelStyle: TextStyle(color: _appBarColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                  ),
-                  cursorColor: _appBarColor,
-                ),
-                SizedBox(height: 16),
-                TextField(
-                  controller: _studentNumberController,
-                  decoration: InputDecoration(
-                    labelText: 'Student Number',
-                    labelStyle: TextStyle(color: _appBarColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                  ),
-                  cursorColor: _appBarColor,
-                ),
-                SizedBox(height: 16),
+                // Major Dropdown
                 DropdownButtonFormField<String>(
                   value: _selectedMajor,
                   hint: Text('Select Major'),
@@ -147,6 +169,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                   ),
                 ),
                 SizedBox(height: 16),
+                // Subject Dropdown
                 DropdownButtonFormField<String>(
                   value: _selectedSubject,
                   hint: Text('Select Subject'),
@@ -155,7 +178,14 @@ class _SubjectProposalState extends State<SubjectProposal> {
                       _selectedSubject = newValue;
                     });
                   },
-                  items: _filteredSubjects.map((subject) {
+                  items: _filteredSubjects.isNotEmpty
+                      ? _filteredSubjects.map((subject) {
+                    return DropdownMenuItem<String>(
+                      value: subject,
+                      child: Expanded(child: Text(subject)),
+                    );
+                  }).toList()
+                      : _subjectList.map((subject) {
                     return DropdownMenuItem<String>(
                       value: subject,
                       child: Text(subject),
@@ -173,6 +203,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                   ),
                 ),
                 SizedBox(height: 16),
+                // Submit Button
                 ElevatedButton(
                   onPressed: _submitForm,
                   child: Text('Submit'),

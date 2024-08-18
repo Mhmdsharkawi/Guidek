@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QAScreen extends StatefulWidget {
   const QAScreen({super.key});
@@ -10,6 +11,7 @@ class QAScreen extends StatefulWidget {
 
 class _QAScreenState extends State<QAScreen> {
   List<Map<String, String>> _qaData = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -18,16 +20,36 @@ class _QAScreenState extends State<QAScreen> {
   }
 
   Future<void> _loadQAData() async {
-    // Load the JSON file from assets
-    final String response = await rootBundle.loadString('assets/questions.json');
-    final List<dynamic> data = json.decode(response);
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken') ?? '';
 
-    setState(() {
-      _qaData = data.map((item) => {
-        'question': item['question'] as String,
-        'answer': item['answer'] as String,
-      }).toList();
-    });
+    try {
+      final response = await http.get(
+        Uri.parse('https://guidekproject.onrender.com/faq/all_qa'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final List<dynamic> qaList = data['QA'];
+        setState(() {
+          _qaData = qaList.map((item) => {
+            'question': item['question'] as String,
+            'answer': item['answer'] as String,
+          }).toList();
+          _isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load Q&A data');
+      }
+    } catch (e) {
+      print('Error loading Q&A data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -43,7 +65,9 @@ class _QAScreenState extends State<QAScreen> {
           },
         ),
       ),
-      body: Directionality(
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Directionality(
         textDirection: TextDirection.rtl,
         child: ListView.builder(
           itemCount: _qaData.length,

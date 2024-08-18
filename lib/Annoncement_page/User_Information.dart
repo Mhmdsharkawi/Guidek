@@ -1,377 +1,333 @@
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({super.key});
-
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  late String _fullname;
+  late String _studentId;
+  late String _email;
+  late String _phone;
+  late String _major;
+  late bool _isLoading;
+  late String _accessToken;
+  ImageProvider _profileImage = AssetImage('assets/default_image.jpg'); // Provide a default value
+
   final _formKey = GlobalKey<FormState>();
-  String _fullName = '';
-  String _studentID = '';
-  String _email = '';
-  String _phoneNumber = '';
-  String? _profileImagePath;
-  File? _image;
-  final picker = ImagePicker();
+  final _picker = ImagePicker();
+  File? _profileImageFile;
 
   @override
   void initState() {
     super.initState();
-    _loadProfileData();  // Load data when the page initializes
+    _loadUserData();
+    _loadProfileImage();
   }
 
-  Future<void> _loadProfileData() async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<void> _loadUserData() async {
     setState(() {
-      _fullName = prefs.getString('userFullName') ?? 'Zaid Nsour';
-      _studentID = prefs.getString('userNumber') ?? '';
-      _email = prefs.getString('userEmail') ?? 'zaid@example.com';
-      _phoneNumber = prefs.getString('userPhone') ?? '';
-      _profileImagePath = prefs.getString('userImgUrl');
-      if (_profileImagePath != null) {
-        _image = File(_profileImagePath!);
-      }
+      _isLoading = true;
     });
-  }
 
-  Future<void> getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
+    final prefs = await SharedPreferences.getInstance();
+    _accessToken = prefs.getString('accessToken') ?? '';
+    final filename = prefs.getString('userImgUrl') ?? '';
+
+    try {
+      // Fetch user info
+      final response = await http.get(
+        Uri.parse('https://guidekproject.onrender.com/users/current_user_info'),
+        headers: {
+          'Authorization': 'Bearer $_accessToken',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          _fullname = data['fullname'] ?? '';
+          _studentId = data['number'] ?? '';
+          _email = data['email'] ?? '';
+          _phone = data['phone'] ?? '';
+          _major = data['major_name'] ?? ''; // Add major field
+          _profileImage = filename.isNotEmpty
+              ? NetworkImage('https://guidekproject.onrender.com/users/get_image/$filename')
+              : AssetImage('assets/default_image.jpg');
+          _isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load user data');
+      }
+    } catch (e) {
+      print('Error loading user data: $e');
       setState(() {
-        _image = File(pickedFile.path);
-        _profileImagePath = pickedFile.path;
+        _isLoading = false;
       });
-      await _uploadImage();
     }
   }
 
-  Future<void> _uploadImage() async {
-    if (_image == null) return;
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final filename = prefs.getString('userImgUrl');
+    final accessToken = prefs.getString('accessToken');
 
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse('https://guidekproject.onrender.com/users/upload_image'),
-    );
-
-    request.files.add(await http.MultipartFile.fromPath('image', _image!.path));
+    String imageUrl;
+    if (filename != null && filename.isNotEmpty) {
+      imageUrl = 'https://guidekproject.onrender.com/users/get_image/$filename';
+    } else {
+      imageUrl = 'https://guidekproject.onrender.com/users/get_image/default_image.jpg';
+    }
 
     try {
-      final response = await request.send();
-      final responseBody = await response.stream.bytesToString();
-      print('Upload response status: ${response.statusCode}');
-      print('Upload response body: $responseBody');
+      final response = await http.get(
+        Uri.parse(imageUrl),
+        headers: <String, String>{
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
       if (response.statusCode == 200) {
-        final data = jsonDecode(responseBody);
-        if (data['message'] == 'Image uploaded successfully.') {
-          final prefs = await SharedPreferences.getInstance();
-          prefs.setString('userImgUrl', _image!.path);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Image uploaded successfully'), backgroundColor: Colors.green),
-          );
+        final contentType = response.headers['content-type'];
+        if (contentType != null && contentType.startsWith('image/')) {
+          setState(() {
+            _profileImage = MemoryImage(response.bodyBytes);
+          });
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to upload image'), backgroundColor: Colors.red),
-          );
+          print('Response is not an image, content-type: $contentType');
+          setState(() {
+            _profileImage = AssetImage('assets/default_image.jpg');
+          });
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to upload image'), backgroundColor: Colors.red),
-        );
+        print('Failed to load profile image, status code: ${response.statusCode}');
+        setState(() {
+          _profileImage = AssetImage('assets/default_image.jpg');
+        });
+      }
+    } catch (e) {
+      print('Error loading profile image: $e');
+      setState(() {
+        _profileImage = AssetImage('assets/default_image.jpg');
+      });
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImageFile = File(pickedFile.path);
+        _profileImage = FileImage(_profileImageFile!);
+      });
+      await _uploadProfileImage();
+    }
+  }
+
+  Future<void> _uploadProfileImage() async {
+    if (_profileImageFile == null) return;
+
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken') ?? '';
+
+    try {
+      final request = http.MultipartRequest(
+        'PUT',
+        Uri.parse('https://guidekproject.onrender.com/users/update_user_info'),
+      );
+      request.headers['Authorization'] = 'Bearer $accessToken';
+
+      // Add the image file
+      request.files.add(await http.MultipartFile.fromPath(
+        'image',
+        _profileImageFile!.path,
+      ));
+
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        final responseData = await response.stream.bytesToString();
+        final data = jsonDecode(responseData);
+        print('Image uploaded successfully: ${data['message']}');
+      } else {
+        print('Failed to upload image: ${response.statusCode}');
       }
     } catch (e) {
       print('Error uploading image: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error uploading image'), backgroundColor: Colors.red),
-      );
     }
   }
 
-  Future<void> _saveProfileData() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('userFullName', _fullName);
-    prefs.setString('userPhone', _phoneNumber);
-    prefs.setString('userImgUrl', _profileImagePath ?? '');
-    prefs.setString('userNumber', _studentID);
-
-    final request = http.MultipartRequest(
-      'PUT',
-      Uri.parse('https://guidekproject.onrender.com/users/update_user_info'),
-    );
-
-    request.fields['json_data'] = jsonEncode({
-      'fullname': _fullName,
-      'number': _studentID,
-      'phone': _phoneNumber,
-      'major_name': 'Computer Science', // Example, replace with actual major if needed
-    });
-
-    if (_image != null) {
-      request.files.add(await http.MultipartFile.fromPath('image', _image!.path));
-    }
-
-    try {
-      final response = await request.send();
-      final responseBody = await response.stream.bytesToString();
-      print('Update response status: ${response.statusCode}');
-      print('Update response body: $responseBody');
-      if (response.statusCode == 200) {
-        final data = jsonDecode(responseBody);
-        if (data['message'] == 'User Profile updated successfully.') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Profile updated successfully'), backgroundColor: Colors.green),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to update profile'), backgroundColor: Colors.red),
-          );
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update profile'), backgroundColor: Colors.red),
-        );
-      }
-    } catch (e) {
-      print('Error updating profile: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error updating profile'), backgroundColor: Colors.red),
-      );
-    }
-  }
-  
-  void _saveChanges() {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      _saveProfileData();
+      _formKey.currentState!.save(); // Save form state
+
+      final prefs = await SharedPreferences.getInstance();
+      final accessToken = prefs.getString('accessToken') ?? '';
+
+      // Prepare the JSON data
+      final data = {
+        'fullname': _fullname,
+        'number': _studentId,
+        'phone': _phone,
+        // 'major_name': _majorName, // Major is read-only
+      };
+
+      try {
+        final response = await http.put(
+          Uri.parse('https://guidekproject.onrender.com/users/update_user_info'),
+          headers: {
+            'Authorization': 'Bearer $accessToken',
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(data),
+        );
+
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+          print('Form submitted successfully: ${responseData['message']}');
+          // Optionally navigate to another page or show a success message
+        } else {
+          print('Failed to submit form: ${response.statusCode}');
+          // Handle the error response
+        }
+      } catch (e) {
+        print('Error submitting form: $e');
+        // Handle the exception
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBarColor = Color(0xFF318c3c);
+
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(
-          'profileTitle',
-          style: TextStyle(
-            fontFamily: 'Acumin Variable Concept',
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Color(0xFF318C3C),
-        elevation: 0,
+        backgroundColor: appBarColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-      ),
-      body: Container(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                height: 12,
-                color: Color(0xFFfdcd90),
-              ),
-              _buildProfileHeader(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: _buildForm(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfileHeader() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: getImage,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 70,
-                  backgroundColor: Colors.white,
-                  child: _image != null
-                      ? ClipRRect(
-                    borderRadius: BorderRadius.circular(70),
-                    child: Image.file(
-                      _image!,
-                      width: 140,
-                      height: 140,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                      : Icon(
-                    Icons.person,
-                    size: 70,
-                    color: Colors.grey,
-                  ),
-                ),
-                Container(
-                  width: 140,
-                  height: 140,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.green,
-                      width: 4,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 134,
-                  height: 134,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Color(0xFFfdcd90),
-                      width: 2.6,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ],
+        title: Row(
+          children: [
+            Text(
+              'Profile',
+              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal, color: Colors.white),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    );
-  }
-
-  Widget _buildForm() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20),
-      decoration: BoxDecoration(
-        color: Color(0xFF318C3C),
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Form(
-        key: _formKey,
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Text(
-                _fullName,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontFamily: 'Acumin Variable Concept',
-                ),
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: CircleAvatar(
+                      backgroundImage: _profileImageFile != null
+                          ? FileImage(_profileImageFile!)
+                          : _profileImage,
+                      backgroundColor: Colors.grey[200],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: IconButton(
+                      icon: Icon(Icons.camera_alt),
+                      onPressed: _pickImage,
+                      color: appBarColor,
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 10),
-            _buildTextField('Full Name', _fullName, false),
-            _buildTextField('Student ID', _studentID, false),
-            _buildTextField('Email Address', _email, false),
-            _buildTextField('Phone Number', _phoneNumber, false),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: _saveChanges,
-                child: Text('Save Changes'),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  textStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Acumin Variable Concept',
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  backgroundColor: Color(0xFFfdcd90),
+            SizedBox(height: 16),
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    TextFormField(
+                      initialValue: _fullname,
+                      decoration: InputDecoration(
+                        labelText: 'Full Name',
+                        labelStyle: TextStyle(color: appBarColor),
+                      ),
+                      onSaved: (value) => _fullname = value!,
+                      cursorColor: appBarColor,
+                    ),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      initialValue: _studentId,
+                      decoration: InputDecoration(
+                        labelText: 'Student ID',
+                        labelStyle: TextStyle(color: appBarColor),
+                      ),
+                      onSaved: (value) => _studentId = value!,
+                      cursorColor: appBarColor,
+                    ),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      initialValue: _email,
+                      decoration: InputDecoration(
+                        labelText: 'Email Address',
+                        labelStyle: TextStyle(color: appBarColor),
+                      ),
+                      onSaved: (value) => _email = value!,
+                      cursorColor: appBarColor,
+                      enabled: false, // Email field is read-only
+                    ),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      initialValue: _phone,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                        labelStyle: TextStyle(color: appBarColor),
+                      ),
+                      onSaved: (value) => _phone = value!,
+                      cursorColor: appBarColor,
+                    ),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      initialValue: _major,
+                      decoration: InputDecoration(
+                        labelText: 'Major',
+                        labelStyle: TextStyle(color: appBarColor),
+                      ),
+                      enabled: false, // Major field is read-only
+                      cursorColor: appBarColor,
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      child: Text('Save Changes',style: TextStyle(color: Color(0xFFfdcd90)),),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: appBarColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(String labelText, String initialValue, bool readOnly) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            labelText,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontFamily: 'Acumin Variable Concept',
-            ),
-          ),
-          TextFormField(
-            initialValue: initialValue,
-            readOnly: readOnly,
-            onSaved: (value) {
-              if (labelText == 'Full Name') {
-                _fullName = value ?? '';
-              } else if (labelText == 'Student ID') {
-                _studentID = value ?? '';
-              } else if (labelText == 'Email Address') {
-                _email = value ?? '';
-              } else if (labelText == 'Phone Number') {
-                _phoneNumber = value ?? '';
-              }
-            },
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 15),
-            ),
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontFamily: 'Acumin Variable Concept',
-            ),
-          ),
-        ],
       ),
     );
   }
