@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart' hide CarouselController;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:guidek_project1/Annoncement_page/App_Info.dart';
@@ -9,10 +11,10 @@ import 'package:guidek_project1/Annoncement_page/Help&Support.dart';
 import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'q&a.dart';
 import 'subjects.dart';
+import 'package:http/http.dart' as http;
 
 class HomeAnnoncementPage extends StatefulWidget {
   const HomeAnnoncementPage({super.key});
@@ -26,8 +28,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   int _current = 0;
   String _selectedLanguage = 'EN';
   bool _isDarkMode = false;
-  String? _profileImageUrl;
   String _userFullName = 'Loading...';
+  ImageProvider _profileImage = AssetImage('assets/default_image.jpg');
+  List<Map<String, dynamic>> announcements = [];
+  bool _isLoading = true;
+  String? _accessToken;
+  List<String> imgList = [];
+
 
   Future<bool> _onWillPop() async {
     return false;
@@ -37,9 +44,61 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   void initState() {
     super.initState();
     _checkLoginStatus();
+    _loadAccessToken();
     _loadProfileImage();
     _loadUserName();
+    _loadAnnouncements();
   }
+
+  Future<void> _loadAccessToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _accessToken = prefs.getString('accessToken') ?? '';
+    });
+  }
+
+  Future<void> _loadAnnouncements() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken') ?? '';
+
+    final url = 'https://guidekproject.onrender.com/announcements/all_announcements';
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body)['announcements'];
+
+        setState(() {
+          announcements = data.map<Map<String, String>>((item) {
+            String imgUrl = item['img_url'] ?? 'default_image.jpg';
+            return {
+              'imgUrl': 'https://guidekproject.onrender.com/announcements/get_image/$imgUrl',
+              'title': item['title'] ?? '',
+              'content': item['content'] ?? '',
+            };
+          }).toList();
+          _isLoading = false;
+        });
+      } else {
+        print('Failed to load announcements');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error loading announcements: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
 
   Future<void> _loadUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -52,14 +111,52 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   Future<void> _loadProfileImage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? filename = prefs.getString('userImgUrl');
-    print(filename);
-    if (filename != null) {
-      setState(() {
-        _profileImageUrl = 'https://guidekproject.onrender.com/users/get_image/$filename';
-      });
+    String? accessToken = prefs.getString('accessToken');
+
+    print('Filename: $filename');
+    print('Access Token: $accessToken');
+
+    // Determine the correct image URL based on whether the filename exists
+    String imageUrl;
+    if (filename != null && filename.isNotEmpty) {
+      imageUrl = 'https://guidekproject.onrender.com/users/get_image/$filename';
     } else {
+      imageUrl = 'https://guidekproject.onrender.com/users/get_image/default_image.jpg';
+    }
+
+    // Try loading the image with the Bearer token authorization header
+    try {
+      final response = await http.get(
+        Uri.parse(imageUrl),
+        headers: <String, String>{
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Check if the response is of type image
+        final contentType = response.headers['content-type'];
+        if (contentType != null && contentType.startsWith('image/')) {
+          setState(() {
+            _profileImage = MemoryImage(response.bodyBytes);
+          });
+          print('Profile image loaded successfully.');
+        } else {
+          print('Response is not an image, content-type: $contentType');
+          setState(() {
+            _profileImage = AssetImage('assets/default_image.jpg');
+          });
+        }
+      } else {
+        print('Failed to load profile image, status code: ${response.statusCode}');
+        setState(() {
+          _profileImage = AssetImage('assets/default_image.jpg');
+        });
+      }
+    } catch (e) {
+      print('Error loading profile image: $e');
       setState(() {
-        _profileImageUrl = 'https://guidekproject.onrender.com/users/get_image/default_image.jpg';
+        _profileImage = AssetImage('assets/default_image.jpg');
       });
     }
   }
@@ -71,16 +168,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     });
     if (!_isLoggedIn) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()), 
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     }
   }
 
 
-  final List<String> imgList = [
-    'assets/NewGate.jpg',
-    'assets/img.png',
-  ];
+
 
   void _changeLanguage() {
     showDialog(
@@ -143,7 +237,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setBool('isLoggedIn', false);
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()), 
+                  MaterialPageRoute(builder: (context) => HomePage()),
                       (Route<dynamic> route) => false,
                 );
               },
@@ -154,6 +248,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       },
     );
   }
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -332,11 +432,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     },
                     child: Row(
                       children: [
-                          CircleAvatar(
-                          backgroundImage: _profileImageUrl != null
-                              ? NetworkImage(_profileImageUrl!)
-                              : AssetImage('assets/default_image.jpg') as ImageProvider,
-                          radius: 30,
+                        Expanded(
+                          child: CircleAvatar(
+                            radius: 50.0,
+                            backgroundImage: _profileImage,
+                            backgroundColor: Colors.grey[200],
+                          ),
                         ),
                         SizedBox(width: 10),
                         Column(
@@ -376,20 +477,87 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           child: Column(
             children: [
               CarouselSlider(
-                items: imgList.map((item) =>
+                items: announcements.map((item) =>
                     Container(
                       width: double.infinity,
-                      child: Image.asset(
-                        item,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
                       ),
-                    )).toList(),
+                      clipBehavior: Clip.antiAlias, // Ensures the content respects the border radius.
+                      child: Stack(
+                        children: [
+                          Image.network(
+                            item['imgUrl']!, // The full image URL.
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity, // Ensure the image fills the container.
+                            headers: {
+                              'Authorization': 'Bearer $_accessToken', // Use the loaded access token.
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset('assets/images/default_image.jpg', fit: BoxFit.cover); // Fallback image in case of error.
+                            },
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                              color: Colors.black.withOpacity(0.6), // Dark overlay for better readability.
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item['title']!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 5.0,
+                                          color: Colors.black.withOpacity(0.7),
+                                          offset: Offset(2, 2),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    item['content']!,
+                                    maxLines: 2, // Limit to 2 lines.
+                                    overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis.
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 5.0,
+                                          color: Colors.black.withOpacity(0.7),
+                                          offset: Offset(2, 2),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                ).toList(),
                 options: CarouselOptions(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   autoPlay: true,
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,
@@ -399,7 +567,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     });
                   },
                 ),
-              ),
+              )
+              ,
               Container(
                 width: double.infinity,
                 height: 12.0,

@@ -76,12 +76,14 @@ class _LoginPageState extends State<LoginPage> {
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           final accessToken = data['access_token'];
+          final refreshToken = data['refresh_token']; // Ensure this is returned by your API
 
           // Save tokens
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setBool('isLoggedIn', true);
           await prefs.setString('userEmail', _emailController.text);
           await prefs.setString('accessToken', accessToken);
+          await prefs.setString('refreshToken', refreshToken); // Save refresh token
 
           // Set expiration date (30 days from now)
           DateTime expirationDate = DateTime.now().add(const Duration(days: 30));
@@ -105,22 +107,23 @@ class _LoginPageState extends State<LoginPage> {
 
             // Safely extract values, handling null cases
             final fullName = userInfo['fullname'] ?? '';
-            final Email =userInfo['email']??'';
+            final email = userInfo['email'] ?? '';
             final majorName = userInfo['major_name'] ?? '';
             final phone = userInfo['phone'] ?? '';
             final imgUrl = userInfo['img_url'] ?? '';
-            final number = userInfo['number'] ?? 0; // Use default value if null
+            final number = userInfo['number'] ?? '';
 
             // Save user info to SharedPreferences
             await prefs.setString('userFullName', fullName);
-            await prefs.setString('userEmail', Email);
+            await prefs.setString('userEmail', email);
             await prefs.setString('userMajor', majorName);
             await prefs.setString('userPhone', phone);
             await prefs.setString('userImgUrl', imgUrl);
-            await prefs.setInt('userNumber', number);
+            await prefs.setString('userNumber', number);
 
             print('User info saved successfully:');
             print('Full Name: $fullName');
+            print('Email: $email');
             print('Major: $majorName');
             print('Phone: $phone');
             print('Image URL: $imgUrl');
@@ -157,6 +160,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
 
 
 
