@@ -17,7 +17,9 @@ class _SubjectProposalState extends State<SubjectProposal> {
   List<String> _subjectList = [];
   String? _selectedSubject;
   String? _selectedMajor;
-  final Color _appBarColor = Color(0xFF318c3c);
+  final Color _primaryColor = Color(0xFF318C3C);
+  final Color _secondaryColor = Color(0xFFFDCD90);
+  final Color _grayColor = Colors.grey[600]!;
   Map<String, dynamic>? _data;
 
   @override
@@ -27,7 +29,6 @@ class _SubjectProposalState extends State<SubjectProposal> {
   }
 
   Future<void> _loadMajorsAndSubjects() async {
-    // Load majors and subjects from a JSON file in assets
     final String response = await rootBundle.loadString('assets/majors_subjects.json');
     final Map<String, dynamic> data = json.decode(response);
 
@@ -37,13 +38,11 @@ class _SubjectProposalState extends State<SubjectProposal> {
       _filteredSubjects = [];
     });
 
-    // Fetch subjects from the API
     await _fetchSubjects();
   }
 
   Future<void> _fetchSubjects() async {
     try {
-      // Make an HTTP GET request to fetch subjects from the API
       final response = await http.get(Uri.parse('https://guidekproject.onrender.com/subjects/all_subjects'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
@@ -95,7 +94,6 @@ class _SubjectProposalState extends State<SubjectProposal> {
     };
 
     try {
-      // Make an HTTP POST request to submit the selected subject
       final response = await http.post(
         Uri.parse('https://guidekproject.onrender.com/classes/request_class'),
         headers: {
@@ -132,105 +130,139 @@ class _SubjectProposalState extends State<SubjectProposal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subject Proposal'),
-        backgroundColor: _appBarColor,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 800), // Adjust maxWidth as needed
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                // Major Dropdown
-                DropdownButtonFormField<String>(
-                  value: _selectedMajor,
-                  hint: Text('Select Major'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedMajor = newValue;
-                      _updateSubjects(newValue);
-                    });
-                  },
-                  items: _majors.map((major) {
-                    return DropdownMenuItem<String>(
-                      value: major,
-                      child: Text(major),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: 'Major',
-                    labelStyle: TextStyle(color: _appBarColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Subject Dropdown
-                DropdownButtonFormField<String>(
-                  value: _selectedSubject,
-                  hint: Text('Select Subject'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedSubject = newValue;
-                    });
-                  },
-                  items: _filteredSubjects.isNotEmpty
-                      ? _filteredSubjects.map((subject) {
-                    return DropdownMenuItem<String>(
-                      value: subject,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 250),  
-                        child: Text(
-                          subject,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }).toList()
-                      : _subjectList.map((subject) {
-                    return DropdownMenuItem<String>(
-                      value: subject,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 250),
-                        child: Text(
-                          subject,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: 'Subject',
-                    labelStyle: TextStyle(color: _appBarColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                // Submit Button
-                ElevatedButton(
-                  onPressed: _submitForm,
-                  child: Text('Submit'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _appBarColor, // Background color
-                    foregroundColor: Colors.white, // Text color
-                  ),
-                ),
-              ],
-            ),
+        title: Text(
+          'Subject Proposal',
+          style: TextStyle(
+            fontFamily: 'Acumin Variable Concept',
+            color: Colors.white,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
           ),
+        ),
+        backgroundColor: _primaryColor,
+        elevation: 0,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/Background2.jpeg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 12,
+              color: _secondaryColor,
+            ),
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 800),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        // Major Dropdown
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: DropdownButtonFormField<String>(
+                            value: _selectedMajor,
+                            hint: Text('Select Major'),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedMajor = newValue;
+                                _updateSubjects(newValue);
+                              });
+                            },
+                            items: _majors.map((major) {
+                              return DropdownMenuItem<String>(
+                                value: major,
+                                child: Text(major),
+                              );
+                            }).toList(),
+                            decoration: InputDecoration(
+                              labelText: 'Major',
+                              labelStyle: TextStyle(color: _primaryColor),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: _primaryColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: _primaryColor),
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Subject Dropdown
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: DropdownButtonFormField<String>(
+                            value: _selectedSubject,
+                            hint: Text('Select Subject'),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedSubject = newValue;
+                              });
+                            },
+                            items: _filteredSubjects.isNotEmpty
+                                ? _filteredSubjects.map((subject) {
+                              return DropdownMenuItem<String>(
+                                value: subject,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxWidth: 250),
+                                  child: Text(
+                                    subject,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              );
+                            }).toList()
+                                : _subjectList.map((subject) {
+                              return DropdownMenuItem<String>(
+                                value: subject,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxWidth: 250),
+                                  child: Text(
+                                    subject,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            decoration: InputDecoration(
+                              labelText: 'Subject',
+                              labelStyle: TextStyle(color: _primaryColor),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: _primaryColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: _primaryColor),
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Submit Button
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: ElevatedButton(
+                            onPressed: _submitForm,
+                            child: Text('Submit'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _primaryColor, // Background color
+                              foregroundColor: Colors.white, // Text color
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
