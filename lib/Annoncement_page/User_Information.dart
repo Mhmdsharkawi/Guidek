@@ -57,7 +57,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           _studentId = data['number'] ?? '';
           _email = data['email'] ?? '';
           _phone = data['phone'] ?? '';
-          _major = data['major_name'] ?? ''; // Add major field
+          _major = data['major_name'] ?? '';
 
           // Update profile image URL
           _updateProfileImage(data['userImgUrl'] ?? '');
@@ -239,15 +239,25 @@ class _UserProfilePageState extends State<UserProfilePage> {
             print('Failed to fetch updated user info');
           }
 
-          print('Form submitted successfully: ${jsonDecode(responseBody)['message']}');
+          // Show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Profile updated successfully!')),
+          );
         } else {
-          print('Failed to submit form: ${response.statusCode}');
+          // Show failure message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to update profile: ${response.statusCode}')),
+          );
         }
       } catch (e) {
         print('Error submitting form: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred: $e')),
+        );
       }
     }
   }
+
 
 
   @override

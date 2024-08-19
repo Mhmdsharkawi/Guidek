@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,11 +13,9 @@ class _SubjectProposalState extends State<SubjectProposal> {
   final _studentNumberController = TextEditingController();
   List<String> _majors = [];
   List<String> _filteredSubjects = [];
-  List<String> _subjectList = [];
   String? _selectedSubject;
   String? _selectedMajor;
   final Color _appBarColor = Color(0xFF318c3c);
-  Map<String, dynamic>? _data;
 
   @override
   void initState() {
@@ -27,55 +24,60 @@ class _SubjectProposalState extends State<SubjectProposal> {
   }
 
   Future<void> _loadMajorsAndSubjects() async {
-    // Load majors and subjects from a JSON file in assets
-    final String response = await rootBundle.loadString('assets/majors_subjects.json');
-    final Map<String, dynamic> data = json.decode(response);
-
-    setState(() {
-      _data = data;
-      _majors = data.keys.toList();
-      _filteredSubjects = [];
-    });
-
-    // Fetch subjects from the API
-    await _fetchSubjects();
-  }
-
-  Future<void> _fetchSubjects() async {
     try {
-      // Make an HTTP GET request to fetch subjects from the API
-      final response = await http.get(Uri.parse('https://guidekproject.onrender.com/subjects/all_subjects'));
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        final List<String> subjects = (data['subjects'] as List<dynamic>)
-            .map((subject) => subject['name'] as String)
+      // Fetch majors from the API
+      final majorsResponse = await http.get(Uri.parse('https://guidekproject.onrender.com/majors/all_majors'));
+
+      if (majorsResponse.statusCode == 200) {
+        final Map<String, dynamic> majorsData = jsonDecode(majorsResponse.body);
+        final List<String> majors = (majorsData['majors'] as List<dynamic>)
+            .map((major) => major['name'] as String)
             .toList();
 
         setState(() {
-          _subjectList = subjects;
+          _majors = majors;
+          _filteredSubjects = [];
         });
       } else {
-        throw Exception('Failed to load subjects');
+        throw Exception('Failed to load majors');
       }
     } catch (e) {
-      print('Error fetching subjects: $e');
+      print('Error fetching majors: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load subjects. Please try again.')),
+        SnackBar(content: Text('Failed to load majors. Please try again.')),
       );
     }
   }
 
-  void _updateSubjects(String? major) {
-    if (major != null && _data != null) {
-      final majorData = _data![major];
-      if (majorData != null) {
-        _filteredSubjects = List<String>.from(majorData['subjects'] as List);
-      } else {
-        _filteredSubjects = [];
+  void _updateSubjects(String? major) async {
+    if (major != null) {
+      try {
+        final subjectsResponse = await http.get(Uri.parse('https://guidekproject.onrender.com/majors/get_subjectsen/$major'));
+
+        if (subjectsResponse.statusCode == 200) {
+          final Map<String, dynamic> subjectsData = jsonDecode(subjectsResponse.body);
+          final List<String> subjects = (subjectsData['Subjects'] as List<dynamic>)
+              .map((subject) => subject['subject name'] as String)
+              .toList();
+
+          setState(() {
+            _filteredSubjects = subjects;
+            _selectedSubject = null; // Reset selected subject
+          });
+        } else {
+          throw Exception('Failed to load subjects for selected major');
+        }
+      } catch (e) {
+        print('Error fetching subjects: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load subjects. Please try again.')),
+        );
       }
-      _selectedSubject = null; // Reset selected subject
     } else {
-      _filteredSubjects = _subjectList; // Use the full list of subjects
+      setState(() {
+        _filteredSubjects = [];
+        _selectedSubject = null;
+      });
     }
   }
 
@@ -95,7 +97,6 @@ class _SubjectProposalState extends State<SubjectProposal> {
     };
 
     try {
-      // Make an HTTP POST request to submit the selected subject
       final response = await http.post(
         Uri.parse('https://guidekproject.onrender.com/classes/request_class'),
         headers: {
@@ -108,7 +109,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
       if (response.statusCode == 201) {
         final responseData = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['message'])),
+          SnackBar(content: Text('Form submitted successfully: ${responseData['message']}')),
         );
         setState(() {
           _selectedSubject = null;
@@ -117,7 +118,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
       } else {
         final responseData = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['message'])),
+          SnackBar(content: Text('Failed to submit form: ${responseData['message']}')),
         );
       }
     } catch (e) {
@@ -139,11 +140,10 @@ class _SubjectProposalState extends State<SubjectProposal> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 800), // Adjust maxWidth as needed
+            constraints: BoxConstraints(maxWidth: 800),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                // Major Dropdown
                 DropdownButtonFormField<String>(
                   value: _selectedMajor,
                   hint: Text('Select Major'),
@@ -171,7 +171,6 @@ class _SubjectProposalState extends State<SubjectProposal> {
                   ),
                 ),
                 SizedBox(height: 16),
-                // Subject Dropdown
                 DropdownButtonFormField<String>(
                   value: _selectedSubject,
                   hint: Text('Select Subject'),
@@ -180,21 +179,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                       _selectedSubject = newValue;
                     });
                   },
-                  items: _filteredSubjects.isNotEmpty
-                      ? _filteredSubjects.map((subject) {
-                    return DropdownMenuItem<String>(
-                      value: subject,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 250),  
-                        child: Text(
-                          subject,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }).toList()
-                      : _subjectList.map((subject) {
+                  items: _filteredSubjects.map((subject) {
                     return DropdownMenuItem<String>(
                       value: subject,
                       child: ConstrainedBox(
@@ -219,7 +204,6 @@ class _SubjectProposalState extends State<SubjectProposal> {
                   ),
                 ),
                 SizedBox(height: 16),
-                // Submit Button
                 ElevatedButton(
                   onPressed: _submitForm,
                   child: Text('Submit'),

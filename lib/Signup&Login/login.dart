@@ -70,13 +70,13 @@ class _LoginPageState extends State<LoginPage> {
           }),
         );
 
-        print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('Login response status: ${response.statusCode}');
+        print('Login response body: ${response.body}');
 
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           final accessToken = data['access_token'];
-          final refreshToken = data['refresh_token']; // Ensure this is returned by your API
+          final refreshToken = data['refresh_token'];
 
           // Save tokens
           SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -104,16 +104,28 @@ class _LoginPageState extends State<LoginPage> {
 
           if (userInfoResponse.statusCode == 200) {
             final userInfo = jsonDecode(userInfoResponse.body);
+            final user = userInfo as Map<String, dynamic>; // Assuming the response is a single user object
 
-            // Safely extract values, handling null cases
-            final fullName = userInfo['fullname'] ?? '';
-            final email = userInfo['email'] ?? '';
-            final majorName = userInfo['major_name'] ?? '';
-            final phone = userInfo['phone'] ?? '';
-            final imgUrl = userInfo['img_url'] ?? '';
-            final number = userInfo['number'] ?? '';
+            final isVerified = user['verified'] ?? false;
+
+            if (!isVerified) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Your account is not verified. Please check your email for verification instructions.')),
+              );
+              setState(() {
+                _isLoading = false;
+              });
+              return;
+            }
 
             // Save user info to SharedPreferences
+            final fullName = user['fullname'] ?? '';
+            final email = user['email'] ?? '';
+            final majorName = user['major_name'] ?? '';
+            final phone = user['phone'] ?? '';
+            final imgUrl = user['img_url'] ?? '';
+            final number = user['number'] ?? '';
+
             await prefs.setString('userFullName', fullName);
             await prefs.setString('userEmail', email);
             await prefs.setString('userMajor', majorName);
@@ -139,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
           } else {
             // Handle user info fetch error
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Failed to fetch user info')),
+              SnackBar(content: Text('Failed to fetch user info: ${userInfoResponse.reasonPhrase}')),
             );
           }
         } else {
@@ -160,6 +172,10 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
+
+
+
 
 
 

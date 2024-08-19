@@ -84,11 +84,12 @@ class _SignupPageState extends State<SignupPage> {
         _isLoading = true;
       });
 
-      final url = 'https://guidekproject.onrender.com/auth/register';
+      final registerUrl = 'https://guidekproject.onrender.com/auth/register';
+      final verifyUrl = 'https://guidekproject.onrender.com/auth/verify_account_request';
 
       try {
-        final response = await http.post(
-          Uri.parse(url),
+        final registerResponse = await http.post(
+          Uri.parse(registerUrl),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -101,21 +102,44 @@ class _SignupPageState extends State<SignupPage> {
           }),
         );
 
-        print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('Register Response status: ${registerResponse.statusCode}');
+        print('Register Response body: ${registerResponse.body}');
 
-        setState(() {
-          _isLoading = false;
-        });
-
-        if (response.statusCode == 201) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginPage()),
+        if (registerResponse.statusCode == 201) {
+          // Send verification email request
+          final verifyResponse = await http.post(
+            Uri.parse(verifyUrl),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              'email': _emailController.text,
+            }),
           );
+
+          print('Verify Response status: ${verifyResponse.statusCode}');
+          print('Verify Response body: ${verifyResponse.body}');
+
+          setState(() {
+            _isLoading = false;
+          });
+
+          if (verifyResponse.statusCode == 200) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Registration successful! Check your email to verify your account.')),
+            );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Verification request failed: ${jsonDecode(verifyResponse.body)['message']}')),
+            );
+          }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Signup failed: ${jsonDecode(response.body)['message']}')),
+            SnackBar(content: Text('Signup failed: ${jsonDecode(registerResponse.body)['message']}')),
           );
         }
       } catch (e) {
@@ -129,6 +153,7 @@ class _SignupPageState extends State<SignupPage> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
