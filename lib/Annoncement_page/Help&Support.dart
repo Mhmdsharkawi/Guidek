@@ -50,7 +50,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(tr('to'), style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
+                    Text(tr('Issue'), style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
                     SizedBox(height: 24),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),
