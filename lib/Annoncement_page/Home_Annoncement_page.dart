@@ -12,6 +12,7 @@ import 'package:guidek_project1/Signup&Login/home.dart';
 import 'GPA_Calculator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'Procedure_guide.dart';
 import 'q&a.dart';
 import 'subjects.dart';
 import 'package:http/http.dart' as http;
@@ -598,7 +599,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                                 builder: (context) => ChatWithMe()),
                           );
                         }),
-                        _buildIcon(Icons.description, 'procedure_guide'.tr(), () {}),
+                        _buildIcon(Icons.description, 'procedure_guide'.tr(), () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProcedureGuide()),
+                          );
+                        }),
                         _buildIcon(Icons.calculate, 'gpa_calculator'.tr(), () {
                           Navigator.push(
                             context,

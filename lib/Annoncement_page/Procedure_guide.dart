@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:guidek_project1/Annoncement_page/procedure_detail.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'location_detail.dart';
 
-class ClassesLocationsScreen extends StatefulWidget {
-  const ClassesLocationsScreen({super.key});
+class ProcedureGuide extends StatefulWidget {
+  const ProcedureGuide({super.key});
   @override
-  _ClassesLocationsState createState() => _ClassesLocationsState();
+  _ProcedureGuideState createState() => _ProcedureGuideState();
 }
 
-class _ClassesLocationsState extends State<ClassesLocationsScreen> {
+class _ProcedureGuideState extends State<ProcedureGuide> {
   List<Map<String, dynamic>> items = [];
   String searchQuery = '';
   final Color appBarColor = Color(0xFF318c3c);
@@ -23,15 +23,15 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
   }
 
   Future<void> loadData() async {
-    final String url = 'https://guidekproject.onrender.com/rooms/all_rooms';
+    final String url = 'https://guidekproject.onrender.com/transactions/all_transactions';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final List<dynamic> rooms = data['rooms'];
+      final List<dynamic> transactions = data['Transactions'];
 
       setState(() {
-        items = rooms.map((room) => room as Map<String, dynamic>).toList();
+        items = transactions.map((transaction) => transaction as Map<String, dynamic>).toList();
       });
     } else {
       throw Exception('Failed to load data');
@@ -42,7 +42,7 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LocationDetailScreen(roomName: roomName),
+        builder: (context) => ProcedureDetailScreen(procedurename: roomName),
       ),
     );
   }
@@ -53,7 +53,7 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: Text(
-          'Classes',
+          'Procedure Guide',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
