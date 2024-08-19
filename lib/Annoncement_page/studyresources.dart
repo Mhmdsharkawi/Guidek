@@ -13,7 +13,11 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
   List<String> _allSubjects = [];
   List<String> _filteredSubjects = [];
   TextEditingController _searchController = TextEditingController();
-  final Color _appBarColor = Color(0xFF318c3c);
+  final Color _appBarColor = Color(0xFF318C3C); // Match the AppBar color
+  final Color _secondaryColor = Color(0xFFFDCD90); // Yellow color for the bar
+  final Color _textColor = Colors.white; // Color for text, matching HelpSupportPage
+  final Color _iconColor = Colors.black87;
+
 
   @override
   void initState() {
@@ -30,7 +34,9 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
 
     setState(() {
       _data = data;
-      _allSubjects = data.values.expand((majors) => (majors['subjects'] as List).map((subject) => subject['name'] as String)).toList();
+      _allSubjects = data.values
+          .expand((majors) => (majors['subjects'] as List).map((subject) => subject['name'] as String))
+          .toList();
       _filteredSubjects = List.from(_allSubjects);
     });
   }
@@ -57,76 +63,102 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subjects'),
+        title: Text(
+          'Subjects', // Title text, can be customized
+          style: TextStyle(
+            fontFamily: 'Acumin Variable Concept',
+            color: _textColor,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: _appBarColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: _iconColor),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _searchController,
-                cursorColor: _appBarColor,
-                decoration: InputDecoration(
-                  hintText: 'Search subjects...',
-                  prefixIcon: Icon(Icons.search, color: _appBarColor),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: _appBarColor),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/Background2.jpeg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 12,
+              color: _secondaryColor,
+            ),
+            Expanded(
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: _searchController,
+                        cursorColor: _appBarColor,
+                        decoration: InputDecoration(
+                          hintText: 'Search subjects...',
+                          prefixIcon: Icon(Icons.search, color: _appBarColor),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: _appBarColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: _appBarColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: _appBarColor),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: _appBarColor),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        final subjectName = _filteredSubjects[index];
+                        final subjectData = _data.entries
+                            .expand((entry) => (entry.value['subjects'] as List).where((sub) => sub['name'] == subjectName))
+                            .first;
+
+                        return ExpansionTile(
+                          title: Text(subjectName, style: TextStyle(color: _appBarColor)),
+                          iconColor: _appBarColor, // Color for the expansion icon
+                          children: <Widget>[
+                            if (subjectData['books'] != null)
+                              ListTile(
+                                title: Text('Books', style: TextStyle(color: _appBarColor)),
+                                onTap: () => _launchUrl(subjectData['books']),
+                              ),
+                            if (subjectData['slides'] != null)
+                              ListTile(
+                                title: Text('Slides', style: TextStyle(color: _appBarColor)),
+                                onTap: () => _launchUrl(subjectData['slides']),
+                              ),
+                            if (subjectData['coursePlan'] != null)
+                              ListTile(
+                                title: Text('Course Plan', style: TextStyle(color: _appBarColor)),
+                                onTap: () => _launchUrl(subjectData['coursePlan']),
+                              ),
+                          ],
+                        );
+                      },
+                      childCount: _filteredSubjects.length,
+                    ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: _appBarColor),
-                  ),
-                ),
+                ],
               ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                final subjectName = _filteredSubjects[index];
-                final subjectData = _data.entries
-                    .expand((entry) => (entry.value['subjects'] as List).where((sub) => sub['name'] == subjectName))
-                    .first;
-
-                return ExpansionTile(
-                  title: Text(subjectName),
-                  iconColor: _appBarColor, // Set the icon color to match the AppBar color
-                  children: <Widget>[
-                    if (subjectData['books'] != null)
-                      ListTile(
-                        title: Text('Books', style: TextStyle(color: _appBarColor)),
-                        onTap: () => _launchUrl(subjectData['books']),
-                      ),
-                    if (subjectData['slides'] != null)
-                      ListTile(
-                        title: Text('Slides', style: TextStyle(color: _appBarColor)),
-                        onTap: () => _launchUrl(subjectData['slides']),
-                      ),
-                    if (subjectData['coursePlan'] != null)
-                      ListTile(
-                        title: Text('Course Plan', style: TextStyle(color: _appBarColor)),
-                        onTap: () => _launchUrl(subjectData['coursePlan']),
-                      ),
-                  ],
-                );
-              },
-              childCount: _filteredSubjects.length,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
