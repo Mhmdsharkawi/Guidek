@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatWithMe extends StatefulWidget {
   const ChatWithMe({super.key});
@@ -23,8 +24,12 @@ class _ChatWithMeState extends State<ChatWithMe> {
   ChatUser BotUser = ChatUser(
     id: "1",
     firstName: "Guidek",
-    profileImage: "",//replace with they app icon img
+    profileImage: "",  
   );
+
+  final Color primaryColor = const Color(0xFF318C3C);
+  final Color secondaryColor = const Color(0xFFFDCD90);
+  final Color grayColor = Colors.grey[600]!;
 
   @override
   Widget build(BuildContext context) {
@@ -35,23 +40,37 @@ class _ChatWithMeState extends State<ChatWithMe> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF318c3c),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        title: Text(
+          'Chat With Me',
+          style: TextStyle(
+            fontFamily: 'Acumin Variable Concept',
+            color: Colors.white,
+            fontSize: 28,   
+            fontWeight: FontWeight.bold,  
+          ),
         ),
-        title: Row(
-          children: [
-            Text(
-              'Chat With Me',
-              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal,color: Colors.white),
-            ),
-          ],
-        ),
+        backgroundColor: primaryColor,
+        elevation: 0,
       ),
-      body: _buildUI(),
+      body: Column(
+        children: [
+          Container(
+            height: 12,
+            color: secondaryColor,  
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/Background2.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: _buildUI(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -60,7 +79,7 @@ class _ChatWithMeState extends State<ChatWithMe> {
       inputOptions: InputOptions(
         trailing: [
           IconButton(
-            color: const Color(0xFF318c3c),
+            color: primaryColor,
             onPressed: _sendMediaMessage,
             icon: const Icon(
               Icons.image,
@@ -73,7 +92,7 @@ class _ChatWithMeState extends State<ChatWithMe> {
           onPressed: onSend,
         ),
       ),
-      messageOptions:const MessageOptions(
+      messageOptions: const MessageOptions(
         currentUserContainerColor: Color(0xFF318c3c),
         currentUserTextColor: Colors.white,
       ),
@@ -154,4 +173,3 @@ class _ChatWithMeState extends State<ChatWithMe> {
     }
   }
 }
-

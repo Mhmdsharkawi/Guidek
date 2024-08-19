@@ -13,7 +13,9 @@ class _GpaCalculatorState extends State<GpaCalculator> {
   final TextEditingController hoursController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
 
-  static const Color appBarColor = Color(0xFF318c3c);
+  static const Color primaryColor = Color(0xFF318c3c);
+  static const Color secondaryColor = Color(0xFFFDCD90);
+  final Color grayColor = Colors.grey[600]!;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: appBarColor,
+        backgroundColor: primaryColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -35,86 +37,121 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           children: [
             Text(
               'GPA Calculator',
-              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal, color: Colors.white),
+              style: TextStyle(
+                fontFamily: 'Acumin Variable Concept',
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 28,
+              ),
             ),
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: SvgPicture.asset(
-              'assets/guidek-bg.jpg.svg',
-              fit: BoxFit.fill,
-              color: const Color.fromARGB(100, 220, 220, 220),
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/Background2.jpeg'),
+            fit: BoxFit.cover,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Row(
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 12,
+              color: secondaryColor,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Hours Passed:'),
-                          TextField(
-                            controller: hoursController,
-                            cursorColor: appBarColor,
-                            decoration: InputDecoration(
-                              hintText: 'Enter hours passed',
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Hours Passed:',
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: grayColor,
+                                ),
                               ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
+                              TextField(
+                                controller: hoursController,
+                                cursorColor: primaryColor,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter hours passed',
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  color: grayColor,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Current GPA:',
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: grayColor,
+                                ),
+                              ),
+                              TextField(
+                                controller: gpaController,
+                                cursorColor: primaryColor,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter current GPA',
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: primaryColor),
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 18,
+                                  color: grayColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 16),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Current GPA:'),
-                          TextField(
-                            cursorColor: appBarColor,
-                            controller: gpaController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter current GPA',
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: appBarColor),
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: ListView.builder(
+                        itemCount: rows.length,
+                        itemBuilder: (context, index) {
+                          return _buildRow(index, index + 1);
+                        },
                       ),
                     ),
                   ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: rows.length,
-                    itemBuilder: (context, index) {
-                      return _buildRow(index, index + 1);
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
@@ -123,7 +160,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              backgroundColor: appBarColor,
+              backgroundColor: primaryColor,
               onPressed: _addRow,
               child: const Icon(Icons.add, color: Colors.black),
             ),
@@ -133,7 +170,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               child: const Icon(Icons.delete, color: Colors.black),
             ),
             FloatingActionButton(
-              backgroundColor: appBarColor,
+              backgroundColor: primaryColor,
               onPressed: _calculateGPA,
               child: const Icon(Icons.calculate, color: Colors.black),
             ),
@@ -177,7 +214,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
     // Process each row
     for (var row in rows) {
       double newGradePoints = _getPoints(row.grade);
-      String subjectKey = 'subject_${row.hashCode}'; // Use a unique identifier for each subject
+      String subjectKey = 'subject_${row
+          .hashCode}'; // Use a unique identifier for each subject
 
       if (row.isRetaken) {
         // If the subject is already in the map, subtract old points
@@ -203,9 +241,10 @@ class _GpaCalculatorState extends State<GpaCalculator> {
     double gpa = totalHours > 0 ? totalPoints / totalHours : 0.0;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        content: Text('Calculated GPA: ${gpa.toStringAsFixed(2)}'),
-      ),
+      builder: (context) =>
+          AlertDialog(
+            content: Text('Calculated GPA: ${gpa.toStringAsFixed(2)}'),
+          ),
     );
   }
 
@@ -242,111 +281,155 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
   Widget _buildRow(int index, int subjectNumber) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.clear, color: Colors.red),
+            icon: const Icon(Icons.clear, color: Colors.red, size: 16),
             onPressed: () => _removeRow(index),
+            padding: EdgeInsets.zero,
+            constraints: BoxConstraints(),
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text('Subject $subjectNumber hours: '),
-                    Expanded(
-                      child: DropdownButton<int>(
-                        value: rows[index].hours,
-                        items: [1, 2, 3].map((int value) {
-                          return DropdownMenuItem<int>(
-                            value: value,
-                            child: Text('$value'),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            rows[index].hours = newValue!;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: DropdownButton<String>(
-                        value: rows[index].grade,
-                        items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            rows[index].grade = newValue!;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                if (rows[index].isRetaken)
-                  Center(
-                    child: Row(
-                      children: [
-                        const Text('Old'),
-                        const SizedBox(width: 15), // Adjust to align with other rows
-                        Expanded(
-                          child: DropdownButton<String>(
-                            value: rows[index].oldGrade,
-                            items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
-                                .map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                rows[index].oldGrade = newValue!;
-                              });
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 150),
-                      ],
-                    ),
-                  ),
-              ],
+          Text(
+            'Subject $subjectNumber:',
+            style: TextStyle(
+              fontFamily: 'Acumin Variable Concept',
+              fontSize: 14,
+              color: grayColor,
             ),
           ),
-          const SizedBox(width: 16),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Checkbox(
-                value: rows[index].isRetaken,
-                onChanged: (newValue) {
-                  setState(() {
-                    rows[index].isRetaken = newValue!;
-                  });
-                },
-                activeColor: appBarColor, // Matching the app bar color
+          SizedBox(width: 4),
+          DropdownButtonHideUnderline(
+            child: DropdownButton<int>(
+              value: rows[index].hours,
+              items: [1, 2, 3].map((int value) {
+                return DropdownMenuItem<int>(
+                  value: value,
+                  child: Text(
+                    value.toString(),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  rows[index].hours = newValue!;
+                });
+              },
+              icon: Icon(Icons.arrow_drop_down, color: primaryColor, size: 24),
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: 16,
+                fontFamily: 'Acumin Variable Concept',
               ),
-              const Text('Retaken'),
-            ],
+              dropdownColor: Colors.white,
+              isDense: false,
+            ),
+          ),
+
+
+
+
+          SizedBox(width: 8),
+          Text(
+            'Grade:',
+            style: TextStyle(
+              fontFamily: 'Acumin Variable Concept',
+              fontSize: 14,
+              color: grayColor,
+            ),
+          ),
+          SizedBox(width: 4),
+          DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: rows[index].grade,
+              items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  rows[index].grade = newValue!;
+                });
+              },
+              icon: Icon(Icons.arrow_drop_down, color: primaryColor, size: 24),
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: 16,
+                fontFamily: 'Acumin Variable Concept',
+              ),
+              dropdownColor: Colors.white,
+              isDense: false,
+            ),
+          ),
+
+          SizedBox(width: 8),
+          Text(
+            'Retaken:',
+            style: TextStyle(
+              fontFamily: 'Acumin Variable Concept',
+              fontSize: 14,
+              color: grayColor,
+            ),
+          ),
+          Transform.scale(
+            scale: 0.8,
+            child: Checkbox(
+              value: rows[index].isRetaken,
+              onChanged: (newValue) {
+                setState(() {
+                  rows[index].isRetaken = newValue!;
+                });
+              },
+            ),
           ),
         ],
       ),
     );
   }
-}
 
+  Widget _buildDropdown({
+    required String value,
+    required List<String> items,
+    required void Function(String?) onChanged,
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: primaryColor.withOpacity(0.5), width: 0.5),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            value,
+            style: TextStyle(
+              color: primaryColor,
+              fontSize: 14,
+              fontFamily: 'Acumin Variable Concept',
+            ),
+          ),
+          Icon(Icons.arrow_drop_down, color: primaryColor, size: 20),
+        ],
+      ),
+    );
+  }
+}
 class RowData {
   int hours = 1;
   String grade = 'A';
-  String oldGrade = 'A';
   bool isRetaken = false;
 }

@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class QAScreen extends StatefulWidget {
   const QAScreen({super.key});
@@ -11,7 +10,10 @@ class QAScreen extends StatefulWidget {
 
 class _QAScreenState extends State<QAScreen> {
   List<Map<String, String>> _qaData = [];
-  bool _isLoading = true;
+
+  final Color primaryColor = Color(0xFF318C3C);
+  final Color secondaryColor = Color(0xFFFDCD90);
+  final Color grayColor = Colors.grey[600]!;
 
   @override
   void initState() {
@@ -20,95 +22,113 @@ class _QAScreenState extends State<QAScreen> {
   }
 
   Future<void> _loadQAData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final accessToken = prefs.getString('accessToken') ?? '';
+    // Load the JSON file from assets
+    final String response = await rootBundle.loadString('assets/questions.json');
+    final List<dynamic> data = json.decode(response);
 
-    try {
-      final response = await http.get(
-        Uri.parse('https://guidekproject.onrender.com/faq/all_qa'),
-        headers: {
-          'Authorization': 'Bearer $accessToken',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final List<dynamic> qaList = data['QA'];
-        setState(() {
-          _qaData = qaList.map((item) => {
-            'question': item['question'] as String,
-            'answer': item['answer'] as String,
-          }).toList();
-          _isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load Q&A data');
-      }
-    } catch (e) {
-      print('Error loading Q&A data: $e');
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    setState(() {
+      _qaData = data.map((item) => {
+        'question': item['question'] as String,
+        'answer': item['answer'] as String,
+      }).toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF318c3c),
-        title: Text('Q&A'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        backgroundColor: primaryColor,
+        title: Text(
+          'FAQ',
+          style: TextStyle(
+            fontFamily: 'Acumin Variable Concept',
+            color: Colors.white,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        elevation: 0,
       ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Directionality(
-        textDirection: TextDirection.rtl,
-        child: ListView.builder(
-          itemCount: _qaData.length,
-          itemBuilder: (context, index) {
-            final item = _qaData[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      item['question'] ?? '',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF318c3c),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      item['answer'] ?? '',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/Background2.jpeg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 12,
+              color: secondaryColor,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _qaData.length,
+                itemBuilder: (context, index) {
+                  final item = _qaData[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            item['question'] ?? '',
+                            style: TextStyle(
+                              fontFamily: 'Acumin Variable Concept',
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            item['answer'] ?? '',
+                            style: TextStyle(
+                              fontFamily: 'Acumin Variable Concept',
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
