@@ -67,7 +67,7 @@ class AppInfoPage extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.asset(
-                                'assets/guidek[1].png',
+                                'assets/guidek.png',
                                 fit: BoxFit.cover,
                               ),
                             ),

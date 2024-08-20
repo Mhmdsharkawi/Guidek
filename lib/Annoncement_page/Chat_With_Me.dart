@@ -5,8 +5,7 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class ChatWithMe extends StatefulWidget {
   const ChatWithMe({super.key});
@@ -24,7 +23,7 @@ class _ChatWithMeState extends State<ChatWithMe> {
   ChatUser BotUser = ChatUser(
     id: "1",
     firstName: "Guidek",
-    profileImage: "",  
+    profileImage: "assets/guidek.png",
   );
 
   final Color primaryColor = const Color(0xFF318C3C);
