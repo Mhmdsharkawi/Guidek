@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HelpSupportPage extends StatefulWidget {
   @override
@@ -14,6 +17,54 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
   final Color primaryColor = Color(0xFF318C3C);
   final Color secondaryColor = Color(0xFFFDCD90);
   final Color grayColor = Colors.grey[600]!;
+
+  SharedPreferences? prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeSharedPreferences();
+  }
+  Future<void> _initializeSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  Future<void> sendSupportRequest() async {
+    final String apiUrl = "https://guidekproject.onrender.com//users/support";
+    final String? token = prefs?.getString('accessToken') ?? '';
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode({
+          "issue": selectedDestination,
+          "title": titleController.text,
+          "description": descriptionController.text,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Success
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(tr('support ticket have been created successfully'))),
+        );
+      } else {
+        // Failure
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(tr('error_occurred'))),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(tr('network_error'))),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +247,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                             elevation: 3,
                           ),
                           onPressed: () {
-                            // Handle sending report
+                            sendSupportRequest();
                           },
                         ),
                       ],

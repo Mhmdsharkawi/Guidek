@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LocationDetailScreen extends StatefulWidget {
   final String roomName;
@@ -23,12 +25,33 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
 
   Future<Map<String, dynamic>> fetchRoomDetails(String roomName) async {
     final String url = 'https://guidekproject.onrender.com/rooms/get_location/$roomName';
-    final response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load room details');
+    try {
+      // Retrieve the JWT token from SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('accessToken');
+
+      if (token == null) {
+        throw Exception('No JWT token found');
+      }
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body) as Map<String, dynamic>;
+      } else {
+        final errorData = json.decode(response.body);
+        final errorMessage = errorData['message'] ?? 'Failed to load room details';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      print('Error fetching room details: $e');
+      rethrow;
     }
   }
 

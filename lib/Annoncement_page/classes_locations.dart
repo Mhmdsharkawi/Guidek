@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'location_detail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ClassesLocationsScreen extends StatefulWidget {
   const ClassesLocationsScreen({super.key});
@@ -24,17 +25,42 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
 
   Future<void> loadData() async {
     final String url = 'https://guidekproject.onrender.com/rooms/all_rooms';
-    final response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final List<dynamic> rooms = data['rooms'];
+    try {
+      // Retrieve the JWT token from SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('accessToken');
 
-      setState(() {
-        items = rooms.map((room) => room as Map<String, dynamic>).toList();
-      });
-    } else {
-      throw Exception('Failed to load data');
+      if (token == null) {
+        throw Exception('No JWT token found');
+      }
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      // Debugging information
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final List<dynamic> rooms = data['rooms'];
+
+        setState(() {
+          items = rooms.map((room) => room as Map<String, dynamic>).toList();
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print('Error loading data: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load data. Please try again.')),
+      );
     }
   }
 

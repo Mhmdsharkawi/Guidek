@@ -52,20 +52,39 @@ class _SubjectProposalState extends State<SubjectProposal> {
   void _updateSubjects(String? major) async {
     if (major != null) {
       try {
-        final subjectsResponse = await http.get(Uri.parse('https://guidekproject.onrender.com/majors/get_subjectsen/$major'));
+        // Retrieve the JWT token from SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        final token = prefs.getString('accessToken');
 
-        if (subjectsResponse.statusCode == 200) {
-          final Map<String, dynamic> subjectsData = jsonDecode(subjectsResponse.body);
-          final List<String> subjects = (subjectsData['Subjects'] as List<dynamic>)
+        if (token == null) {
+          throw Exception('No JWT token found');
+        }
+
+        final response = await http.get(
+          Uri.parse('https://guidekproject.onrender.com/majors/get_subjects/$major'),
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        );
+
+        // Debugging information
+        print('Status Code: ${response.statusCode}');
+        print('Response Body: ${response.body}');
+
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> data = jsonDecode(response.body);
+          final List<String> subjects = (data['Subjects'] as List<dynamic>)
               .map((subject) => subject['subject name'] as String)
               .toList();
 
           setState(() {
             _filteredSubjects = subjects;
-            _selectedSubject = null;  
+            _selectedSubject = null;
           });
         } else {
-          throw Exception('Failed to load subjects for selected major');
+          final Map<String, dynamic> errorData = jsonDecode(response.body);
+          final String errorMessage = errorData['message'] ?? 'Failed to load subjects for selected major';
+          throw Exception(errorMessage);
         }
       } catch (e) {
         print('Error fetching subjects: $e');
