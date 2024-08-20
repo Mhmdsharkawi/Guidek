@@ -9,13 +9,14 @@ class SubjectProposal extends StatefulWidget {
 }
 
 class _SubjectProposalState extends State<SubjectProposal> {
-  final _fullNameController = TextEditingController();
-  final _studentNumberController = TextEditingController();
   List<String> _majors = [];
   List<String> _filteredSubjects = [];
   String? _selectedSubject;
   String? _selectedMajor;
-  final Color _appBarColor = Color(0xFF318c3c);
+
+  final Color _primaryColor = Color(0xFF318C3C);
+  final Color _secondaryColor = Color(0xFFFDCD90);
+  final Color _grayColor = Colors.grey[600]!;
 
   @override
   void initState() {
@@ -25,7 +26,6 @@ class _SubjectProposalState extends State<SubjectProposal> {
 
   Future<void> _loadMajorsAndSubjects() async {
     try {
-      // Fetch majors from the API
       final majorsResponse = await http.get(Uri.parse('https://guidekproject.onrender.com/majors/all_majors'));
 
       if (majorsResponse.statusCode == 200) {
@@ -62,7 +62,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
 
           setState(() {
             _filteredSubjects = subjects;
-            _selectedSubject = null; // Reset selected subject
+            _selectedSubject = null;  
           });
         } else {
           throw Exception('Failed to load subjects for selected major');
@@ -129,93 +129,120 @@ class _SubjectProposalState extends State<SubjectProposal> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subject Proposal'),
-        backgroundColor: _appBarColor,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 800),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                DropdownButtonFormField<String>(
-                  value: _selectedMajor,
-                  hint: Text('Select Major'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedMajor = newValue;
-                      _updateSubjects(newValue);
-                    });
-                  },
-                  items: _majors.map((major) {
-                    return DropdownMenuItem<String>(
-                      value: major,
-                      child: Text(major),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: 'Major',
-                    labelStyle: TextStyle(color: _appBarColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                DropdownButtonFormField<String>(
-                  value: _selectedSubject,
-                  hint: Text('Select Subject'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedSubject = newValue;
-                    });
-                  },
-                  items: _filteredSubjects.map((subject) {
-                    return DropdownMenuItem<String>(
-                      value: subject,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 250),
-                        child: Text(
-                          subject,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: 'Subject',
-                    labelStyle: TextStyle(color: _appBarColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: _appBarColor),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: _submitForm,
-                  child: Text('Submit'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _appBarColor, // Background color
-                    foregroundColor: Colors.white, // Text color
-                  ),
-                ),
-              ],
-            ),
+        title: Text(
+          'Subject Proposal',
+          style: TextStyle(
+            fontFamily: 'Acumin Variable Concept',
+            color: Colors.white,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
           ),
+        ),
+        backgroundColor: _primaryColor,
+        elevation: 0,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/Background2.jpeg'),  
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 12,
+              color: _secondaryColor,  
+            ),
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 800),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        DropdownButtonFormField<String>(
+                          value: _selectedMajor,
+                          hint: Text('Select Major'),
+                          onChanged: (newValue) {
+                            setState(() {
+                              _selectedMajor = newValue;
+                              _updateSubjects(newValue);
+                            });
+                          },
+                          items: _majors.map((major) {
+                            return DropdownMenuItem<String>(
+                              value: major,
+                              child: Text(major),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(
+                            labelText: 'Major',
+                            labelStyle: TextStyle(color: _primaryColor),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: _primaryColor),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: _primaryColor),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        DropdownButtonFormField<String>(
+                          value: _selectedSubject,
+                          hint: Text('Select Subject'),
+                          onChanged: (newValue) {
+                            setState(() {
+                              _selectedSubject = newValue;
+                            });
+                          },
+                          items: _filteredSubjects.map((subject) {
+                            return DropdownMenuItem<String>(
+                              value: subject,
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(maxWidth: 250),
+                                child: Text(
+                                  subject,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          decoration: InputDecoration(
+                            labelText: 'Subject',
+                            labelStyle: TextStyle(color: _primaryColor),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: _primaryColor),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: _primaryColor),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: _submitForm,
+                          child: Text('Submit'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: _primaryColor,  
+                            foregroundColor: Colors.white,  
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
