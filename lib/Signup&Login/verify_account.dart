@@ -5,14 +5,14 @@ import 'dart:convert';
 
 import 'login.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
+class VerifyAccountPage extends StatefulWidget {
+  const VerifyAccountPage({super.key});
 
   @override
-  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
+  _VerifyAccountPageState createState() => _VerifyAccountPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _VerifyAccountPageState extends State<VerifyAccountPage> {
   final TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -22,12 +22,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     super.dispose();
   }
 
-  Future<void> _handleResetPassword() async {
+  Future<void> _handleReqiuestVerify() async {
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text;
 
       final response = await http.post(
-        Uri.parse('https://guidekproject.onrender.com/users/reset_password_request'), // Replace with your API URL
+        Uri.parse('https://guidekproject.onrender.com/auth/verify_account_request'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -38,7 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('If this account exists, you will receive an email with instructions . \nnote : chick your email spam if you didnt recive the msg')),
+          const SnackBar(content: Text('If this account exists, you will receive an email to verify your account . \nnote : chick your email spam if you didnt recive the msg')),
         );
         Navigator.pushReplacement(
           context,
@@ -121,7 +121,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: _handleResetPassword,
+                      onPressed: _handleReqiuestVerify,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal,
                         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -130,7 +130,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      child: const Text('Reset Password', style: TextStyle(color: Colors.white)),
+                      child: const Text('Reqiuest Verify', style: TextStyle(color: Colors.white)),
                     ),
                   ],
                 ),

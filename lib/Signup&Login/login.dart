@@ -296,6 +296,16 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/verify_account');
+                      },
+                      child: const Text(
+                        'Request verify ?',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
                   ],
                 ),
               ),

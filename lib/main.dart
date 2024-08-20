@@ -8,9 +8,10 @@ import 'Signup&Login/forgot_password.dart';
 import 'Annoncement_page/Home_Annoncement_page.dart';
 import 'Annoncement_page/GPA_Calculator.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'Signup&Login/verify_account.dart';
 import 'consts.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:guidek_project1/Annoncement_page/classes_locations.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/forgot_password': (context) => const ForgotPasswordPage(),
+        '/verify_account': (context) => const VerifyAccountPage(),
         '/Home_Annoncament_page': (context) => HomeAnnoncementPage(),
         '/GPA_Calculator': (context) => GpaCalculator(),
         '/Chat_With_Me': (context) => const ChatWithMe(),
