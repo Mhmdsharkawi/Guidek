@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class UserProfilePage extends StatefulWidget {
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
@@ -25,6 +24,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
   File? _profileImageFile;
+
+  final Color primaryColor = Color(0xFF318C3C);
+  final Color secondaryColor = Color(0xFFFDCD90);
+  final Color grayColor = Colors.grey[600]!;
 
   @override
   void initState() {
@@ -174,9 +177,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-
-
-
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save(); // Save form state
@@ -258,133 +258,186 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    final appBarColor = Color(0xFF318c3c);
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: appBarColor,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Row(
-          children: [
-            Text(
-              'Profile',
-              style: GoogleFonts.notoSans(fontWeight: FontWeight.normal, color: Colors.white),
-            ),
-          ],
-        ),
-      ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Stack(
-                children: [
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CircleAvatar(
-                      backgroundImage: _profileImageFile != null
-                          ? FileImage(_profileImageFile!)
-                          : _profileImage,
-                      backgroundColor: Colors.grey[200],
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: IconButton(
-                      icon: Icon(Icons.camera_alt),
-                      onPressed: _pickImage,
-                      color: appBarColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 16),
-            Expanded(
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  children: [
-                    TextFormField(
-                      initialValue: _fullname,
-                      decoration: InputDecoration(
-                        labelText: 'Full Name',
-                        labelStyle: TextStyle(color: appBarColor),
-                      ),
-                      onSaved: (value) => _fullname = value!,
-                      cursorColor: appBarColor,
-                    ),
-                    SizedBox(height: 16),
-                    TextFormField(
-                      initialValue: _studentId,
-                      decoration: InputDecoration(
-                        labelText: 'Student ID',
-                        labelStyle: TextStyle(color: appBarColor),
-                      ),
-                      onSaved: (value) => _studentId = value!,
-                      cursorColor: appBarColor,
-                    ),
-                    SizedBox(height: 16),
-                    TextFormField(
-                      initialValue: _email,
-                      decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        labelStyle: TextStyle(color: appBarColor),
-                      ),
-                      onSaved: (value) => _email = value!,
-                      cursorColor: appBarColor,
-                      enabled: false, // Email field is read-only
-                    ),
-                    SizedBox(height: 16),
-                    TextFormField(
-                      initialValue: _phone,
-                      decoration: InputDecoration(
-                        labelText: 'Phone Number',
-                        labelStyle: TextStyle(color: appBarColor),
-                      ),
-                      onSaved: (value) => _phone = value!,
-                      cursorColor: appBarColor,
-                    ),
-                    SizedBox(height: 16),
-                    TextFormField(
-                      initialValue: _major,
-                      decoration: InputDecoration(
-                        labelText: 'Major',
-                        labelStyle: TextStyle(color: appBarColor),
-                      ),
-                      enabled: false, // Major field is read-only
-                      cursorColor: appBarColor,
-                    ),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: _submitForm,
-                      child: Text('Save Changes', style: TextStyle(color: Color(0xFFfdcd90))),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: appBarColor,
-                      ),
-                    ),
-                  ],
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Row(
+            children: [
+              Text(
+                'Profile',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 28,
                 ),
               ),
+            ],
+          ),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(12),
+            child: Container(
+              color: secondaryColor,
+              height: 12,
             ),
-          ],
+          ),
         ),
-      ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/Background2.jpeg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: CircleAvatar(
+                          backgroundImage: _profileImageFile != null
+                              ? FileImage(_profileImageFile!)
+                              : _profileImage,
+                          backgroundColor: Colors.grey[200],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: IconButton(
+                          icon: Icon(Icons.camera_alt, color: primaryColor),
+                          onPressed: _pickImage,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24),
+                Expanded(
+                  child: Form(
+                    key: _formKey,
+                    child: ListView(
+                      children: [
+                        TextFormField(
+                          initialValue: _fullname,
+                          decoration: InputDecoration(
+                            labelText: 'Full Name',
+                            labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                          ),
+                          onSaved: (value) => _fullname = value!,
+                          style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          initialValue: _studentId,
+                          decoration: InputDecoration(
+                            labelText: 'Student ID',
+                            labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                          ),
+                          onSaved: (value) => _studentId = value!,
+                          style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          initialValue: _email,
+                          decoration: InputDecoration(
+                            labelText: 'Email Address',
+                            labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                          ),
+                          enabled: false,  
+                          style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          initialValue: _phone,
+                          decoration: InputDecoration(
+                            labelText: 'Phone Number',
+                            labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                          ),
+                          onSaved: (value) => _phone = value!,
+                          style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          initialValue: _major,
+                          decoration: InputDecoration(
+                            labelText: 'Major',
+                            labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                          ),
+                          enabled: false,  
+                          style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18),
+                        ),
+                        SizedBox(height: 24),
+                        ElevatedButton(
+                          onPressed: _submitForm,
+                          child: Text('Save Changes', style: TextStyle(color: Colors.white, fontFamily: 'Acumin Variable Concept', fontSize: 18)),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                          elevation: 3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
     );
   }
 }
