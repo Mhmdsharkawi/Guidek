@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guidek_project1/Annoncement_page/studyresources.dart';
+import 'RecommandedSubjects.dart';
 import 'SubjectProposal.dart';
 
 class SubjectsScreen extends StatelessWidget {
@@ -44,7 +45,12 @@ class SubjectsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildIcon(Icons.lightbulb, 'Recommended Subjects', () {
-                      // Handle Recommended Subjects button press
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RecommandedSubjects(),
+                        ),
+                      );
                     }),
                     SizedBox(height: 20),
                     _buildIcon(Icons.assignment, 'Subject Proposal', () {
