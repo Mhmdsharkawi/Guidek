@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class GpaCalculator extends StatefulWidget {
   @override
@@ -13,9 +11,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
   final TextEditingController hoursController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
 
-  final Color primaryColor = Color(0xFF318C3C);  
-  final Color secondaryColor = Color(0xFFFDCD90);  
-  final Color backgroundColor = Color.fromARGB(100, 220, 220, 220); 
+  static const Color appBarColor = Color(0xFF318c3c);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +22,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: appBarColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -36,78 +32,84 @@ class _GpaCalculatorState extends State<GpaCalculator> {
         title: Text(
           'GPA Calculator',
           style: TextStyle(
-            fontFamily: 'Acumin Variable Concept',  
+            fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
             fontSize: 28,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),  
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          children: [
-            Container(
-              height: 12,
-              color: secondaryColor,  
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/Background2.jpeg',
+              fit: BoxFit.cover,
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Hours Passed:'),
-                              TextField(
-                                controller: hoursController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter hours passed',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Current GPA:'),
-                              TextField(
-                                controller: gpaController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter current GPA',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: rows.length,
-                        itemBuilder: (context, index) {
-                          return _buildRow(index, index + 1);
-                        },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Hours Passed:'),
+                          TextField(
+                            controller: hoursController,
+                            cursorColor: appBarColor,
+                            decoration: InputDecoration(
+                              hintText: 'Enter hours passed',
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Current GPA:'),
+                          TextField(
+                            cursorColor: appBarColor,
+                            controller: gpaController,
+                            decoration: InputDecoration(
+                              hintText: 'Enter current GPA',
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: appBarColor),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: rows.length,
+                    itemBuilder: (context, index) {
+                      return _buildRow(index, index + 1);
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
@@ -116,7 +118,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              backgroundColor: primaryColor,
+              backgroundColor: appBarColor,
               onPressed: _addRow,
               child: const Icon(Icons.add, color: Colors.black),
             ),
@@ -126,7 +128,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               child: const Icon(Icons.delete, color: Colors.black),
             ),
             FloatingActionButton(
-              backgroundColor: primaryColor,
+              backgroundColor: appBarColor,
               onPressed: _calculateGPA,
               child: const Icon(Icons.calculate, color: Colors.black),
             ),
@@ -308,21 +310,28 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                             },
                           ),
                         ),
+                        const SizedBox(width: 150),
                       ],
                     ),
                   ),
-                CheckboxListTile(
-                  title: const Text("Retaken"),
-                  value: rows[index].isRetaken,
-                  onChanged: (newValue) {
-                    setState(() {
-                      rows[index].isRetaken = newValue!;
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
               ],
             ),
+          ),
+          const SizedBox(width: 16),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Checkbox(
+                value: rows[index].isRetaken,
+                onChanged: (newValue) {
+                  setState(() {
+                    rows[index].isRetaken = newValue!;
+                  });
+                },
+                activeColor: appBarColor, // Matching the app bar color
+              ),
+              const Text('Retaken'),
+            ],
           ),
         ],
       ),
@@ -336,5 +345,10 @@ class RowData {
   bool isRetaken;
   String oldGrade;
 
-  RowData({this.hours = 1, this.grade = 'A', this.isRetaken = false, this.oldGrade = 'A'});
+  RowData({
+    this.hours = 1,
+    this.grade = 'A',
+    this.isRetaken = false,
+    this.oldGrade = 'A',
+  });
 }
