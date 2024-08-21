@@ -14,7 +14,6 @@ class ResourceLinksScreen extends StatefulWidget {
 }
 
 class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
-  // TextEditingControllers to manage the state of the TextFormFields
   final TextEditingController _bookController = TextEditingController();
   final TextEditingController _slidesController = TextEditingController();
   final TextEditingController _coursePlanController = TextEditingController();
@@ -40,8 +39,6 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
 
-        // Print the entire API response for debugging
-        print('API Response: $data');
 
         final Map<String, dynamic> resources = data['subject_resources'] ?? {};
 
@@ -67,7 +64,7 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
   }
 
   Widget _buildLinkField(String label, TextEditingController controller) {
-    final Color _appBarColor = Color(0xFF318C3C); // AppBar color
+    final Color _appBarColor = Color(0xFF318C3C);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -90,7 +87,7 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
                 ),
                 labelStyle: TextStyle(color: _appBarColor),
               ),
-              cursorColor: _appBarColor, // Set the cursor color
+              cursorColor: _appBarColor,
             ),
           ),
           IconButton(
@@ -106,8 +103,8 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Color _appBarColor = Color(0xFF318C3C); // Match the AppBar color
-    final Color _textColor = Colors.white; // Color for text
+    final Color _appBarColor = Color(0xFF318C3C);
+    final Color _textColor = Colors.white;
     final Color _iconColor = Colors.black87;
 
     return Scaffold(
@@ -140,7 +137,7 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Center vertically
+              mainAxisSize: MainAxisSize.min,
               children: [
                 _buildLinkField('Book', _bookController),
                 _buildLinkField('Slides', _slidesController),
