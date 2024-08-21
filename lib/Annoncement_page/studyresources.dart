@@ -1,7 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+import '../ResourceLinks.dart';
 
 class StudyResourcesScreen extends StatefulWidget {
   @override
@@ -9,15 +15,13 @@ class StudyResourcesScreen extends StatefulWidget {
 }
 
 class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
-  Map<String, dynamic> _data = {};
-  List<String> _allSubjects = [];
-  List<String> _filteredSubjects = [];
+  List<dynamic> _allSubjects = [];
+  List<dynamic> _filteredSubjects = [];
   TextEditingController _searchController = TextEditingController();
   final Color _appBarColor = Color(0xFF318C3C); // Match the AppBar color
   final Color _secondaryColor = Color(0xFFFDCD90); // Yellow color for the bar
-  final Color _textColor = Colors.white; // Color for text, matching HelpSupportPage
+  final Color _textColor = Colors.white; // Color for text
   final Color _iconColor = Colors.black87;
-
 
   @override
   void initState() {
@@ -29,34 +33,47 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
   }
 
   Future<void> _loadData() async {
-    final String response = await rootBundle.loadString('assets/subjects.json');
-    final Map<String, dynamic> data = json.decode(response);
+    // Get token from SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
 
-    setState(() {
-      _data = data;
-      _allSubjects = data.values
-          .expand((majors) => (majors['subjects'] as List).map((subject) => subject['name'] as String))
-          .toList();
-      _filteredSubjects = List.from(_allSubjects);
-    });
+    // Fetch subjects from API
+    final response = await http.get(
+      Uri.parse('https://guidekproject.onrender.com/subjects/all_subjects'),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final List<dynamic> subjects = data['subjects'];
+
+      setState(() {
+        _allSubjects = subjects;
+        _filteredSubjects = List.from(_allSubjects);
+      });
+    } else {
+      throw Exception('Failed to load subjects');
+    }
   }
 
   void _filterSubjects() {
     final query = _searchController.text.toLowerCase();
     setState(() {
       _filteredSubjects = _allSubjects.where((subject) {
-        return subject.toLowerCase().contains(query);
+        return subject['name'].toLowerCase().contains(query);
       }).toList();
     });
   }
 
-  Future<void> _launchUrl(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $url';
-    }
+  void _navigateToResourceLinks(String subjectName) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResourceLinksScreen(subjectName: subjectName),
+      ),
+    );
   }
 
   @override
@@ -64,7 +81,7 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Subjects', // Title text, can be customized
+          'Books & Files',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: _textColor,
@@ -124,31 +141,12 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                        final subjectName = _filteredSubjects[index];
-                        final subjectData = _data.entries
-                            .expand((entry) => (entry.value['subjects'] as List).where((sub) => sub['name'] == subjectName))
-                            .first;
+                        final subject = _filteredSubjects[index];
+                        final subjectName = subject['name'];
 
-                        return ExpansionTile(
+                        return ListTile(
                           title: Text(subjectName, style: TextStyle(color: _appBarColor)),
-                          iconColor: _appBarColor, // Color for the expansion icon
-                          children: <Widget>[
-                            if (subjectData['books'] != null)
-                              ListTile(
-                                title: Text('Books', style: TextStyle(color: _appBarColor)),
-                                onTap: () => _launchUrl(subjectData['books']),
-                              ),
-                            if (subjectData['slides'] != null)
-                              ListTile(
-                                title: Text('Slides', style: TextStyle(color: _appBarColor)),
-                                onTap: () => _launchUrl(subjectData['slides']),
-                              ),
-                            if (subjectData['coursePlan'] != null)
-                              ListTile(
-                                title: Text('Course Plan', style: TextStyle(color: _appBarColor)),
-                                onTap: () => _launchUrl(subjectData['coursePlan']),
-                              ),
-                          ],
+                          onTap: () => _navigateToResourceLinks(subjectName),
                         );
                       },
                       childCount: _filteredSubjects.length,
@@ -159,6 +157,25 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ResourceLinks extends StatelessWidget {
+  final String subjectName;
+
+  ResourceLinks({required this.subjectName});
+
+  @override
+  Widget build(BuildContext context) {
+    // Implement your ResourceLinks screen here
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(subjectName),
+      ),
+      body: Center(
+        child: Text('Resource links for $subjectName'),
       ),
     );
   }
