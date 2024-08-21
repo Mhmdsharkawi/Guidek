@@ -173,7 +173,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
                 child: Text(
                   'Suggest Subjects',
                   style: TextStyle(
-                    color: _secondaryColor,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
