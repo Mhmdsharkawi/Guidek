@@ -214,37 +214,32 @@ class _GpaCalculatorState extends State<GpaCalculator> {
     // Process each row
     for (var row in rows) {
       double newGradePoints = _getPoints(row.grade);
-      String subjectKey = 'subject_${row
-          .hashCode}'; // Use a unique identifier for each subject
+      String subjectKey = 'subject_${row.hashCode}';
 
       if (row.isRetaken) {
-        // If the subject is already in the map, subtract old points
+        double retakenGradePoints = _getPoints(row.retakenGrade ?? row.grade);
+
         if (subjectMap.containsKey(subjectKey)) {
           double oldGradePoints = _getPoints(subjectMap[subjectKey]!.grade);
           totalPoints -= oldGradePoints * row.hours;
         }
-        // Update the subject with the new grade
-        subjectMap[subjectKey] = row;
-        // Add the new grade points
-        totalPoints += newGradePoints * row.hours;
+
+        totalPoints += retakenGradePoints * row.hours;
       } else {
-        // For non-retaken subjects, simply add the points
         totalPoints += newGradePoints * row.hours;
-        // Add the subject to the map
-        subjectMap[subjectKey] = row;
       }
 
       totalHours += row.hours;
+      subjectMap[subjectKey] = row;
     }
 
     // Calculate final GPA
     double gpa = totalHours > 0 ? totalPoints / totalHours : 0.0;
     showDialog(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            content: Text('Calculated GPA: ${gpa.toStringAsFixed(2)}'),
-          ),
+      builder: (context) => AlertDialog(
+        content: Text('Calculated GPA: ${gpa.toStringAsFixed(2)}'),
+      ),
     );
   }
 
@@ -282,154 +277,171 @@ class _GpaCalculatorState extends State<GpaCalculator> {
   Widget _buildRow(int index, int subjectNumber) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
+      child: Column(
         children: [
-          IconButton(
-            icon: const Icon(Icons.clear, color: Colors.red, size: 16),
-            onPressed: () => _removeRow(index),
-            padding: EdgeInsets.zero,
-            constraints: BoxConstraints(),
-          ),
-          Text(
-            'Subject $subjectNumber:',
-            style: TextStyle(
-              fontFamily: 'Acumin Variable Concept',
-              fontSize: 14,
-              color: grayColor,
-            ),
-          ),
-          SizedBox(width: 4),
-          DropdownButtonHideUnderline(
-            child: DropdownButton<int>(
-              value: rows[index].hours,
-              items: [1, 2, 3].map((int value) {
-                return DropdownMenuItem<int>(
-                  value: value,
-                  child: Text(
-                    value.toString(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  rows[index].hours = newValue!;
-                });
-              },
-              icon: Icon(Icons.arrow_drop_down, color: primaryColor, size: 24),
-              style: TextStyle(
-                color: primaryColor,
-                fontSize: 16,
-                fontFamily: 'Acumin Variable Concept',
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.clear, color: Colors.red, size: 16),
+                onPressed: () => _removeRow(index),
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
               ),
-              dropdownColor: Colors.white,
-              isDense: false,
-            ),
-          ),
-
-
-
-
-          SizedBox(width: 8),
-          Text(
-            'Grade:',
-            style: TextStyle(
-              fontFamily: 'Acumin Variable Concept',
-              fontSize: 14,
-              color: grayColor,
-            ),
-          ),
-          SizedBox(width: 4),
-          DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: rows[index].grade,
-              items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'].map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  rows[index].grade = newValue!;
-                });
-              },
-              icon: Icon(Icons.arrow_drop_down, color: primaryColor, size: 24),
-              style: TextStyle(
-                color: primaryColor,
-                fontSize: 16,
-                fontFamily: 'Acumin Variable Concept',
+              Text(
+                'Subject $subjectNumber:',
+                style: TextStyle(
+                  fontFamily: 'Acumin Variable Concept',
+                  fontSize: 14,
+                  color: grayColor,
+                ),
               ),
-              dropdownColor: Colors.white,
-              isDense: false,
-            ),
+              SizedBox(width: 4),
+              DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                  value: rows[index].hours,
+                  items: [1, 2, 3].map((int value) {
+                    return DropdownMenuItem<int>(
+                      value: value,
+                      child: Text(
+                        value.toString(),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      rows[index].hours = newValue!;
+                    });
+                  },
+                  icon: Icon(Icons.arrow_drop_down, color: primaryColor, size: 24),
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 16,
+                    fontFamily: 'Acumin Variable Concept',
+                  ),
+                  dropdownColor: Colors.white,
+                  isDense: false,
+                ),
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Grade:',
+                style: TextStyle(
+                  fontFamily: 'Acumin Variable Concept',
+                  fontSize: 14,
+                  color: grayColor,
+                ),
+              ),
+              SizedBox(width: 4),
+              DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: rows[index].grade,
+                  items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      rows[index].grade = newValue!;
+                    });
+                  },
+                  icon: Icon(Icons.arrow_drop_down, color: primaryColor, size: 24),
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 16,
+                    fontFamily: 'Acumin Variable Concept',
+                  ),
+                  dropdownColor: Colors.white,
+                  isDense: false,
+                ),
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Retaken:',
+                style: TextStyle(
+                  fontFamily: 'Acumin Variable Concept',
+                  fontSize: 14,
+                  color: grayColor,
+                ),
+              ),
+              Transform.scale(
+                scale: 0.8,
+                child: Checkbox(
+                  value: rows[index].isRetaken,
+                  onChanged: (newValue) {
+                    setState(() {
+                      rows[index].isRetaken = newValue!;
+                    });
+                  },
+                ),
+              ),
+            ],
           ),
-
-          SizedBox(width: 8),
-          Text(
-            'Retaken:',
-            style: TextStyle(
-              fontFamily: 'Acumin Variable Concept',
-              fontSize: 14,
-              color: grayColor,
+          if (rows[index].isRetaken)
+            Row(
+              children: [
+                SizedBox(width: 8),
+                Text(
+                  'Retaken Grade:',
+                  style: TextStyle(
+                    fontFamily: 'Acumin Variable Concept',
+                    fontSize: 14,
+                    color: grayColor,
+                  ),
+                ),
+                SizedBox(width: 4),
+                DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: rows[index].retakenGrade,
+                    items: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        rows[index].retakenGrade = newValue!;
+                      });
+                    },
+                    icon: Icon(Icons.arrow_drop_down, color: primaryColor, size: 24),
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 16,
+                      fontFamily: 'Acumin Variable Concept',
+                    ),
+                    dropdownColor: Colors.white,
+                    isDense: false,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Transform.scale(
-            scale: 0.8,
-            child: Checkbox(
-              value: rows[index].isRetaken,
-              onChanged: (newValue) {
-                setState(() {
-                  rows[index].isRetaken = newValue!;
-                });
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDropdown({
-    required String value,
-    required List<String> items,
-    required void Function(String?) onChanged,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: primaryColor.withOpacity(0.5), width: 0.5),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            value,
-            style: TextStyle(
-              color: primaryColor,
-              fontSize: 14,
-              fontFamily: 'Acumin Variable Concept',
-            ),
-          ),
-          Icon(Icons.arrow_drop_down, color: primaryColor, size: 20),
         ],
       ),
     );
   }
 }
+
 class RowData {
   int hours = 1;
   String grade = 'A';
+  String? retakenGrade;
   bool isRetaken = false;
 }
