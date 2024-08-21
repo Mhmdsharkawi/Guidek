@@ -13,8 +13,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
   final TextEditingController hoursController = TextEditingController();
   final TextEditingController gpaController = TextEditingController();
 
-  final Color primaryColor = Color(0xFF318C3C); // اللون الأساسي المستخدم في التطبيق
-  final Color secondaryColor = Color(0xFFFDCD90); // الشريط الأصفر
+  final Color primaryColor = Color(0xFF318C3C);  
+  final Color secondaryColor = Color(0xFFFDCD90);  
   final Color backgroundColor = Color.fromARGB(100, 220, 220, 220); // لون الخلفية الشفاف المستخدم
 
   @override
