@@ -14,7 +14,10 @@ class ResourceLinksScreen extends StatefulWidget {
 }
 
 class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
-  Map<String, dynamic> _subjectResources = {};
+  // TextEditingControllers to manage the state of the TextFormFields
+  final TextEditingController _bookController = TextEditingController();
+  final TextEditingController _slidesController = TextEditingController();
+  final TextEditingController _coursePlanController = TextEditingController();
 
   @override
   void initState() {
@@ -40,10 +43,14 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
         // Print the entire API response for debugging
         print('API Response: $data');
 
-        setState(() {
-          _subjectResources = data['subject_resources'] ?? {};
-          print('Parsed Resources: $_subjectResources');
-        });
+        final Map<String, dynamic> resources = data['subject_resources'] ?? {};
+
+        // Update TextEditingControllers with the received data
+        _bookController.text = resources['book'] as String? ?? 'Link not available';
+        _slidesController.text = resources['slides'] as String? ?? 'Link not available';
+        _coursePlanController.text = resources['course_plan'] as String? ?? 'Link not available';
+
+        print('Parsed Resources: ${resources}');
       } else {
         throw Exception('Failed to load subject resources');
       }
@@ -59,7 +66,7 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
     );
   }
 
-  Widget _buildLinkField(String label, String? link) {
+  Widget _buildLinkField(String label, TextEditingController controller) {
     final Color _appBarColor = Color(0xFF318C3C); // AppBar color
 
     return Padding(
@@ -68,7 +75,7 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
         children: [
           Expanded(
             child: TextFormField(
-              initialValue: link ?? 'Link not available',
+              controller: controller,
               readOnly: true,
               decoration: InputDecoration(
                 labelText: label,
@@ -88,7 +95,9 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
           ),
           IconButton(
             icon: Icon(Icons.copy, color: _appBarColor),
-            onPressed: link != null ? () => _copyToClipboard(link) : null,
+            onPressed: controller.text.isNotEmpty
+                ? () => _copyToClipboard(controller.text)
+                : null,
           ),
         ],
       ),
@@ -100,8 +109,6 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
     final Color _appBarColor = Color(0xFF318C3C); // Match the AppBar color
     final Color _textColor = Colors.white; // Color for text
     final Color _iconColor = Colors.black87;
-
-    print('Building UI with resources: $_subjectResources'); // Debug statement
 
     return Scaffold(
       appBar: AppBar(
@@ -135,9 +142,9 @@ class _ResourceLinksScreenState extends State<ResourceLinksScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min, // Center vertically
               children: [
-                _buildLinkField('Book', _subjectResources['book']),
-                _buildLinkField('Slides', _subjectResources['slides']),
-                _buildLinkField('Course Plan', _subjectResources['course_plan']),
+                _buildLinkField('Book', _bookController),
+                _buildLinkField('Slides', _slidesController),
+                _buildLinkField('Course Plan', _coursePlanController),
               ],
             ),
           ),
