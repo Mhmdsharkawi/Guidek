@@ -15,7 +15,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
 
   final Color primaryColor = Color(0xFF318C3C);  
   final Color secondaryColor = Color(0xFFFDCD90);  
-  final Color backgroundColor = Color.fromARGB(100, 220, 220, 220); // لون الخلفية الشفاف المستخدم
+  final Color backgroundColor = Color.fromARGB(100, 220, 220, 220); 
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'), // نفس الخلفية المستخدمة في صفحة HelpSupportPage
+            image: AssetImage('assets/Background2.jpeg'),  
             fit: BoxFit.cover,
           ),
         ),
@@ -54,7 +54,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           children: [
             Container(
               height: 12,
-              color: secondaryColor, // الشريط الأصفر
+              color: secondaryColor,  
             ),
             Expanded(
               child: Padding(
