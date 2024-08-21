@@ -36,7 +36,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
         title: Text(
           'GPA Calculator',
           style: TextStyle(
-            fontFamily: 'Acumin Variable Concept', // استخدام نفس الخط
+            fontFamily: 'Acumin Variable Concept',  
             color: Colors.white,
             fontSize: 28,
             fontWeight: FontWeight.bold,
