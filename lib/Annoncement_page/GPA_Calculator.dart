@@ -47,10 +47,19 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               fit: BoxFit.cover,
             ),
           ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: double.infinity,
+              height: 12,
+              color: Color(0xFFFDCD90),  
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
+                SizedBox(height: 16),  
                 Row(
                   children: [
                     Expanded(
@@ -137,6 +146,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
       ),
     );
   }
+
+
 
   void _addRow() {
     setState(() {
