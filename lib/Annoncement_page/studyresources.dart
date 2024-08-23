@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
@@ -81,7 +81,7 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Books & Files',
+          'books_files'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: _textColor,
@@ -100,7 +100,7 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -120,7 +120,7 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
                         controller: _searchController,
                         cursorColor: _appBarColor,
                         decoration: InputDecoration(
-                          hintText: 'Search subjects...',
+                          hintText: 'search_subjects'.tr(),
                           prefixIcon: Icon(Icons.search, color: _appBarColor),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
