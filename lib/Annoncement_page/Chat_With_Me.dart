@@ -5,6 +5,7 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 
 class ChatWithMe extends StatefulWidget {
@@ -40,12 +41,12 @@ class _ChatWithMeState extends State<ChatWithMe> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chat With Me',
+          'chat_with_me'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
-            fontSize: 28,   
-            fontWeight: FontWeight.bold,  
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: primaryColor,
@@ -55,13 +56,13 @@ class _ChatWithMeState extends State<ChatWithMe> {
         children: [
           Container(
             height: 12,
-            color: secondaryColor,  
+            color: secondaryColor,
           ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/Background2.jpeg'),
+                  image: AssetImage('assets/last_background.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -159,7 +160,7 @@ class _ChatWithMeState extends State<ChatWithMe> {
       ChatMessage chatMessage = ChatMessage(
         user: currentUser,
         createdAt: DateTime.now(),
-        text: "Describe this picture?",
+        text: "Describe this picture?".tr(),
         medias: [
           ChatMedia(
             url: file.path,
