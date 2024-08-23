@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class QAScreen extends StatefulWidget {
-  const QAScreen({super.key});
+  final String language;
+  const QAScreen({super.key, required this.language});
+
   @override
   _QAScreenState createState() => _QAScreenState();
 }
@@ -22,8 +24,9 @@ class _QAScreenState extends State<QAScreen> {
   }
 
   Future<void> _loadQAData() async {
-    // Load the JSON file from assets
-    final String response = await rootBundle.loadString('assets/questions.json');
+
+    final String fileName = widget.language == 'ar' ? 'questions_ar.json' : 'questions_en.json';
+    final String response = await rootBundle.loadString('assets/$fileName');
     final List<dynamic> data = json.decode(response);
 
     setState(() {
@@ -36,11 +39,12 @@ class _QAScreenState extends State<QAScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isRTL = widget.language == 'ar';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(
-          'FAQ',
+          widget.language == 'ar' ? 'الأسئلة الشائعة' : 'FAQ',
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
@@ -53,7 +57,7 @@ class _QAScreenState extends State<QAScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -93,12 +97,15 @@ class _QAScreenState extends State<QAScreen> {
                               fontSize: 16,
                               color: Colors.black,
                             ),
-                            textDirection: TextDirection.rtl,
+                            textDirection: isRTL
+                                ? TextDirection.rtl
+                                : TextDirection.ltr,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 4.0),
                         child: Container(
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -119,7 +126,9 @@ class _QAScreenState extends State<QAScreen> {
                               fontSize: 16,
                               color: Colors.white,
                             ),
-                            textDirection: TextDirection.rtl,
+                            textDirection: isRTL
+                                ? TextDirection.rtl
+                                : TextDirection.ltr,
                           ),
                         ),
                       ),
