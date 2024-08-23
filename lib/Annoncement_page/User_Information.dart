@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -241,18 +241,24 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
           // Show success message
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Profile updated successfully!')),
+            SnackBar(content: Text('profileUpdatedSuccess').tr()),
           );
         } else {
           // Show failure message
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to update profile: ${response.statusCode}')),
+            SnackBar(
+              content: Text(
+                '${'profileUpdateFailed'.tr()} (Error: ${response.statusCode})',
+              ),
+            ),
           );
+
+
         }
       } catch (e) {
         print('Error submitting form: $e');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An error occurred: $e')),
+          SnackBar(content: Text('${'error_occurred'.tr()} ${e}').tr()),
         );
       }
     }
@@ -272,7 +278,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           title: Row(
             children: [
               Text(
-                'Profile',
+                'profileTitle'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -292,7 +298,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/Background2.jpeg'),
+              image: AssetImage('assets/last_background.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -336,7 +342,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         TextFormField(
                           initialValue: _fullname,
                           decoration: InputDecoration(
-                            labelText: 'Full Name',
+                            labelText: 'fullName'.tr(),
                             labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
                             filled: true,
                             fillColor: Colors.white,
@@ -353,7 +359,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         TextFormField(
                           initialValue: _studentId,
                           decoration: InputDecoration(
-                            labelText: 'Student ID',
+                            labelText: 'studentId'.tr(),
                             labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
                             filled: true,
                             fillColor: Colors.white,
@@ -370,7 +376,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         TextFormField(
                           initialValue: _email,
                           decoration: InputDecoration(
-                            labelText: 'Email Address',
+                            labelText: 'emailAddress'.tr(),
                             labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
                             filled: true,
                             fillColor: Colors.white,
@@ -380,14 +386,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             ),
                             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                           ),
-                          enabled: false,  
+                          enabled: false,
                           style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
                           initialValue: _phone,
                           decoration: InputDecoration(
-                            labelText: 'Phone Number',
+                            labelText: 'phoneNumber'.tr(),
                             labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
                             filled: true,
                             fillColor: Colors.white,
@@ -404,7 +410,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         TextFormField(
                           initialValue: _major,
                           decoration: InputDecoration(
-                            labelText: 'Major',
+                            labelText: 'major'.tr(),
                             labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
                             filled: true,
                             fillColor: Colors.white,
@@ -414,13 +420,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             ),
                             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                           ),
-                          enabled: false,  
+                          enabled: false,
                           style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 18),
                         ),
                         SizedBox(height: 24),
                         ElevatedButton(
                           onPressed: _submitForm,
-                          child: Text('Save Changes', style: TextStyle(color: Colors.white, fontFamily: 'Acumin Variable Concept', fontSize: 18)),
+                          child: Text('saveChanges'.tr(), style: TextStyle(color: Colors.white, fontFamily: 'Acumin Variable Concept', fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
