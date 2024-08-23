@@ -4,7 +4,7 @@
   "chat_with_me": "الدردشة معي",
   "contact_us": "اتصل بنا",
   "faq": "الأسئلة الشائعة",
-  "gpa_calculator": "حساب المعدل التراكمي",
+  "gpa_calculator": "احسب معدلك",
   "help_support": "المساعدة والدعم",
   "home": "الرئيسية",
   "language": "اللغة",
@@ -15,12 +15,11 @@
   "procedure_guide": "دليل الإجراءات",
   "select_language": "اختر اللغة",
   "subjects_classes": "المواد والفصول",
-  "theme": "السمة",
-  "university_classes": "اماكن القاعات",
+  "university_classes": "مواقع القاعات",
   "yes": "نعم",
-  "help & support_page":"المساعدة والدعم",
+  "save_changes": "حفظ التغييرات",
 
-  "to": "إلى",
+  "issue": "الخلل",
   "select_page": "اختر الصفحة...",
   "announcement_page": "صفحة الإعلانات",
   "subjects_classes_page": "صفحة المواد والفصول",
@@ -39,6 +38,10 @@
   "clear": "مسح",
   "send_report": "إرسال التقرير",
 
+  "support_ticket_created": "تم إنشاء تذكرة الدعم بنجاح",
+  "error_occurred": "حدث خطأ ما، يرجى المحاولة لاحقًا",
+  "network_error": "خطأ في الشبكة، يرجى التحقق من الاتصال",
+
   "developers": "المطورون",
 
   "app_info": "معلومات التطبيق",
@@ -49,14 +52,59 @@
 
 
   "profileTitle": "الملف الشخصي",
-  "firstName": "الاسم الأول",
-  "lastName": "اسم العائلة",
+  "fullName": "الاسم الكامل",
+  "studentId": "رقم الطالب",
   "emailAddress": "البريد الإلكتروني",
   "phoneNumber": "رقم الهاتف",
-  "saveChanges": "حفظ التغييرات"
+  "major": "التخصص",
+  "saveChanges": "حفظ التغييرات",
+  "editProfileImage": "تعديل صورة الملف الشخصي",
+  "profileUpdatedSuccess": "تم تحديث الملف الشخصي بنجاح!",
+  "profileUpdateFailed": "فشل في تحديث الملف الشخصي",
+
+
+
+
+  "hours_passed": "الساعات المقطوعة:",
+  "enter_hours_passed":"ادخل الساعات المقطوعة",
+  "current_gpa": "المعدل الحالي:",
+  "enter_current_gpa":"ادخل المعدل الحالي",
+  "retaken": "معادة",
+  "subject": "المادة:",
+  "hours": "الساعات:",
+  "old": "رمز سابق",
+  "calculated_gpa": "المعدل المحسوب:",
+
+
+
+  "subjects_classes":"المواد و الفصول",
+  "recommended_subjects":"المواد المقترحة",
+  "subject_proposal": "طلب فتح شعبة",
+  "books_files": "الملفات و الكتب",
+
+
+  "year": "السنة",
+  "semester": "الفصل",
+  "First":"الاول",
+  "Second": "الثاني",
+  "suggest_subjects":"المواد المقترحة",
+
+
+  "search_subjects":"البحث عن مادة...",
+
+
+  "subject_proposal":"طلب فتح شعبة",
+  "select_major": "اختر التخصص",
+  "major": "التخصص",
+  "select_subject": "اختر المادة",
+  "subject": "المادة",
+  "submit": "ارسال",
+
+
+  "chat_with_me": "دردش معي",
+  "Describe this picture?": "صف لي هذه الصورة"
+
+
+
 }
-
-
-
-
 
