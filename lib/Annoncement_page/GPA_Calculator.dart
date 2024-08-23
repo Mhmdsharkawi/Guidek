@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class GpaCalculator extends StatefulWidget {
   @override
@@ -30,7 +32,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
           },
         ),
         title: Text(
-          'GPA Calculator',
+          'gpa_calculator'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
@@ -43,7 +45,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/Background2.jpeg',
+              'assets/last_background.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -52,26 +54,26 @@ class _GpaCalculatorState extends State<GpaCalculator> {
             child: Container(
               width: double.infinity,
               height: 12,
-              color: Color(0xFFFDCD90),  
+              color: Color(0xFFFDCD90),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                SizedBox(height: 16),  
+                SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Hours Passed:'),
+                          const Text('hours_passed').tr(),
                           TextField(
                             controller: hoursController,
                             cursorColor: appBarColor,
                             decoration: InputDecoration(
-                              hintText: 'Enter hours passed',
+                              hintText: 'enter_hours_passed'.tr(),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: appBarColor),
                               ),
@@ -88,12 +90,12 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Current GPA:'),
+                          const Text('current_gpa').tr(),
                           TextField(
                             cursorColor: appBarColor,
                             controller: gpaController,
                             decoration: InputDecoration(
-                              hintText: 'Enter current GPA',
+                              hintText: 'enter_current_gpa'.tr(),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: appBarColor),
                               ),
@@ -210,7 +212,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: Text('Calculated GPA: ${gpa.toStringAsFixed(2)}'),
+        content: Text('${'calculated_gpa'.tr()} ${gpa.toStringAsFixed(2)}'),
       ),
     );
   }
@@ -261,7 +263,8 @@ class _GpaCalculatorState extends State<GpaCalculator> {
               children: [
                 Row(
                   children: [
-                    Text('Subject $subjectNumber hours: '),
+
+                    Text('${'subject'.tr()} ${subjectNumber} ${'hours'.tr()} '),
                     Expanded(
                       child: DropdownButton<int>(
                         value: rows[index].hours,
@@ -302,7 +305,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                   Center(
                     child: Row(
                       children: [
-                        const Text('Old'),
+                        const Text('old').tr(),
                         const SizedBox(width: 15), // Adjust to align with other rows
                         Expanded(
                           child: DropdownButton<String>(
@@ -341,7 +344,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                 },
                 activeColor: appBarColor, // Matching the app bar color
               ),
-              const Text('Retaken'),
+              const Text('retaken').tr(),
             ],
           ),
         ],
