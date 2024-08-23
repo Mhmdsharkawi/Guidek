@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'tree.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class SubjectsAndClasses extends StatefulWidget {
   @override
@@ -92,7 +94,7 @@ class _SubjectsPageState extends State<SubjectsAndClasses> {
         title: Row(
           children: [
             Text(
-              'Subjects',
+              'Subjects'.tr(),
               style: GoogleFonts.notoSans(fontWeight: FontWeight.normal, color: Colors.white),
             ),
           ],
