@@ -28,7 +28,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   bool _isLoggedIn = true;
   int _current = 0;
   String _selectedLanguage = 'EN';
-  bool _isDarkMode = false;
   String _userFullName = 'Loading...';
   ImageProvider _profileImage = AssetImage('assets/default_image.jpg');
   List<Map<String, dynamic>> announcements = [];
@@ -213,11 +212,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     );
   }
 
-  void _toggleTheme(bool isDarkMode) {
-    setState(() {
-      _isDarkMode = isDarkMode;
-    });
-  }
 
   void _confirmLogout() {
     showDialog(
@@ -251,7 +245,9 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   }
 
 
-
+  String _getCurrentLanguage() {
+    return context.locale.languageCode;
+  }
 
 
 
@@ -359,23 +355,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     Navigator.pop(context);
                   },
                 ),
-                ListTile(
-                  leading: Icon(Icons.color_lens, color: Color(0xFF318c3c)),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('theme'.tr()),
-                      Switch(
-                        value: _isDarkMode,
-                        onChanged: _toggleTheme,
-                        activeColor: Color(0xFF318c3c),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    _toggleTheme(!_isDarkMode);
-                  },
-                ),
+
                 ListTile(
                   leading: Icon(Icons.language, color: Color(0xFF318c3c)),
                   title: Text('language'.tr() + ': $_selectedLanguage'),
@@ -400,6 +380,17 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                       context,
                       MaterialPageRoute(builder: (context) => AppInfoPage()),
                     );
+                  },
+                ),
+
+                ListTile(
+                  leading: Icon(Icons.question_answer, color: Color(0xFF318c3c)),
+                  title: Text('faq'.tr()),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QAScreen(language: _getCurrentLanguage())),
+                    ); // Corrected here
                   },
                 ),
                 ListTile(
@@ -435,12 +426,12 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                       children: [
                         Expanded(
                           child: CircleAvatar(
-                            radius: 50.0,
+                            radius: 40.0,
                             backgroundImage: _profileImage,
                             backgroundColor: Colors.grey[200],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -466,6 +457,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                             ),
                           ],
                         ),
+                        SizedBox(width:55),
                       ],
                     ),
                   ),
@@ -617,7 +609,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => QAScreen()),
+                              builder: (context) => QAScreen(language: _getCurrentLanguage()),
+                            ),
                           );
                         }),
                         _buildIcon(
