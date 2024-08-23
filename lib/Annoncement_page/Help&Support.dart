@@ -50,7 +50,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
       if (response.statusCode == 201) {
         // Success
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(tr('support ticket have been created successfully'))),
+          SnackBar(content: Text(tr('support_ticket_created'))),
         );
       } else {
         // Failure
@@ -85,7 +85,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -101,7 +101,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(tr('Issue'), style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
+                    Text(tr('issue'), style: TextStyle(fontFamily: 'Acumin Variable Concept', fontSize: 24, fontWeight: FontWeight.w600)),
                     SizedBox(height: 24),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),
