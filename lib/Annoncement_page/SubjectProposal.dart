@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -39,7 +40,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
           _filteredSubjects = [];
         });
       } else {
-        throw Exception('Failed to load majors');
+        throw Exception('Failed to load majors'.tr());
       }
     } catch (e) {
       print('Error fetching majors: $e');
@@ -153,7 +154,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Subject Proposal',
+          'subject_proposal'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
@@ -167,7 +168,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),  
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -189,7 +190,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                       children: <Widget>[
                         DropdownButtonFormField<String>(
                           value: _selectedMajor,
-                          hint: Text('Select Major'),
+                          hint: Text('select_major').tr(),
                           onChanged: (newValue) {
                             setState(() {
                               _selectedMajor = newValue;
@@ -203,7 +204,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                             );
                           }).toList(),
                           decoration: InputDecoration(
-                            labelText: 'Major',
+                            labelText: 'major'.tr(),
                             labelStyle: TextStyle(color: _primaryColor),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: _primaryColor),
@@ -216,7 +217,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                         SizedBox(height: 16),
                         DropdownButtonFormField<String>(
                           value: _selectedSubject,
-                          hint: Text('Select Subject'),
+                          hint: Text('select_subject').tr(),
                           onChanged: (newValue) {
                             setState(() {
                               _selectedSubject = newValue;
@@ -236,7 +237,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                             );
                           }).toList(),
                           decoration: InputDecoration(
-                            labelText: 'Subject',
+                            labelText: 'subject'.tr(),
                             labelStyle: TextStyle(color: _primaryColor),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: _primaryColor),
@@ -249,7 +250,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                         SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: _submitForm,
-                          child: Text('Submit'),
+                          child: Text('submit').tr(),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _primaryColor,  
                             foregroundColor: Colors.white,  
