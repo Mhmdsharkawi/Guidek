@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:guidek_project1/Annoncement_page/studyresources.dart';
 import 'RecommandedSubjects.dart';
 import 'SubjectProposal.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class SubjectsScreen extends StatelessWidget {
   const SubjectsScreen({super.key});
@@ -15,7 +17,7 @@ class SubjectsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Subjects & Classes',
+          'subjects_classes'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 28,
@@ -29,7 +31,7 @@ class SubjectsScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -44,7 +46,7 @@ class SubjectsScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildIcon(Icons.lightbulb, 'Recommended Subjects', () {
+                    _buildIcon(Icons.lightbulb, 'recommended_subjects'.tr(), () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -53,7 +55,7 @@ class SubjectsScreen extends StatelessWidget {
                       );
                     }),
                     SizedBox(height: 20),
-                    _buildIcon(Icons.assignment, 'Subject Proposal', () {
+                    _buildIcon(Icons.assignment, 'subject_proposal'.tr(), () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -62,7 +64,7 @@ class SubjectsScreen extends StatelessWidget {
                       );
                     }),
                     SizedBox(height: 20),
-                    _buildIcon(Icons.library_books, 'Books & Files', () {
+                    _buildIcon(Icons.library_books, 'books_files'.tr(), () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
