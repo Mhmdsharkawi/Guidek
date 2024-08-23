@@ -41,95 +41,195 @@ class _ProcedureDetailScreenState extends State<ProcedureDetailScreen> {
         title: Text(
           widget.procedurename,
           textAlign: TextAlign.right,
+          style: TextStyle(
+            fontFamily: 'Acumin Variable Concept',
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: stepsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No steps available'));
-          } else {
-            final steps = snapshot.data!;
-            final stepCount = steps.length;
-            final progress = (currentStep + 1) / stepCount;
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/last_background.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Main content
+          FutureBuilder<List<Map<String, dynamic>>>(
+            future: stepsFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(child: Text('No steps available'));
+              } else {
+                final steps = snapshot.data!;
+                final stepCount = steps.length;
+                final progress = (currentStep + 1) / stepCount;
 
-            return Stack(
-              children: [
-                // Positioned Progress Bar at the Top
-                Positioned(
-                  top: 40, // Move the progress bar down
-                  left: 16,
-                  right: 16,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0), // Carved edges
-                    child: Container(
-                      width: double.infinity,
-                      child: LinearProgressIndicator(
-                        value: progress,
-                        backgroundColor: Colors.grey[300],
-                        color: Color(0xFF318c3c),
-                        minHeight: 10, // Increase the height
+                return Stack(
+                  children: [
+                    // Positioned Progress Bar at the Top
+                    Positioned(
+                      top: 16,
+                      left: 16,
+                      right: 16,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Container(
+                          height: 20,
+                          child: LinearProgressIndicator(
+                            value: progress,
+                            backgroundColor: Colors.grey[300],
+                            color: Color(0xFF318c3c),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                // Centered Description
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      steps[currentStep]['description'],
-                      style: TextStyle(fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                // Floating Action Buttons
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Visibility(
-                      visible: currentStep > 0,
-                      child: FloatingActionButton(
-                        backgroundColor: Color(0xFF318c3c),
-                        onPressed: () {
-                          setState(() {
-                            currentStep--;
-                          });
-                        },
-                        child: Icon(Icons.arrow_back),
+                    // Centered Description
+                    Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(15.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 8.0,
+                                offset: Offset(2, 2),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(24.0),
+                          child: Text(
+                            steps[currentStep]['description'],
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Acumin Variable Concept',
+                              color: Colors.black87,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Visibility(
-                      visible: currentStep < stepCount - 1,
-                      child: FloatingActionButton(
-                        backgroundColor: Color(0xFF318c3c),
-                        onPressed: () {
-                          setState(() {
-                            currentStep++;
-                          });
-                        },
-                        child: Icon(Icons.arrow_forward),
+                    // Floating Action Buttons
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Visibility(
+                          visible: currentStep > 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currentStep--;
+                              });
+                            },
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: RadialGradient(
+                                  colors: [Color(0xFF318c3c), Color(0xFFa8e063)],
+                                  center: Alignment(-0.3, -0.5),
+                                  radius: 0.8,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black38,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 4),
+                                    spreadRadius: 1,
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.6),
+                                    blurRadius: 10,
+                                    offset: Offset(-2, -2),
+                                    spreadRadius: 1,
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.5),
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(Icons.arrow_back, size: 32, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          }
-        },
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Visibility(
+                          visible: currentStep < stepCount - 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currentStep++;
+                              });
+                            },
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: RadialGradient(
+                                  colors: [Color(0xFF318c3c), Color(0xFFa8e063)],
+                                  center: Alignment(-0.3, -0.5),
+                                  radius: 0.8,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black38,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 4),
+                                    spreadRadius: 1,
+                                  ),
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.6),
+                                    blurRadius: 10,
+                                    offset: Offset(-2, -2),
+                                    spreadRadius: 1,
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.5),
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(Icons.arrow_forward, size: 32, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
