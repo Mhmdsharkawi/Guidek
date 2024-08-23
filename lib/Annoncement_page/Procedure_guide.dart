@@ -66,7 +66,7 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
