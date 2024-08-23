@@ -18,8 +18,9 @@
   "theme": "Theme",
   "university_classes": "University Classes",
   "yes": "Yes",
+  "save_changes": "Save Changes",
 
-  "to": "To",
+  "issue": "Issue",
   "select_page": "Select The Page...",
   "announcement_page": "Announcement Page",
   "subjects_classes_page": "Subjects & Classes Page",
@@ -38,6 +39,10 @@
   "clear": "Clear",
   "send_report": "Send Report",
 
+  "support_ticket_created": "Support ticket has been created successfully",
+  "error_occurred": "An error occurred, please try again later",
+  "network_error": "Network error, please check your connection",
+
   "developers": "Developers",
 
   "app_info": "App Info",
@@ -46,18 +51,60 @@
   "backend_database": "Back-end/Database:",
   "project_mentor": "Project Mentor:",
 
-
   "profileTitle": "Profile",
-  "firstName": "First Name",
-  "lastName": "Last Name",
-  "emailAddress": "E-mail Address",
+  "fullName": "Full Name",
+  "studentId": "Student ID",
+  "emailAddress": "Email Address",
   "phoneNumber": "Phone Number",
-  "saveChanges": "Save Changes"
+  "major": "Major",
+  "saveChanges": "Save Changes",
+  "editProfileImage": "Edit Profile Image",
+  "profileUpdatedSuccess": "Profile updated successfully!",
+  "profileUpdateFailed": "Failed to update profile",
+
+
+  "gpa_calculator": "GPA Calculator",
+  "hours_passed": "Hours Passed:",
+  "enter_hours_passed": "Enter hours passed",
+  "current_gpa": "Current GPA:",
+  "enter_current_gpa": "Enter current GPA",
+  "retaken": "Retaken",
+  "old": "Old",
+  "subject:":"Subject:",
+  "hours":"hours:",
+  "calculated_gpa": "Calculated GPA:",
+  "calculate": "Calculate",
+
+
+  "subjects_classes":"Subjects & Classes",
+  "recommended_subjects":"Recommended Subjects",
+  "subject_proposal": "Subject Proposal",
+  "books_files": "Books & Files",
+
+
+
+  "year": "Year",
+  "semester": "Semester",
+  "first":"First",
+  "second": "Second",
+  "suggest_subjects": "ٍSuggest Subjects",
+
+
+  "search_subjects":"Search subjects...",
+
+
+
+  "subject_proposal":"Subject Proposal",
+  "select_major": "Select Major",
+  "major": "Major",
+  "select_subject": "Select Subject",
+  "subject": "Subject",
+  "submit": "Submit",
+
+
+  "chat_with_me": "Chat With Me",
+  "Describe this picture?": "Describe this picture?"
+
+
+
 }
-
-
-
-
-
-
-
