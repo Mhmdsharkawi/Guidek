@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+
 
 class RecommandedSubjects extends StatefulWidget {
   @override
@@ -68,7 +71,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Suggested Subjects',
+          'recommended_subjects'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
@@ -82,7 +85,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -103,7 +106,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
                           child: DropdownButtonFormField<int>(
                             value: _selectedYear,
                             decoration: InputDecoration(
-                              labelText: 'Year',
+                              labelText: 'year'.tr(),
                               labelStyle: TextStyle(color: _primaryColor),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: _primaryColor),
@@ -127,7 +130,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
                           child: DropdownButtonFormField<String>(
                             value: _selectedSemester,
                             decoration: InputDecoration(
-                              labelText: 'Semester',
+                              labelText: 'semester'.tr(),
                               labelStyle: TextStyle(color: _primaryColor),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: _primaryColor),
@@ -171,7 +174,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
                   minimumSize: Size(double.infinity, 50),
                 ),
                 child: Text(
-                  'Suggest Subjects',
+                  'suggest_subjects'.tr(),
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
