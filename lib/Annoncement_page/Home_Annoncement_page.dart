@@ -250,8 +250,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -355,7 +353,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     Navigator.pop(context);
                   },
                 ),
-
                 ListTile(
                   leading: Icon(Icons.language, color: Color(0xFF318c3c)),
                   title: Text('language'.tr() + ': $_selectedLanguage'),
@@ -367,8 +364,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => HelpSupportPage()),
+                      MaterialPageRoute(builder: (context) => HelpSupportPage()),
                     );
                   },
                 ),
@@ -382,15 +378,15 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     );
                   },
                 ),
-
                 ListTile(
                   leading: Icon(Icons.question_answer, color: Color(0xFF318c3c)),
                   title: Text('faq'.tr()),
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => QAScreen(language: _getCurrentLanguage())),
-                    ); // Corrected here
+                      MaterialPageRoute(
+                          builder: (context) => QAScreen(language: _getCurrentLanguage())),
+                    );
                   },
                 ),
                 ListTile(
@@ -414,7 +410,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 Spacer(),
                 Divider(color: Colors.grey),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 5),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -425,39 +421,42 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     child: Row(
                       children: [
                         Expanded(
+                          flex: 1,
                           child: CircleAvatar(
                             radius: 40.0,
                             backgroundImage: _profileImage,
                             backgroundColor: Colors.grey[200],
                           ),
                         ),
-                        SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _userFullName,
-                              style: TextStyle(
-                                fontFamily: 'Acumin Variable Concept',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                        SizedBox(width: 12),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _userFullName,
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
                               ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              'manage_account'.tr(),
-                              style: TextStyle(
-                                fontFamily: 'Acumin Variable Concept',
-                                fontSize: 14,
-                                color: Color(0xFF318C3C),
+                              Text(
+                                'manage_account'.tr(),
+                                style: TextStyle(
+                                  fontFamily: 'Acumin Variable Concept',
+                                  fontSize: 14,
+                                  color: Color(0xFF318C3C),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                        SizedBox(width:55),
                       ],
                     ),
                   ),
