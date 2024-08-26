@@ -17,7 +17,189 @@
   "subjects_classes": "Subjects & Classes",
   "theme": "Theme",
   "university_classes": "University Classes",
+  "yes": "Yes",{
+  "app_info": "App Info",
+  "cancel": "Cancel",
+  "chat_with_me": "Chat with Me",
+  "contact_us": "Contact Us",
+  "faq": "FAQ",
+  "gpa_calculator": "GPA Calculator",
+  "help_support": "Help & Support",
+  "home": "Home",
+  "language": "Language",
+  "logout": "Logout",
+  "logout_confirmation": "Logout Confirmation",
+  "logout_message": "Are you sure you want to logout?",
+  "manage_account": "Manage Account",
+  "procedure_guide": "Procedure Guide",
+  "select_language": "Select Language",
+  "subjects_classes": "Subjects & Classes",
+  "theme": "Theme",
+  "university_classes": "University Classes",
   "yes": "Yes",
+  "save_changes": "Save Changes",
+
+  "issue": "Issue",
+  "select_page": "Select The Page...",
+  "announcement_page": "Announcement Page",
+  "subjects_classes_page": "Subjects & Classes Page",
+  "chat_with_me_page": "Chat With Me Page",
+  "procedure_guide_page": "Procedure Guide Page",
+  "gpa_calculator_page": "GPA Calculator Page",
+  "faq_page": "FAQ Page",
+  "university_classes_page": "University Classes Page",
+  "help_page": "Help Page",
+  "profile_page": "Profile Page",
+  "others": "Others ...",
+  "title": "Title",
+  "enter_title": "Enter title",
+  "description": "Description",
+  "enter_description": "Enter description",
+  "clear": "Clear",
+  "send_report": "Send Report",
+
+  "support_ticket_created": "Support ticket has been created successfully",
+  "error_occurred": "An error occurred, please try again later",
+  "network_error": "Network error, please check your connection",
+
+  "developers": "Developers",
+
+  "app_info": "App Info",
+  "created_by": "Created By:",
+  "frontend_ui_design": "Front-end/UI Design:",
+  "backend_database": "Back-end/Database:",
+  "project_mentor": "Project Mentor:",
+
+  "profileTitle": "Profile",
+  "fullName": "Full Name",
+  "studentId": "Student ID",
+  "emailAddress": "Email Address",
+  "phoneNumber": "Phone Number",
+  "major": "Major",
+  "saveChanges": "Save Changes",
+  "editProfileImage": "Edit Profile Image",
+  "profileUpdatedSuccess": "Profile updated successfully!",
+  "profileUpdateFailed": "Failed to update profile",
+
+
+  "gpa_calculator": "GPA Calculator",
+  "hours_passed": "Hours Passed:",
+  "enter_hours_passed": "Enter hours passed",
+  "current_gpa": "Current GPA:",
+  "enter_current_gpa": "Enter current GPA",
+  "retaken": "Retaken",
+  "old": "Old",
+  "subject:":"Subject:",
+  "hours":"hours:",
+  "calculated_gpa": "Calculated GPA:",
+  "calculate": "Calculate",
+
+
+  "subjects_classes":"Subjects & Classes",
+  "recommended_subjects":"Recommended Subjects",
+  "subject_proposal": "Subject Proposal",
+  "books_files": "Books & Files",
+
+
+
+  "year": "Year",
+  "semester": "Semester",
+  "first":"First",
+  "second": "Second",
+  "suggest_subjects": "ٍSuggest Subjects",
+
+
+  "search_subjects":"Search subjects...",
+
+
+
+  "subject_proposal":"Subject Proposal",
+  "select_major": "Select Major",
+  "major": "Major",
+  "select_subject": "Select Subject",
+  "subject": "Subject",
+  "submit": "Submit",
+
+
+  "chat_with_me": "Chat With Me",
+  "Describe this picture?": "Describe this picture?",
+
+
+  "search": "ٍSearch ...",
+  "classes":"Classes",
+
+  "procedure guide":"Procedure Guide",
+
+
+
+
+  "name": "Name",
+  "major": "Major",
+  "email_address": "Email Address",
+  "student_id": "Student ID",
+  "password": "Password",
+  "sign_up": "Sign Up",
+  "already_have_account": "Already have an account? Login",
+  "please_enter_your_name": "Please enter your name",
+  "please_enter_your_email": "Please enter your email",
+  "please_enter_a_valid_email": "Please enter a valid email",
+  "please_enter_your_password": "Please enter your password",
+  "password_min_length": "Password must be at least 8 characters long",
+  "password_uppercase": "Password must contain at least one uppercase letter",
+  "password_number": "Password must contain at least one number",
+  "password_special_character": "Password must contain at least one special character",
+  "please_select_major": "Please select a major",
+  "registration_success": "Registration successful! Check your email to verify your account.",
+  "verification_failed": "Verification request failed: {}",
+  "signup_failed": "Signup failed: {}",
+  "signup_failed_network": "Signup failed: Network error",
+  "please_enter_your_student_id": "Please enter your student ID",
+
+
+
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "forgot_password": "Forgot password?",
+  "request_verify": "Request verify?",
+  "enter_email": "Please enter your email",
+  "invalid_email": "Please enter a valid email address",
+  "enter_password": "Please enter your password",
+  "password_length": "Password must be at least 8 characters",
+  "password_uppercase": "Password must contain at least one uppercase letter",
+  "password_number": "Password must contain at least one number",
+  "password_special": "Password must contain at least one special character",
+  "account_not_verified": "Your account is not verified. Please check your email for verification instructions.",
+  "login_failed": "Login failed",
+
+
+
+  "signup_with_email": "Signup with Email",
+  "already_have_account": "Already have an account? ",
+  "login_here": "Login Here",
+  "agree_terms": "By signing up, you agree to our BAU terms",
+
+
+
+  "email_address": "Email Address",
+  "enter_email": "Please enter your email address",
+  "enter_valid_email": "Enter a valid email address",
+  "reset_password": "Reset Password",
+  "email_sent_msg": "If this account exists, you will receive an email with instructions.\nNote: Check your email spam if you didn't receive the message",
+
+
+
+  "email_address": "Email Address",
+  "enter_email": "Please enter your email address",
+  "enter_valid_email": "Enter a valid email address",
+  "request_verify": "Request Verify?",
+  "email_sent_msg": "If this account exists, you will receive an email to verify your account.\nNote: Check your email spam if you didn't receive the message"
+
+
+
+
+}
+
   "save_changes": "Save Changes",
 
   "issue": "Issue",
