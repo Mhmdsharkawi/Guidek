@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:guidek_project1/Annoncement_page/procedure_detail.dart';
@@ -53,7 +54,7 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: Text(
-          'Procedure Guide',
+          'procedure guide'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
@@ -78,34 +79,32 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search, color: appBarColor),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'search'.tr(),
+                  prefixIcon: Icon(Icons.search, color: appBarColor),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
                   ),
-                  cursorColor: appBarColor,
-                  onChanged: (value) {
-                    setState(() {
-                      searchQuery = value.toLowerCase();
-                    });
-                  },
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
+                cursorColor: appBarColor,
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value.toLowerCase();
+                  });
+                },
+                textAlign: TextAlign.right, // محاذاة النص لليمين
               ),
             ),
             Expanded(
