@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,10 +13,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.black,
-      statusBarIconBrightness: Brightness.light,
-    ));
     return Scaffold(
       body: Stack(
         children: [
@@ -33,7 +29,31 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0, left: 10.0),
+                child: PopupMenuButton<String>(
+                  icon: const Icon(Icons.language, color: Colors.white),
+                  onSelected: (value) {
+                    if (value == 'ar') {
+                      context.setLocale(const Locale('ar'));
+                    } else if (value == 'en') {
+                      context.setLocale(const Locale('en'));
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 'en',
+                      child: Text('English'),
+                    ),
+                    PopupMenuItem(
+                      value: 'ar',
+                      child: Text('العربية'),
+                    ),
+                  ],
+                ),
+              ),
               const Spacer(),
               Align(
                 alignment: Alignment.center,
@@ -42,9 +62,9 @@ class _HomePageState extends State<HomePage> {
                     Navigator.pushNamed(context, '/signup');
                   },
                   icon: const Icon(Icons.email, color: Colors.white),
-                  label: const Text(
-                    'Signup with Email',
-                    style: TextStyle(color: Colors.white),
+                  label: Text(
+                    tr('signup_with_email'),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   style: ButtonStyle(
                     side: MaterialStateProperty.all(const BorderSide(color: Colors.white, width: 2)),
@@ -85,11 +105,11 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: 'Already have an account? ',
+                        text: tr('already_have_account'),
                         style: const TextStyle(color: Colors.white, fontSize: 16),
                         children: [
                           TextSpan(
-                            text: 'Login Here',
+                            text: tr('login_here'),
                             style: TextStyle(
                               color: _isHovering ? Colors.blue : Colors.white,
                               decoration: TextDecoration.underline,
@@ -107,7 +127,7 @@ class _HomePageState extends State<HomePage> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'By signing up, you agree to our BAU terms',
+                  tr('agree_terms'),
                   style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 12),
                 ),
               ),
