@@ -14,6 +14,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
   List<String> _filteredSubjects = [];
   String? _selectedSubject;
   String? _selectedMajor;
+  String? _selectedDay;
 
   final Color _primaryColor = Color(0xFF318C3C);
   final Color _secondaryColor = Color(0xFFFDCD90);
@@ -27,7 +28,20 @@ class _SubjectProposalState extends State<SubjectProposal> {
 
   Future<void> _loadMajorsAndSubjects() async {
     try {
-      final majorsResponse = await http.get(Uri.parse('https://guidekproject.onrender.com/majors/all_majors'));
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('accessToken');
+
+      if (token == null) {
+        throw Exception('Access token is missing. Please log in again.');
+      }
+
+      final majorsResponse = await http.get(
+        Uri.parse('https://guidekproject.onrender.com/majors/all_majors'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
 
       if (majorsResponse.statusCode == 200) {
         final Map<String, dynamic> majorsData = jsonDecode(majorsResponse.body);
@@ -45,15 +59,15 @@ class _SubjectProposalState extends State<SubjectProposal> {
     } catch (e) {
       print('Error fetching majors: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load majors. Please try again.')),
+        const SnackBar(content: Text('Failed to load majors. Please try again.')),
       );
     }
   }
 
+
   void _updateSubjects(String? major) async {
     if (major != null) {
       try {
-        // Retrieve the JWT token from SharedPreferences
         final prefs = await SharedPreferences.getInstance();
         final token = prefs.getString('accessToken');
 
@@ -68,7 +82,6 @@ class _SubjectProposalState extends State<SubjectProposal> {
           },
         );
 
-        // Debugging information
         print('Status Code: ${response.statusCode}');
         print('Response Body: ${response.body}');
 
@@ -90,7 +103,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
       } catch (e) {
         print('Error fetching subjects: $e');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load subjects. Please try again.')),
+          const SnackBar(content: Text('Failed to load subjects. Please try again.')),
         );
       }
     } else {
@@ -102,9 +115,9 @@ class _SubjectProposalState extends State<SubjectProposal> {
   }
 
   Future<void> _submitForm() async {
-    if (_selectedSubject == null || _selectedMajor == null) {
+    if (_selectedSubject == null || _selectedMajor == null || _selectedDay == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select a major and subject')),
+        const SnackBar(content: Text('Please select a major, subject, and days')),
       );
       return;
     }
@@ -114,6 +127,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
 
     final data = {
       'subject_name': _selectedSubject,
+      'suggested_days': _selectedDay,
     };
 
     try {
@@ -134,6 +148,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
         setState(() {
           _selectedSubject = null;
           _selectedMajor = null;
+          _selectedDay = null;
         });
       } else {
         final responseData = jsonDecode(response.body);
@@ -144,7 +159,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
     } catch (e) {
       print('Error submitting form: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred. Please try again.')),
+        const SnackBar(content: Text('An error occurred. Please try again.')),
       );
     }
   }
@@ -155,7 +170,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
       appBar: AppBar(
         title: Text(
           'subject_proposal'.tr(),
-          style: TextStyle(
+          style:const TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
             fontSize: 28,
@@ -166,7 +181,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
@@ -247,13 +262,43 @@ class _SubjectProposalState extends State<SubjectProposal> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
+                        DropdownButtonFormField<String>(
+                          value: _selectedDay,
+                          hint:const Text('select day').tr(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              _selectedDay = newValue;
+                            });
+                          },
+                          items:const [
+                            DropdownMenuItem<String>(
+                              value: "Monday Wednesday",
+                              child: Text("Monday Wednesday"),
+                            ),
+                            DropdownMenuItem<String>(
+                              value: "Sunday Tuesday Thursday",
+                              child: Text("Sunday Tuesday Thursday"),
+                            ),
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'day'.tr(),
+                            labelStyle: TextStyle(color: _primaryColor),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: _primaryColor),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: _primaryColor),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: _submitForm,
                           child: Text('submit').tr(),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: _primaryColor,  
-                            foregroundColor: Colors.white,  
+                            backgroundColor: _primaryColor,
+                            foregroundColor: Colors.white,
                           ),
                         ),
                       ],

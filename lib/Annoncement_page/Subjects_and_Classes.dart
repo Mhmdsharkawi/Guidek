@@ -61,10 +61,10 @@ class _SubjectsPageState extends State<SubjectsAndClasses> {
               },
             ),
           )
-              : Text('There are no following subjects for the selected ones.'),
+              :const Text('There are no following subjects for the selected ones.'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child:const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

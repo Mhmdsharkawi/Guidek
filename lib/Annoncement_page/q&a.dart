@@ -45,7 +45,7 @@ class _QAScreenState extends State<QAScreen> {
         backgroundColor: primaryColor,
         title: Text(
           widget.language == 'ar' ? 'الأسئلة الشائعة' : 'FAQ',
-          style: TextStyle(
+          style:const TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
             fontSize: 28,
@@ -55,7 +55,7 @@ class _QAScreenState extends State<QAScreen> {
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
@@ -92,7 +92,7 @@ class _QAScreenState extends State<QAScreen> {
                           ),
                           child: Text(
                             item['question'] ?? '',
-                            style: TextStyle(
+                            style:const TextStyle(
                               fontFamily: 'Acumin Variable Concept',
                               fontSize: 16,
                               color: Colors.black,
@@ -107,7 +107,7 @@ class _QAScreenState extends State<QAScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding:const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: primaryColor,
                             borderRadius: BorderRadius.circular(8),
@@ -121,7 +121,7 @@ class _QAScreenState extends State<QAScreen> {
                           ),
                           child: Text(
                             item['answer'] ?? '',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Acumin Variable Concept',
                               fontSize: 16,
                               color: Colors.white,

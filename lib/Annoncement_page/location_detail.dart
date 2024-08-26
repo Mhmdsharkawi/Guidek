@@ -27,7 +27,6 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
     final String url = 'https://guidekproject.onrender.com/rooms/get_location/$roomName';
 
     try {
-      // Retrieve the JWT token from SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('accessToken');
 
@@ -64,7 +63,7 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
         title: Text(
           widget.roomName,
           textAlign: TextAlign.right,
-          style: TextStyle(
+          style:const TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -75,7 +74,7 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration:const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/last_background.jpg'),
                 fit: BoxFit.cover,
@@ -86,11 +85,11 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
             future: roomDetails,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData) {
-                return Center(child: Text('No data found'));
+                return const Center(child: Text('No data found'));
               }
 
               final data = snapshot.data!;
@@ -127,12 +126,11 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 8.0),
-                          // Space between the image and text
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.8),  
                               borderRadius: BorderRadius.circular(12),  
-                              boxShadow: [
+                              boxShadow:const [
                                 BoxShadow(
                                   color: Colors.black26,
                                   blurRadius: 8,
@@ -140,8 +138,8 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
                                 ),
                               ],
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                            child: Text(
+                            padding:const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                            child:const Text(
                               'انقر على الصورة للحصول على الموقع',
                               style: TextStyle(
                                 fontSize: 16,
@@ -161,7 +159,7 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
                         child: Text(
                           direction,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
+                          style:const TextStyle(fontSize: 16),
                         ),
                       ),
                     ),

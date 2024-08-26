@@ -173,41 +173,32 @@ class _GpaCalculatorState extends State<GpaCalculator> {
     double totalPoints = 0;
     int totalHours = 0;
 
-    // Create a map to track highest grade for each subject
     Map<String, RowData> subjectMap = {};
 
-    // Process initial GPA
     int passedHours = int.tryParse(hoursController.text) ?? 0;
     double currentGPA = double.tryParse(gpaController.text) ?? 0.0;
     totalPoints = currentGPA * passedHours;
     totalHours = passedHours;
 
-    // Process each row
     for (var row in rows) {
       double newGradePoints = _getPoints(row.grade);
-      String subjectKey = 'subject_${row.hashCode}'; // Use a unique identifier for each subject
+      String subjectKey = 'subject_${row.hashCode}';
 
       if (row.isRetaken) {
-        // If the subject is already in the map, subtract old points
         if (subjectMap.containsKey(subjectKey)) {
           double oldGradePoints = _getPoints(subjectMap[subjectKey]!.grade);
           totalPoints -= oldGradePoints * row.hours;
         }
-        // Update the subject with the new grade
         subjectMap[subjectKey] = row;
-        // Add the new grade points
         totalPoints += newGradePoints * row.hours;
       } else {
-        // For non-retaken subjects, simply add the points
         totalPoints += newGradePoints * row.hours;
-        // Add the subject to the map
         subjectMap[subjectKey] = row;
       }
 
       totalHours += row.hours;
     }
 
-    // Calculate final GPA
     double gpa = totalHours > 0 ? totalPoints / totalHours : 0.0;
     showDialog(
       context: context,
@@ -306,7 +297,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                     child: Row(
                       children: [
                         const Text('old').tr(),
-                        const SizedBox(width: 15), // Adjust to align with other rows
+                        const SizedBox(width: 15),
                         Expanded(
                           child: DropdownButton<String>(
                             value: rows[index].oldGrade,
@@ -342,7 +333,7 @@ class _GpaCalculatorState extends State<GpaCalculator> {
                     rows[index].isRetaken = newValue!;
                   });
                 },
-                activeColor: appBarColor, // Matching the app bar color
+                activeColor: appBarColor,
               ),
               const Text('retaken').tr(),
             ],

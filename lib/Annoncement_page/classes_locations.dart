@@ -28,7 +28,6 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
     final String url = 'https://guidekproject.onrender.com/rooms/all_rooms';
 
     try {
-      // Retrieve the JWT token from SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('accessToken');
 
@@ -43,7 +42,6 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
         },
       );
 
-      // Debugging information
       print('Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
 
@@ -76,7 +74,6 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // تصفية العناصر التي تتطابق مع استعلام البحث
     final filteredItems = items.where((item) {
       return item['name'].toLowerCase().contains(searchQuery);
     }).toList();

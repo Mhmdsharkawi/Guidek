@@ -10,15 +10,15 @@ class SubjectsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColor = Color(0xFF318C3C);
-    final Color secondaryColor = Color(0xFFFDCD90);
+    final Color primaryColor =const Color(0xFF318C3C);
+    final Color secondaryColor =const Color(0xFFFDCD90);
     final Color grayColor = Colors.grey[600]!;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'subjects_classes'.tr(),
-          style: TextStyle(
+          style:const TextStyle(
             fontFamily: 'Acumin Variable Concept',
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -29,7 +29,7 @@ class SubjectsScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
@@ -54,7 +54,7 @@ class SubjectsScreen extends StatelessWidget {
                         ),
                       );
                     }),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     _buildIcon(Icons.assignment, 'subject_proposal'.tr(), () {
                       Navigator.push(
                         context,
@@ -63,7 +63,7 @@ class SubjectsScreen extends StatelessWidget {
                         ),
                       );
                     }),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     _buildIcon(Icons.library_books, 'books_files'.tr(), () {
                       Navigator.push(
                         context,

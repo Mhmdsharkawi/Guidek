@@ -341,6 +341,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       children: [
                         TextFormField(
                           initialValue: _fullname,
+                          readOnly: true,
                           decoration: InputDecoration(
                             labelText: 'fullName'.tr(),
                             labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),
@@ -358,6 +359,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         SizedBox(height: 16),
                         TextFormField(
                           initialValue: _studentId,
+                          readOnly: true,
                           decoration: InputDecoration(
                             labelText: 'studentId'.tr(),
                             labelStyle: TextStyle(color: primaryColor, fontFamily: 'Acumin Variable Concept'),

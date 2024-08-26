@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:guidek_project1/Annoncement_page/procedure_detail.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProcedureGuide extends StatefulWidget {
   const ProcedureGuide({super.key});
@@ -25,20 +26,41 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
   }
 
   Future<void> loadData() async {
-    final String url = 'https://guidekproject.onrender.com/transactions/all_transactions';
-    final response = await http.get(Uri.parse(url));
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('accessToken');
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final List<dynamic> transactions = data['Transactions'];
+      if (token == null) {
+        throw Exception('Access token is missing. Please log in again.');
+      }
 
-      setState(() {
-        items = transactions.map((transaction) => transaction as Map<String, dynamic>).toList();
-      });
-    } else {
-      throw Exception('Failed to load data');
+      final String  url = 'https://guidekproject.onrender.com/transactions/all_transactions';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final List<dynamic> transactions = data['Transactions'];
+
+        setState(() {
+          items = transactions.map((transaction) => transaction as Map<String, dynamic>).toList();
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print('Error fetching transactions: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content:const Text('Failed to load transactions. Please try again.')),
+      );
     }
   }
+
 
   void navigateToDetailScreen(String procedureName) {
     Navigator.push(
@@ -51,7 +73,6 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
 
   @override
   Widget build(BuildContext context) {
-    // تصفية العناصر التي تتطابق مع استعلام البحث
     final filteredItems = items.where((item) {
       return item['name'].toLowerCase().contains(searchQuery);
     }).toList();
@@ -61,7 +82,7 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
         backgroundColor: appBarColor,
         title: Text(
           'procedure guide'.tr(),
-          style: TextStyle(
+          style:const TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
             fontSize: 28,
@@ -71,7 +92,7 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
@@ -136,7 +157,7 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         item['name'],
-                        style: TextStyle(
+                        style:const TextStyle(
                           fontFamily: 'Acumin Variable Concept',
                           fontSize: 16,
                           color: Colors.black,

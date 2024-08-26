@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ProcedureDetailScreen extends StatefulWidget {
   final String procedurename;
 
@@ -21,17 +23,36 @@ class _ProcedureDetailScreenState extends State<ProcedureDetailScreen> {
     stepsFuture = fetchProcedureSteps(widget.procedurename);
   }
 
-  Future<List<Map<String, dynamic>>> fetchProcedureSteps(String procedurename) async {
-    final String url = 'https://guidekproject.onrender.com/transactions/transaction_steps/$procedurename';
-    final response = await http.get(Uri.parse(url));
+  Future<List<Map<String, dynamic>>> fetchProcedureSteps(String procedureName) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('accessToken');
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return List<Map<String, dynamic>>.from(data['steps']);
-    } else {
-      throw Exception('Failed to load procedure steps');
+      if (token == null) {
+        throw Exception('Access token is missing. Please log in again.');
+      }
+
+      final String url = 'https://guidekproject.onrender.com/transactions/transaction_steps/$procedureName';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return List<Map<String, dynamic>>.from(data['steps']);
+      } else {
+        throw Exception('Failed to load procedure steps');
+      }
+    } catch (e) {
+      print('Error fetching procedure steps: $e');
+      throw Exception('An error occurred while fetching procedure steps. Please try again.');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +98,7 @@ class _ProcedureDetailScreenState extends State<ProcedureDetailScreen> {
 
                 return Stack(
                   children: [
-                    // Positioned Progress Bar at the Top
+
                     Positioned(
                       top: 16,
                       left: 16,

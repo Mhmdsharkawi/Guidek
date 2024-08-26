@@ -17,8 +17,8 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
   int? _selectedYear = 1;
   String? _selectedSemester = 'First';
 
-  final Color _primaryColor = Color(0xFF318C3C);
-  final Color _secondaryColor = Color(0xFFFDCD90);
+  final Color _primaryColor =const Color(0xFF318C3C);
+  final Color _secondaryColor =const Color(0xFFFDCD90);
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
   Future<void> _loadMajorName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _selectedMajor = prefs.getString('userMajor') ?? ''; // Use the correct key
+      _selectedMajor = prefs.getString('userMajor') ?? '';
     });
     print('Loaded Major Name: $_selectedMajor');
   }
@@ -72,7 +72,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
       appBar: AppBar(
         title: Text(
           'recommended_subjects'.tr(),
-          style: TextStyle(
+          style:const TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
             fontSize: 25,
@@ -83,7 +83,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
@@ -125,7 +125,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
                             },
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: DropdownButtonFormField<String>(
                             value: _selectedSemester,
@@ -175,7 +175,7 @@ class _RecommandedSubjectsState extends State<RecommandedSubjects> {
                 ),
                 child: Text(
                   'suggest_subjects'.tr(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),

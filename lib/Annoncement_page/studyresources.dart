@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -18,9 +16,9 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
   List<dynamic> _allSubjects = [];
   List<dynamic> _filteredSubjects = [];
   TextEditingController _searchController = TextEditingController();
-  final Color _appBarColor = Color(0xFF318C3C); // Match the AppBar color
-  final Color _secondaryColor = Color(0xFFFDCD90); // Yellow color for the bar
-  final Color _textColor = Colors.white; // Color for text
+  final Color _appBarColor =const Color(0xFF318C3C);
+  final Color _secondaryColor = const Color(0xFFFDCD90);
+  final Color _textColor = Colors.white;
   final Color _iconColor = Colors.black87;
 
   @override
@@ -33,11 +31,9 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
   }
 
   Future<void> _loadData() async {
-    // Get token from SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
 
-    // Fetch subjects from API
     final response = await http.get(
       Uri.parse('https://guidekproject.onrender.com/subjects/all_subjects'),
       headers: {
@@ -98,7 +94,7 @@ class _StudyResourcesScreenState extends State<StudyResourcesScreen> {
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,

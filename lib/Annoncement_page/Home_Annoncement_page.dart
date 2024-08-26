@@ -29,12 +29,11 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   int _current = 0;
   String _selectedLanguage = 'EN';
   String _userFullName = 'Loading...';
-  ImageProvider _profileImage = AssetImage('assets/default_image.jpg');
+  ImageProvider _profileImage = const AssetImage('assets/default_image.jpg');
   List<Map<String, dynamic>> announcements = [];
   bool _isLoading = true;
   String? _accessToken;
   List<String> imgList = [];
-
 
   Future<bool> _onWillPop() async {
     return false;
@@ -61,7 +60,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('accessToken') ?? '';
 
-    final url = 'https://guidekproject.onrender.com/announcements/all_announcements';
+    final url =
+        'https://guidekproject.onrender.com/announcements/all_announcements';
     try {
       final response = await http.get(
         Uri.parse(url),
@@ -78,7 +78,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           announcements = data.map<Map<String, String>>((item) {
             String imgUrl = item['img_url'] ?? 'default_image.jpg';
             return {
-              'imgUrl': 'https://guidekproject.onrender.com/announcements/get_image/$imgUrl',
+              'imgUrl':
+                  'https://guidekproject.onrender.com/announcements/get_image/$imgUrl',
               'title': item['title'] ?? '',
               'content': item['content'] ?? '',
             };
@@ -99,12 +100,11 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     }
   }
 
-
   Future<void> _loadUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? fullName = prefs.getString('userFullName');
     setState(() {
-      _userFullName = fullName ?? 'Guest'; // Use 'Guest' if no name is found
+      _userFullName = fullName ?? 'Guest';
     });
   }
 
@@ -116,15 +116,14 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     print('Filename: $filename');
     print('Access Token: $accessToken');
 
-    // Determine the correct image URL based on whether the filename exists
     String imageUrl;
     if (filename != null && filename.isNotEmpty) {
       imageUrl = 'https://guidekproject.onrender.com/users/get_image/$filename';
     } else {
-      imageUrl = 'https://guidekproject.onrender.com/users/get_image/default_image.jpg';
+      imageUrl =
+          'https://guidekproject.onrender.com/users/get_image/default_image.jpg';
     }
 
-    // Try loading the image with the Bearer token authorization header
     try {
       final response = await http.get(
         Uri.parse(imageUrl),
@@ -134,7 +133,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       );
 
       if (response.statusCode == 200) {
-        // Check if the response is of type image
         final contentType = response.headers['content-type'];
         if (contentType != null && contentType.startsWith('image/')) {
           setState(() {
@@ -148,7 +146,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           });
         }
       } else {
-        print('Failed to load profile image, status code: ${response.statusCode}');
+        print(
+            'Failed to load profile image, status code: ${response.statusCode}');
         setState(() {
           _profileImage = AssetImage('assets/default_image.jpg');
         });
@@ -172,9 +171,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       );
     }
   }
-
-
-
 
   void _changeLanguage() {
     showDialog(
@@ -212,7 +208,6 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     );
   }
 
-
   void _confirmLogout() {
     showDialog(
       context: context,
@@ -225,7 +220,10 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('cancel'.tr() , style: TextStyle(color: Color(0xFF318C3C)),),
+              child: Text(
+                'cancel'.tr(),
+                style: TextStyle(color: Color(0xFF318C3C)),
+              ),
             ),
             TextButton(
               onPressed: () async {
@@ -233,7 +231,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                 await prefs.setBool('isLoggedIn', false);
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => HomePage()),
-                      (Route<dynamic> route) => false,
+                  (Route<dynamic> route) => false,
                 );
               },
               child: Text('yes'.tr(), style: TextStyle(color: Colors.red)),
@@ -244,11 +242,9 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     );
   }
 
-
   String _getCurrentLanguage() {
     return context.locale.languageCode;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +258,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           title: Padding(
             padding: EdgeInsets.only(left: 0.0),
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 children: [
                   TextSpan(
                     text: 'GUIDE',
@@ -364,7 +360,8 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HelpSupportPage()),
+                      MaterialPageRoute(
+                          builder: (context) => HelpSupportPage()),
                     );
                   },
                 ),
@@ -379,18 +376,22 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.question_answer, color: Color(0xFF318c3c)),
+                  leading:
+                      Icon(Icons.question_answer, color: Color(0xFF318c3c)),
                   title: Text('faq'.tr()),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => QAScreen(language: _getCurrentLanguage())),
+                        builder: (context) =>
+                            QAScreen(language: _getCurrentLanguage()),
+                      ),
                     );
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
+                  leading:
+                      const Icon(Icons.contact_mail, color: Color(0xFF318c3c)),
                   title: Text('contact_us'.tr()),
                   onTap: () {
                     Navigator.push(
@@ -400,22 +401,23 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.logout, color: Colors.red),
+                  leading: const Icon(Icons.logout, color: Colors.red),
                   title: Text(
                     'logout'.tr(),
                     style: TextStyle(color: Colors.red),
                   ),
                   onTap: _confirmLogout,
                 ),
-                Spacer(),
-                Divider(color: Colors.grey),
+                const Spacer(),
+                const Divider(color: Colors.grey),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 5),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UserProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => UserProfilePage()),
                       ).then((_) => _loadProfileImage());
                     },
                     child: Row(
@@ -436,7 +438,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                             children: [
                               Text(
                                 _userFullName,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'Acumin Variable Concept',
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -448,7 +450,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                               ),
                               Text(
                                 'manage_account'.tr(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: 'Acumin Variable Concept',
                                   fontSize: 14,
                                   color: Color(0xFF318C3C),
@@ -469,85 +471,91 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
           child: Column(
             children: [
               CarouselSlider(
-                items: announcements.map((item) =>
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      clipBehavior: Clip.antiAlias, // Ensures the content respects the border radius.
-                      child: Stack(
-                        children: [
-                          Image.network(
-                            item['imgUrl']!, // The full image URL.
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity, // Ensure the image fills the container.
-                            headers: {
-                              'Authorization': 'Bearer $_accessToken', // Use the loaded access token.
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset('assets/images/default_image.jpg', fit: BoxFit.cover); // Fallback image in case of error.
-                            },
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                              color: Colors.black.withOpacity(0.6), // Dark overlay for better readability.
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item['title']!,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 5.0,
-                                          color: Colors.black.withOpacity(0.7),
-                                          offset: Offset(2, 2),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Text(
-                                    item['content']!,
-                                    maxLines: 2, // Limit to 2 lines.
-                                    overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis.
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 5.0,
-                                          color: Colors.black.withOpacity(0.7),
-                                          offset: Offset(2, 2),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                items: announcements
+                    .map((item) => Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                ).toList(),
+                          clipBehavior: Clip.antiAlias,
+                          child: Stack(
+                            children: [
+                              Image.network(
+                                item['imgUrl']!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                                headers: {
+                                  'Authorization': 'Bearer $_accessToken',
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                      'assets/images/default_image.jpg',
+                                      fit: BoxFit.cover);
+                                },
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 20.0),
+                                  color: Colors.black.withOpacity(0.6),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item['title']!,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                          shadows: [
+                                            Shadow(
+                                              blurRadius: 5.0,
+                                              color:
+                                                  Colors.black.withOpacity(0.7),
+                                              offset: const Offset(2, 2),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        item['content']!,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          shadows: [
+                                            Shadow(
+                                              blurRadius: 5.0,
+                                              color:
+                                                  Colors.black.withOpacity(0.7),
+                                              offset: const Offset(2, 2),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                    .toList(),
                 options: CarouselOptions(
                   height: MediaQuery.of(context).size.height * 0.4,
                   autoPlay: true,
@@ -559,65 +567,71 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                     });
                   },
                 ),
-              )
-              ,
+              ),
               Container(
                 width: double.infinity,
                 height: 12.0,
-                color: Color(0xFFfdcd90),
+                color: const Color(0xFFfdcd90),
               ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: GridView.count(
                       crossAxisCount: 3,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       childAspectRatio: 1.0,
                       children: [
                         _buildIcon(Icons.school, 'subjects_classes'.tr(), () {
                           Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SubjectsScreen()),
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubjectsScreen(),
+                            ),
+                          );
                         }),
                         _buildIcon(Icons.chat_bubble, 'chat_with_me'.tr(), () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ChatWithMe()),
+                              builder: (context) => ChatWithMe(),
+                            ),
                           );
                         }),
-                        _buildIcon(Icons.description, 'procedure_guide'.tr(), () {
+                        _buildIcon(Icons.description, 'procedure_guide'.tr(),
+                            () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProcedureGuide()),
+                              builder: (context) => ProcedureGuide(),
+                            ),
                           );
                         }),
                         _buildIcon(Icons.calculate, 'gpa_calculator'.tr(), () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => GpaCalculator()),
+                              builder: (context) => GpaCalculator(),
+                            ),
                           );
                         }),
                         _buildIcon(Icons.help, 'faq'.tr(), () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => QAScreen(language: _getCurrentLanguage()),
+                              builder: (context) =>
+                                  QAScreen(language: _getCurrentLanguage()),
                             ),
                           );
                         }),
-                        _buildIcon(
-                            Icons.location_on, 'university_classes'.tr(), () {
+                        _buildIcon(Icons.location_on, 'university_classes'.tr(),
+                            () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ClassesLocationsScreen()),
+                              builder: (context) => ClassesLocationsScreen(),
+                            ),
                           );
                         }),
                       ],
@@ -663,19 +677,20 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                   width: 74,
                   height: 74,
                   decoration: BoxDecoration(
-                    color: Color(0xFF318c3c),
+                    color: const Color(0xFF318c3c),
                     borderRadius: BorderRadius.circular(23),
-                    border: Border.all(color: Color(0xFFfdcd90), width: 3.4),
+                    border:
+                        Border.all(color: const Color(0xFFfdcd90), width: 3.4),
                   ),
-                  child: Icon(icon, size: 40, color: Color(0xFFfdcd90)),
+                  child: Icon(icon, size: 40, color: const Color(0xFFfdcd90)),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 13,
               color: Color(0xff000000),
               fontWeight: FontWeight.normal,
