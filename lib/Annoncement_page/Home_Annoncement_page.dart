@@ -236,7 +236,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
                       (Route<dynamic> route) => false,
                 );
               },
-              child: Text('yes', style: TextStyle(color: Colors.red)),
+              child: Text('yes'.tr(), style: TextStyle(color: Colors.red)),
             ),
           ],
         );
