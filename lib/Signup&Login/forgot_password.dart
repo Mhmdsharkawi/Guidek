@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'login.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       final email = _emailController.text;
 
       final response = await http.post(
-        Uri.parse('https://guidekproject.onrender.com/users/reset_password_request'), // Replace with your API URL
+        Uri.parse('https://guidekproject.onrender.com/users/reset_password_request'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -38,11 +38,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('If this account exists, you will receive an email with instructions . \nnote : chick your email spam if you didnt recive the msg')),
+          SnackBar(content: Text(tr('email_sent_msg'))),
         );
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       } else {
         final responseData = jsonDecode(response.body);
@@ -96,7 +96,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email Address',
+                        labelText: tr('email_address'),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -112,9 +112,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       style: const TextStyle(color: Colors.white),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
+                          return tr('enter_email');
                         } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Enter a valid email address';
+                          return tr('enter_valid_email');
                         }
                         return null;
                       },
@@ -130,7 +130,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      child: const Text('Reset Password', style: TextStyle(color: Colors.white)),
+                      child: Text(tr('reset_password'), style: const TextStyle(color: Colors.white)),
                     ),
                   ],
                 ),
