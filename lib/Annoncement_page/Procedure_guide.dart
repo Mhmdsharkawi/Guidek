@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class ProcedureGuide extends StatefulWidget {
   const ProcedureGuide({super.key});
+
   @override
   _ProcedureGuideState createState() => _ProcedureGuideState();
 }
@@ -39,17 +40,22 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
     }
   }
 
-  void navigateToDetailScreen(String roomName) {
+  void navigateToDetailScreen(String procedureName) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProcedureDetailScreen(procedurename: roomName),
+        builder: (context) => ProcedureDetailScreen(procedurename: procedureName),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    // تصفية العناصر التي تتطابق مع استعلام البحث
+    final filteredItems = items.where((item) {
+      return item['name'].toLowerCase().contains(searchQuery);
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
@@ -104,12 +110,19 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
                     searchQuery = value.toLowerCase();
                   });
                 },
-                textAlign: TextAlign.right, // محاذاة النص لليمين
+                textAlign: TextAlign.right,  
               ),
             ),
             Expanded(
-              child: ListView.separated(
-                itemCount: items.length,
+              child: filteredItems.isEmpty
+                  ? Center(
+                child: Text(
+                  'No results found'.tr(),
+                  style: TextStyle(color: Colors.grey),
+                ),
+              )
+                  : ListView.separated(
+                itemCount: filteredItems.length,
                 separatorBuilder: (context, index) {
                   return Divider(
                     color: appBarColor,
@@ -117,27 +130,23 @@ class _ProcedureGuideState extends State<ProcedureGuide> {
                   );
                 },
                 itemBuilder: (context, index) {
-                  final item = items[index];
-                  if (item['name'].toLowerCase().contains(searchQuery)) {
-                    return ListTile(
-                      title: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          item['name'],
-                          style: TextStyle(
-                            fontFamily: 'Acumin Variable Concept',
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
+                  final item = filteredItems[index];
+                  return ListTile(
+                    title: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        item['name'],
+                        style: TextStyle(
+                          fontFamily: 'Acumin Variable Concept',
+                          fontSize: 16,
+                          color: Colors.black,
                         ),
                       ),
-                      onTap: () {
-                        navigateToDetailScreen(item['name']);
-                      },
-                    );
-                  } else {
-                    return Container();
-                  }
+                    ),
+                    onTap: () {
+                      navigateToDetailScreen(item['name']);
+                    },
+                  );
                 },
               ),
             ),
