@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -79,7 +80,7 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: Text(
-          'Classes',
+          'classes'.tr(),
           style: TextStyle(
             fontFamily: 'Acumin Variable Concept',
             color: Colors.white,
@@ -92,7 +93,7 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/Background2.jpeg'),
+            image: AssetImage('assets/last_background.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -104,34 +105,32 @@ class _ClassesLocationsState extends State<ClassesLocationsScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search, color: appBarColor),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      borderSide: BorderSide.none,
-                    ),
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'search'.tr(),
+                  prefixIcon: Icon(Icons.search, color: appBarColor),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
                   ),
-                  cursorColor: appBarColor,
-                  onChanged: (value) {
-                    setState(() {
-                      searchQuery = value.toLowerCase();
-                    });
-                  },
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
+                cursorColor: appBarColor,
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value.toLowerCase();
+                  });
+                },
+                textAlign: TextAlign.right,
               ),
             ),
             Expanded(
