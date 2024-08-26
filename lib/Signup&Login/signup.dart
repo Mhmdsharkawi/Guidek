@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:guidek_project1/Signup&Login/login.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -42,31 +43,31 @@ class _SignupPageState extends State<SignupPage> {
 
   String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your name';
+      return 'please_enter_your_name'.tr();
     }
     return null;
   }
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your email';
+      return 'please_enter_your_email'.tr();
     } else if (!EmailValidator.validate(value)) {
-      return 'Please enter a valid email';
+      return 'please_enter_a_valid_email'.tr();
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your password';
+      return 'please_enter_your_password'.tr();
     } else if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return 'password_min_length'.tr();
     } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'Password must contain at least one uppercase letter';
+      return 'password_uppercase'.tr();
     } else if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Password must contain at least one number';
+      return 'password_number'.tr();
     } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'Password must contain at least one special character';
+      return 'password_special_character'.tr();
     }
     return null;
   }
@@ -75,7 +76,7 @@ class _SignupPageState extends State<SignupPage> {
     if (_formKey.currentState!.validate()) {
       if (_selectedMajor == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select a major')),
+          SnackBar(content: Text('please_select_major'.tr())),
         );
         return;
       }
@@ -126,7 +127,7 @@ class _SignupPageState extends State<SignupPage> {
 
           if (verifyResponse.statusCode == 200) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Registration successful! Check your email to verify your account.')),
+              SnackBar(content: Text('registration_success'.tr())),
             );
             Navigator.pushReplacement(
               context,
@@ -134,12 +135,12 @@ class _SignupPageState extends State<SignupPage> {
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Verification request failed: ${jsonDecode(verifyResponse.body)['message']}')),
+              SnackBar(content: Text('verification_failed'.tr(args: [jsonDecode(verifyResponse.body)['message']]))),
             );
           }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Signup failed: ${jsonDecode(registerResponse.body)['message']}')),
+            SnackBar(content: Text('signup_failed'.tr(args: [jsonDecode(registerResponse.body)['message']]))),
           );
         }
       } catch (e) {
@@ -148,12 +149,11 @@ class _SignupPageState extends State<SignupPage> {
           _isLoading = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Signup failed: Network error')),
+          SnackBar(content: Text('signup_failed_network'.tr())),
         );
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +198,7 @@ class _SignupPageState extends State<SignupPage> {
                     TextFormField(
                       controller: _nameController,
                       decoration: InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'name'.tr(),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -222,7 +222,7 @@ class _SignupPageState extends State<SignupPage> {
                           value: major['value'],
                           child: Text(
                             major['name']!,
-                            style: const TextStyle(color: Colors.white), // Ensure text color is black for visibility
+                            style: const TextStyle(color: Colors.white),
                           ),
                         );
                       }).toList(),
@@ -232,7 +232,7 @@ class _SignupPageState extends State<SignupPage> {
                         });
                       },
                       decoration: InputDecoration(
-                        labelText: 'Major',
+                        labelText: 'major'.tr(),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -245,14 +245,14 @@ class _SignupPageState extends State<SignupPage> {
                         hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
                         prefixIcon: const Icon(Icons.school, color: Colors.white),
                       ),
-                      style: const TextStyle(color: Colors.black), // Ensure text color is black for visibility
-                      dropdownColor: Color(0xf00000013), // Ensure dropdown background color is black
+                      style: const TextStyle(color: Colors.black),
+                      dropdownColor: const Color(0xf00000013),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email Address',
+                        labelText: 'email_address'.tr(),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -272,7 +272,7 @@ class _SignupPageState extends State<SignupPage> {
                     TextFormField(
                       controller: _studentIdController,
                       decoration: InputDecoration(
-                        labelText: 'Student ID',
+                        labelText: 'student_id'.tr(),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -288,7 +288,7 @@ class _SignupPageState extends State<SignupPage> {
                       style: const TextStyle(color: Colors.white),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your student ID';
+                          return 'please_enter_your_student_id'.tr();
                         }
                         return null;
                       },
@@ -298,7 +298,7 @@ class _SignupPageState extends State<SignupPage> {
                       controller: _passwordController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'password'.tr(),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -336,10 +336,10 @@ class _SignupPageState extends State<SignupPage> {
                         textStyle: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white, // Ensure text color is white
+                          color: Colors.white,
                         ),
                       ),
-                      child: const Text('Sign Up',style: TextStyle(color: Colors.white),),
+                      child: Text('sign_up'.tr(), style: const TextStyle(color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
                     TextButton(
@@ -349,9 +349,9 @@ class _SignupPageState extends State<SignupPage> {
                           MaterialPageRoute(builder: (context) => const LoginPage()),
                         );
                       },
-                      child: const Text(
-                        'Already have an account? Login',
-                        style: TextStyle(color: Colors.white),
+                      child: Text(
+                        'already_have_account'.tr(),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
