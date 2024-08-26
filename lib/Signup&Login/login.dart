@@ -5,6 +5,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Annoncement_page/Home_Annoncement_page.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,24 +33,24 @@ class _LoginPageState extends State<LoginPage> {
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your email';
+      return tr('enter_email');
     } else if (!EmailValidator.validate(value)) {
-      return 'Please enter a valid email address';
+      return tr('invalid_email');
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your password';
+      return tr('enter_password');
     } else if (value.length < 8) {
-      return 'Password must be at least 8 characters';
+      return tr('password_length');
     } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'Password must contain at least one uppercase letter';
+      return tr('password_uppercase');
     } else if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Password must contain at least one number';
+      return tr('password_number');
     } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-    return 'Password must contain at least one special character';
+      return tr('password_special');
     }
     return null;
   }
@@ -70,9 +74,6 @@ class _LoginPageState extends State<LoginPage> {
           }),
         );
 
-        print('Login response status: ${response.statusCode}');
-        print('Login response body: ${response.body}');
-
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           final accessToken = data['access_token'];
@@ -89,8 +90,6 @@ class _LoginPageState extends State<LoginPage> {
           DateTime expirationDate = DateTime.now().add(const Duration(days: 30));
           await prefs.setString('loginExpiration', expirationDate.toIso8601String());
 
-          print('Tokens and login state saved successfully');
-
           // Fetch user info
           final userInfoResponse = await http.get(
             Uri.parse('https://guidekproject.onrender.com/users/current_user_info'),
@@ -99,18 +98,15 @@ class _LoginPageState extends State<LoginPage> {
             },
           );
 
-          print('User info response status: ${userInfoResponse.statusCode}');
-          print('User info response body: ${userInfoResponse.body}');
-
           if (userInfoResponse.statusCode == 200) {
             final userInfo = jsonDecode(userInfoResponse.body);
-            final user = userInfo as Map<String, dynamic>; // Assuming the response is a single user object
+            final user = userInfo as Map<String, dynamic>;
 
             final isVerified = user['verified'] ?? false;
 
             if (!isVerified) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Your account is not verified. Please check your email for verification instructions.')),
+                SnackBar(content: Text(tr('account_not_verified'))),
               );
               setState(() {
                 _isLoading = false;
@@ -119,27 +115,12 @@ class _LoginPageState extends State<LoginPage> {
             }
 
             // Save user info to SharedPreferences
-            final fullName = user['fullname'] ?? '';
-            final email = user['email'] ?? '';
-            final majorName = user['major_name'] ?? '';
-            final phone = user['phone'] ?? '';
-            final imgUrl = user['img_url'] ?? '';
-            final number = user['number'] ?? '';
-
-            await prefs.setString('userFullName', fullName);
-            await prefs.setString('userEmail', email);
-            await prefs.setString('userMajor', majorName);
-            await prefs.setString('userPhone', phone);
-            await prefs.setString('userImgUrl', imgUrl);
-            await prefs.setString('userNumber', number);
-
-            print('User info saved successfully:');
-            print('Full Name: $fullName');
-            print('Email: $email');
-            print('Major: $majorName');
-            print('Phone: $phone');
-            print('Image URL: $imgUrl');
-            print('Number: $number');
+            await prefs.setString('userFullName', user['fullname'] ?? '');
+            await prefs.setString('userEmail', user['email'] ?? '');
+            await prefs.setString('userMajor', user['major_name'] ?? '');
+            await prefs.setString('userPhone', user['phone'] ?? '');
+            await prefs.setString('userImgUrl', user['img_url'] ?? '');
+            await prefs.setString('userNumber', user['number'] ?? '');
 
             // Delay navigation to ensure all data is processed
             await Future.delayed(const Duration(seconds: 2));
@@ -149,21 +130,18 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(builder: (context) => const HomeAnnoncementPage()),
             );
           } else {
-            // Handle user info fetch error
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Failed to fetch user info: ${userInfoResponse.reasonPhrase}')),
+              SnackBar(content: Text(tr('login_failed') + ': ${userInfoResponse.reasonPhrase}')),
             );
           }
         } else {
-          // Handle login error
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Login failed: ${jsonDecode(response.body)['message']}')),
+            SnackBar(content: Text(tr('login_failed') + ': ${jsonDecode(response.body)['message']}')),
           );
         }
       } catch (e) {
-        print('Request failed with error: $e');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login failed: Network error')),
+          SnackBar(content: Text(tr('login_failed') + ': Network error')),
         );
       } finally {
         setState(() {
@@ -172,13 +150,6 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
+                        labelText: tr('email'),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -244,7 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: tr('password'),
                         labelStyle: const TextStyle(color: Colors.white),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.transparent),
@@ -284,16 +255,16 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      child: const Text('Login', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                      child: Text(tr('login'), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, '/forgot_password');
                       },
-                      child: const Text(
-                        'Forgot password?',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      child: Text(
+                        tr('forgot_password'),
+                        style: const TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -301,9 +272,9 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () {
                         Navigator.pushNamed(context, '/verify_account');
                       },
-                      child: const Text(
-                        'Request verify ?',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      child: Text(
+                        tr('request_verify'),
+                        style: const TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                   ],
