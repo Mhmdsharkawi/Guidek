@@ -265,7 +265,7 @@ class _SubjectProposalState extends State<SubjectProposal> {
                         const SizedBox(height: 16),
                         DropdownButtonFormField<String>(
                           value: _selectedDay,
-                          hint:const Text('select day').tr(),
+                          hint:const Text('select_day').tr(),
                           onChanged: (newValue) {
                             setState(() {
                               _selectedDay = newValue;
@@ -274,11 +274,11 @@ class _SubjectProposalState extends State<SubjectProposal> {
                           items:const [
                             DropdownMenuItem<String>(
                               value: "Monday Wednesday",
-                              child: Text("Monday Wednesday"),
+                              child: Text("ن ر"),
                             ),
                             DropdownMenuItem<String>(
                               value: "Sunday Tuesday Thursday",
-                              child: Text("Sunday Tuesday Thursday"),
+                              child: Text("ا ث خ"),
                             ),
                           ],
                           decoration: InputDecoration(
