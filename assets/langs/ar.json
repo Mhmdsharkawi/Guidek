@@ -186,7 +186,12 @@
   "Monday Wednesday":"اثنين اربعاء",
   "Sunday Tuesday Thursday":"احد ثلاثاء خميس",
   "day": "اليوم",
-  "select_day": "اختر اليوم"
+  "Select Day": "اختر اليوم",
+
+
+  "Book": "الكتاب",
+  "Slides": "السلايدات",
+  "Course Plan": "خطة المادة"
 
 
 }

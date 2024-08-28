@@ -285,7 +285,11 @@
   "Monday Wednesday":"Monday Wednesday",
   "Sunday Tuesday Thursday":"Sunday Tuesday Thursday",
   "day": "day",
-  "select_day": "select_day"
+  "Select Day": "select_day",
+
+  "Book": "Book",
+  "Slides": "Slides",
+  "Course Plan": "Course Plan"
 
 
 
