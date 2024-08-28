@@ -271,14 +271,14 @@ class _SubjectProposalState extends State<SubjectProposal> {
                               _selectedDay = newValue;
                             });
                           },
-                          items:const [
+                          items: [
                             DropdownMenuItem<String>(
-                              value: "Monday Wednesday",
-                              child: Text("ن ر"),
+                              value: "ن ر",
+                              child: Text("Monday Wednesday").tr(),
                             ),
                             DropdownMenuItem<String>(
-                              value: "Sunday Tuesday Thursday",
-                              child: Text("ا ث خ"),
+                              value:"ا ث خ" ,
+                              child: Text("Sunday Tuesday Thursday").tr(),
                             ),
                           ],
                           decoration: InputDecoration(
