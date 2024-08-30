@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:guidek_project1/Annoncement_page/App_Info.dart';
@@ -34,6 +34,7 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
   bool _isLoading = true;
   String? _accessToken;
   List<String> imgList = [];
+  Timer? _announcementTimer;
 
   Future<bool> _onWillPop() async {
     return false;
@@ -47,7 +48,15 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
     _loadProfileImage();
     _loadUserName();
     _loadAnnouncements();
+    _startAnnouncementTimer();
   }
+
+  void _startAnnouncementTimer() {
+    _announcementTimer = Timer.periodic(Duration(minutes: 1), (timer) {
+      _loadAnnouncements();
+    });
+  }
+
 
   Future<void> _loadAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,6 +64,13 @@ class _HomeAnnoncementPageState extends State<HomeAnnoncementPage> {
       _accessToken = prefs.getString('accessToken') ?? '';
     });
   }
+
+  @override
+  void dispose() {
+    _announcementTimer?.cancel();
+    super.dispose();
+  }
+
 
   Future<void> _loadAnnouncements() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
